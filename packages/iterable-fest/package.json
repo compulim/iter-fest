@@ -1,0 +1,186 @@
+{
+  "name": "iterable-fest",
+  "version": "0.0.0-0",
+  "description": "A collection of iterable utilities.",
+  "files": [
+    "./dist/"
+  ],
+  "exports": {
+    "./iterableConcat": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableConcat.d.mts",
+        "default": "./dist/iterable-fest.iterableConcat.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableConcat.d.ts",
+        "default": "./dist/iterable-fest.iterableConcat.js"
+      }
+    },
+    "./iterableEvery": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableEvery.d.mts",
+        "default": "./dist/iterable-fest.iterableEvery.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableEvery.d.ts",
+        "default": "./dist/iterable-fest.iterableEvery.js"
+      }
+    },
+    "./iterableFilter": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableFilter.d.mts",
+        "default": "./dist/iterable-fest.iterableFilter.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableFilter.d.ts",
+        "default": "./dist/iterable-fest.iterableFilter.js"
+      }
+    },
+    "./iterableFind": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableFind.d.mts",
+        "default": "./dist/iterable-fest.iterableFind.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableFind.d.ts",
+        "default": "./dist/iterable-fest.iterableFind.js"
+      }
+    },
+    "./iterableFindIndex": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableFindIndex.d.mts",
+        "default": "./dist/iterable-fest.iterableFindIndex.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableFindIndex.d.ts",
+        "default": "./dist/iterable-fest.iterableFindIndex.js"
+      }
+    },
+    "./iterableFindLast": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableFindLast.d.mts",
+        "default": "./dist/iterable-fest.iterableFindLast.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableFindLast.d.ts",
+        "default": "./dist/iterable-fest.iterableFindLast.js"
+      }
+    },
+    "./iterableFindLastIndex": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableFindLastIndex.d.mts",
+        "default": "./dist/iterable-fest.iterableFindLastIndex.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableFindLastIndex.d.ts",
+        "default": "./dist/iterable-fest.iterableFindLastIndex.js"
+      }
+    },
+    "./iterableIncludes": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableIncludes.d.mts",
+        "default": "./dist/iterable-fest.iterableIncludes.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableIncludes.d.ts",
+        "default": "./dist/iterable-fest.iterableIncludes.js"
+      }
+    },
+    "./iterableIndexOf": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableIndexOf.d.mts",
+        "default": "./dist/iterable-fest.iterableIndexOf.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableIndexOf.d.ts",
+        "default": "./dist/iterable-fest.iterableIndexOf.js"
+      }
+    },
+    "./iterableReduce": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableReduce.d.mts",
+        "default": "./dist/iterable-fest.iterableReduce.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableReduce.d.ts",
+        "default": "./dist/iterable-fest.iterableReduce.js"
+      }
+    },
+    "./iterableSlice": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableSlice.d.mts",
+        "default": "./dist/iterable-fest.iterableSlice.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableSlice.d.ts",
+        "default": "./dist/iterable-fest.iterableSlice.js"
+      }
+    },
+    "./iterableSome": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableSome.d.mts",
+        "default": "./dist/iterable-fest.iterableSome.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableSome.d.ts",
+        "default": "./dist/iterable-fest.iterableSome.js"
+      }
+    },
+    ".": {
+      "import": {
+        "types": "./dist/iterable-fest.d.mts",
+        "default": "./dist/iterable-fest.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest.d.ts",
+        "default": "./dist/iterable-fest.js"
+      }
+    }
+  },
+  "main": "./dist/iterable-fest.js",
+  "typings": "./dist/iterable-fest.d.ts",
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
+    "bump:auditfix": "npm audit fix || exit 0",
+    "bump:dev": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.localPeerDependencies // {}) as $L | (.devDependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@latest\") | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
+    "bump:prod": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.localPeerDependencies // {}) as $L | (.dependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@latest\") | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
+    "precommit": "npm run precommit:eslint && npm run precommit:typescript:production && npm run precommit:typescript:test",
+    "precommit:eslint": "eslint ./src/",
+    "precommit:typescript:production": "tsc --noEmit --project ./src/tsconfig.precommit.production.json",
+    "precommit:typescript:test": "tsc --noEmit --project ./src/tsconfig.precommit.test.json",
+    "prepack": "cp ../../CHANGELOG.md . && cp ../../LICENSE . && cp ../../README.md .",
+    "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compulim/iterable-fest.git"
+  },
+  "keywords": [
+    "generator",
+    "iterable",
+    "iterator"
+  ],
+  "author": "William Wong (https://github.com/compulim)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/compulim/iterable-fest/issues"
+  },
+  "homepage": "https://github.com/compulim/iterable-fest#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.5",
+    "@babel/preset-typescript": "^7.24.1",
+    "@testing-library/react": "^14.2.2",
+    "@tsconfig/recommended": "^1.0.5",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.2",
+    "esbuild": "^0.20.2",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}

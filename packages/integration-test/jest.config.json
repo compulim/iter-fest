@@ -1,0 +1,20 @@
+{
+  "testMatch": ["**/__tests__/**/*.?([cm])[jt]s?(x)", "**/?(*.)+(spec|test).?([cm])[jt]s?(x)"],
+  "transform": {
+    "\\.(cjsx?|jsx?|mjsx?|ts)$": [
+      "babel-jest",
+      {
+        "presets": [
+          "@babel/preset-typescript",
+          [
+            "@babel/preset-env",
+            {
+              "modules": "commonjs",
+              "targets": "defaults"
+            }
+          ]
+        ]
+      }
+    ]
+  }
+}
