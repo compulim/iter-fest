@@ -97,7 +97,14 @@ Generator has more functionalities than iterator and array. It is not recommende
 
 ### What is on the roadmap?
 
-We are planning to bring iterables and alike together. This includes: `Iterable`/`AsyncIterable`, `Iterator`/`AsyncIterator`, `IterableIterator`/`AsyncIterableIterator`, `Generator`/`AsyncGenerator`, `ReadableStream`, and `Observable`.
+We are planning to bring iterables and alike together. This includes:
+
+- `Iterable`/`AsyncIterable`
+- `Iterator`/`AsyncIterator`
+- `IterableIterator`/`AsyncIterableIterator`
+- `Generator`/`AsyncGenerator`
+- `ReadableStream`
+- `Observable`
 
 ## Contributions
 
