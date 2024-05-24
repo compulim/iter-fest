@@ -99,10 +99,10 @@ Generator has more functionalities than iterator and array. It is not recommende
 
 We are planning to bring iterables and alikes together. This includes:
 
-- `Iterable`/`AsyncIterable`
-- `Iterator`/`AsyncIterator`
-- `IterableIterator`/`AsyncIterableIterator`
-- `Generator`/`AsyncGenerator`
+- `Iterable` and `AsyncIterable`
+- `Iterator` and `AsyncIterator`
+- `IterableIterator` and `AsyncIterableIterator`
+- `Generator` and `AsyncGenerator`
 - `ReadableStream`
 - `Observable`
 
