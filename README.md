@@ -53,7 +53,9 @@ for (const value of iterable) {
 
 ### Are there any differences between its counterparts in `Array.prototype`?
 
-Majority of functions should work exactly the same way, except below:
+Majority of functions should work similarly. If they were returning an array, they will be returning iterables in the ports.
+
+There are minor differences on some functions:
 
 - `findLast` and `findLastIndex`
   - Instead of iterating from the right side, iterables must start from left side
