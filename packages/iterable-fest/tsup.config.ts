@@ -14,6 +14,7 @@ export default defineConfig([
       'iterable-fest.iterableFindLastIndex': './src/iterableFindLastIndex.ts',
       'iterable-fest.iterableIncludes': './src/iterableIncludes.ts',
       'iterable-fest.iterableIndexOf': './src/iterableIndexOf.ts',
+      'iterable-fest.iterableJoin': './src/iterableJoin.ts',
       'iterable-fest.iterableReduce': './src/iterableReduce.ts',
       'iterable-fest.iterableSlice': './src/iterableSlice.ts',
       'iterable-fest.iterableSome': './src/iterableSome.ts'

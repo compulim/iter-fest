@@ -96,6 +96,16 @@
         "default": "./dist/iterable-fest.iterableIndexOf.js"
       }
     },
+    "./iterableJoin": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableJoin.d.mts",
+        "default": "./dist/iterable-fest.iterableJoin.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableJoin.d.ts",
+        "default": "./dist/iterable-fest.iterableJoin.js"
+      }
+    },
     "./iterableReduce": {
       "import": {
         "types": "./dist/iterable-fest.iterableReduce.d.mts",

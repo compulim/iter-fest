@@ -8,6 +8,7 @@ import {
   iterableFindLastIndex,
   iterableIncludes,
   iterableIndexOf,
+  iterableJoin,
   iterableReduce,
   iterableSlice,
   iterableSome
@@ -32,6 +33,8 @@ test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1,
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
 
 test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
+
+test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
 
 test('iterableReduce should work', () =>
   expect(iterableReduce([1, 2, 3].values(), (previousValue, currentValue) => previousValue + currentValue, 0)).toBe(6));
