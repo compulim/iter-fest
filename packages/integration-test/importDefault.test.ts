@@ -13,7 +13,8 @@ import {
   iterableReduce,
   iterableSlice,
   iterableSome,
-  iterableToSpliced
+  iterableToSpliced,
+  iterableToString
 } from 'iterable-fest';
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
@@ -49,3 +50,5 @@ test('iterableSome should work', () => expect(iterableSome([1, 2, 3].values(), v
 
 test('iterableToSpliced should work', () =>
   expect(Array.from(iterableToSpliced([1, 2, 3].values(), 1, 1, 9))).toEqual([1, 9, 3]));
+
+test('iterableToString should work', () => expect(iterableToString([1, 2, 3])).toBe('1,2,3'));

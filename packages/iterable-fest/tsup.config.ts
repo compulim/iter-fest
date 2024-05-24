@@ -19,7 +19,8 @@ export default defineConfig([
       'iterable-fest.iterableReduce': './src/iterableReduce.ts',
       'iterable-fest.iterableSlice': './src/iterableSlice.ts',
       'iterable-fest.iterableSome': './src/iterableSome.ts',
-      'iterable-fest.iterableToSpliced': './src/iterableToSpliced.ts'
+      'iterable-fest.iterableToSpliced': './src/iterableToSpliced.ts',
+      'iterable-fest.iterableToString': './src/iterableToString.ts'
     },
     format: ['cjs', 'esm'],
     sourcemap: true

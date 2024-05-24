@@ -13,6 +13,7 @@ import { iterableReduce } from './iterableReduce';
 import { iterableSlice } from './iterableSlice';
 import { iterableSome } from './iterableSome';
 import { iterableToSpliced } from './iterableToSpliced';
+import { iterableToString } from './iterableToString';
 
 export {
   iterableAt,
@@ -29,5 +30,6 @@ export {
   iterableReduce,
   iterableSlice,
   iterableSome,
-  iterableToSpliced
+  iterableToSpliced,
+  iterableToString
 };
