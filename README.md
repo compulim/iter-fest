@@ -1,10 +1,10 @@
 # `iter-fest`
 
-A collection of iterable utilities.
+A collection of utilities for iterations.
 
 ## Background
 
-Iterables become mainstream. However, traversing iterables are not as trivial as array.
+Iterators become mainstream. However, traversing iterables are not as trivial as array.
 
 In this package, we are porting majority of `Array.prototype.*` functions to work with iterables. We also added some utility functions to assist iterable, iterator, and generator.
 
@@ -33,7 +33,7 @@ List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at
 
 ### Converting an iterator to iterable
 
-`iteratorToIterable` converts a pure iterator into `IterableIterator` and enable for-loop iteration.
+`iteratorToIterable` converts a pure iterator to `IterableIterator` and enable for-loop iteration.
 
 ```ts
 const iterate = (): Iterator<number> => {
@@ -57,6 +57,12 @@ for (const value of iteratorToIterable(iterate())) {
 
 ## Behaviors
 
+### How this compares to the TC39 proposals?
+
+Always use the [TC39](https://github.com/tc39/proposal-iterator-helpers) [version](https://github.com/tc39/proposal-async-iterator-helpers) when they are available in your environment. We will deprecate duplicated features when the proposal is shipped.
+
+`iter-fest` also works with siblings of iterators such as `Generator`, [Streams](https://streams.spec.whatwg.org/) and `Observable`. `iter-fest` will evolve more around the whole iteration universe than focusing on `Iterator`.
+
 ### What are the differences between `Array.prototype` and their ports?
 
 Majority of functions should work the same way with same complexity and performance characteristics. If they return an array, in the port, they will be returning iterables instead.
@@ -67,10 +73,10 @@ There are minor differences on some functions:
   - Instead of iterating from the right side, iterables must start from left side
   - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times (`O(N)`)
   - In contrast, its counterpart in `Array` will be called between 1 and 5 times (`O(log N)`)
-- `includes` and `indexOf`
-  - `fromIndex` cannot be negative finite number
+- `at`, `includes`, `indexOf`, `slice`, and `toSpliced`
+  - Index arguments cannot be negative finite number
+    - Negative finite number means traversing from right side, which an iterator/iterable may not have an end
     - Infinites, zeroes, and positive numbers are supported
-    - This could be implemented with same complexity, we welcome pull requests
 
 ### Why `Array.prototype.push` is not ported?
 
