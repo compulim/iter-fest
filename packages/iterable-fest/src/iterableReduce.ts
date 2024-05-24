@@ -32,18 +32,18 @@ export function iterableReduce<T, U>(
 
 export function iterableReduce<T, U = undefined>(
   iterable: Iterable<T>,
-  callbackFn: (previousValue: U | undefined, currentValue: T, currentIndex: number, iterable: Iterable<T>) => U,
+  callbackfn: (previousValue: U | undefined, currentValue: T, currentIndex: number, iterable: Iterable<T>) => U,
   initialValue?: U
 ): U | undefined {
   let index = 0;
   let previousValue: U | undefined = initialValue;
 
-  if (typeof callbackFn !== 'function') {
-    throw new TypeError(`${callbackFn} is not a function`);
+  if (typeof callbackfn !== 'function') {
+    throw new TypeError(`${callbackfn} is not a function`);
   }
 
   for (const currentValue of iterable) {
-    previousValue = callbackFn(previousValue, currentValue, index++, iterable);
+    previousValue = callbackfn(previousValue, currentValue, index++, iterable);
   }
 
   return previousValue;
