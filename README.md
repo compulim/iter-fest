@@ -78,7 +78,7 @@ If you think a specific function should be done, please submit a pull request to
 
 ### How about asynchronous iterables?
 
-Yes, this is in our roadmap. This will enable traverse iterables [across domains/workers via `MessagePort`](https://npmjs.com/package/message-port-rpc). We welcome pull requests.
+Yes, this is on our roadmap. This will enable traverse iterables [across domains/workers via `MessagePort`](https://npmjs.com/package/message-port-rpc). We welcome pull requests.
 
 ### How about functions outside of `Array.prototype`?
 
