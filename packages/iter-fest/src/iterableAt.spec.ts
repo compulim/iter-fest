@@ -22,3 +22,6 @@ describe.each([
 
   test('should return same result', () => expect(iterableResult).toBe(arrayResult));
 });
+
+test('when passing fromIndex of -1 should throw TypeError', () =>
+  expect(() => iterableAt([], -1)).toThrow('index cannot be a negative finite number'));

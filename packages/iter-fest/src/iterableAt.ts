@@ -10,11 +10,17 @@ export function iterableAt<T>(iterable: Iterable<T>, index: number): T | undefin
 
   index = toIntegerOrInfinity(index);
 
-  if (index >= 0) {
-    for (const value of iterable) {
-      if (currentIndex++ === index) {
-        return value;
-      }
+  if (!isFinite(index)) {
+    return;
+  }
+
+  if (index < 0) {
+    throw new TypeError('index cannot be a negative finite number');
+  }
+
+  for (const value of iterable) {
+    if (currentIndex++ === index) {
+      return value;
     }
   }
 
