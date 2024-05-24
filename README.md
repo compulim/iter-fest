@@ -34,9 +34,10 @@ Majority of functions should work exactly the same way, except below:
 - `findLast` and `findLastIndex`
    - Instead of iterating from the right side, iterables must start from left side
    - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times
-   - In contrast, its counterpart in `Array` may be called 1-5 times
+   - In contrast, its counterpart in `Array` will be called between 1 and 5 times
 - `includes` and `indexOf`
-   - `fromIndex` cannot be negative finite number. Infinites, zeroes, and positive numbers are supported
+   - `fromIndex` cannot be negative finite number
+      - Infinites, zeroes, and positive numbers are supported
       - This could be implemented in an efficient way, we welcome pull requests
 
 ### Why not porting `Array.prototype.push`?
