@@ -92,7 +92,7 @@ Generator has more functionalities than iterator and array. It is not recommende
   - `return { done: true, value: 'the very last value' }`
   - Iterating generator using for-loop will never get the value from `{ done: true }`
 - Generator can receive feedback values from its iterator
-  - `iterator.next('something')` will be printed assigned via `const feedback = yield;`
+  - `generator.next('something')`, the feedback can be assigned to variable via `const feedback = yield;`
   - For-loop cannot send feedbacks to generator
 
 ## Contributions
