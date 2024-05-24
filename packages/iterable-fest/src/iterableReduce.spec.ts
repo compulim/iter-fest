@@ -38,6 +38,6 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
   test('should return same result', () => expect(iterableResult).toBe(arrayResult));
 });
 
-test('should throw TypeError when passing an invalid callbackFn', () =>
+test('should throw TypeError when passing an invalid callbackfn', () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(() => iterableReduce([], 0 as any)).toThrow('is not a function'));

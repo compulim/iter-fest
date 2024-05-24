@@ -9,6 +9,7 @@ const { iterableFindLastIndex } = require('iterable-fest/iterableFindLastIndex')
 const { iterableIncludes } = require('iterable-fest/iterableIncludes');
 const { iterableIndexOf } = require('iterable-fest/iterableIndexOf');
 const { iterableJoin } = require('iterable-fest/iterableJoin');
+const { iterableMap } = require('iterable-fest/iterableMap');
 const { iterableReduce } = require('iterable-fest/iterableReduce');
 const { iterableSlice } = require('iterable-fest/iterableSlice');
 const { iterableSome } = require('iterable-fest/iterableSome');
@@ -39,6 +40,9 @@ test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)
 test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
+
+test('iterableMap should work', () =>
+  expect(Array.from(iterableMap([1, 2, 3], value => `"${value}"`))).toEqual(['"1"', '"2"', '"3"']));
 
 test('iterableReduce should work', () =>
   expect(iterableReduce([1, 2, 3].values(), (previousValue, currentValue) => previousValue + currentValue, 0)).toBe(6));

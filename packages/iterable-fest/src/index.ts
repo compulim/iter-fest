@@ -9,6 +9,7 @@ import { iterableFindLastIndex } from './iterableFindLastIndex';
 import { iterableIncludes } from './iterableIncludes';
 import { iterableIndexOf } from './iterableIndexOf';
 import { iterableJoin } from './iterableJoin';
+import { iterableMap } from './iterableMap';
 import { iterableReduce } from './iterableReduce';
 import { iterableSlice } from './iterableSlice';
 import { iterableSome } from './iterableSome';
@@ -28,6 +29,7 @@ export {
   iterableIncludes,
   iterableIndexOf,
   iterableJoin,
+  iterableMap,
   iterableReduce,
   iterableSlice,
   iterableSome,
