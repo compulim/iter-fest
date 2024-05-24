@@ -57,7 +57,7 @@ for (const value of iteratorToIterable(iterate())) {
 
 ## Behaviors
 
-### What are the differences between `Array.prototype` and the ports?
+### What are the differences between `Array.prototype` and their ports?
 
 Majority of functions should work the same way with same complexity and performance characteristics. If they return an array, in the port, they will be returning iterables instead.
 
