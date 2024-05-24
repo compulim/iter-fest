@@ -4,9 +4,9 @@ A collection of iterable utilities.
 
 ## Background
 
-Iterables become more mainstream, however, traversing iterables are not as trivial as array.
+Iterables become mainstream. However, traversing iterables are not as trivial as array.
 
-In this package, we are building majority of `Array.prototype.*` functions to work with iterables.
+In this package, we are porting majority of `Array.prototype.*` functions to work with iterables. We also added some utility functions to assist iterable, iterator, and generator.
 
 ## How to use
 
@@ -31,7 +31,7 @@ console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 
 ### Converting an iterator to iterable
 
-`iteratorToIterable` can convert iterator and generator into `IterableIterator` and enable for-loop iteration on them.
+`iteratorToIterable` converts iterator and generator into `IterableIterator` and enable for-loop iteration.
 
 Iterating a generator is generally not recommended. Please read [this section](#does-this-work-on-generator) to avoid pitfalls when iterating a generator.
 
@@ -57,12 +57,12 @@ Majority of functions should work exactly the same way, except below:
 
 - `findLast` and `findLastIndex`
   - Instead of iterating from the right side, iterables must start from left side
-  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times
-  - In contrast, its counterpart in `Array` will be called between 1 and 5 times
+  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times (`O(N)`)
+  - In contrast, its counterpart in `Array` will be called between 1 and 5 times (`O(log N)`)
 - `includes` and `indexOf`
   - `fromIndex` cannot be negative finite number
     - Infinites, zeroes, and positive numbers are supported
-    - This could be implemented in an efficient way, we welcome pull requests
+    - This could be implemented with same complexity, we welcome pull requests
 
 ### Why not porting `Array.prototype.push`?
 
@@ -70,9 +70,9 @@ Some functions that modify the array are not brought over, for example, `copyWit
 
 Some functions that do not have actual functionality, such as, `entries`, `forEach`, `keys`, `values`, etc. are not ported.
 
-Some functions that requires iterating from the right side or random access are not brought over, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc. This is because iterables must always start from left side. We will not emulate right side iteration if they would take more than `O(n)`.
+Some functions that requires iterating from the right side or random access are not brought over, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc. This is because iterables must always start from left side. To avoid performance regressions, we generally do not port functions that their complexity would be increased.
 
-If you think a specific function could be done in an `O(n)` way, please submit a pull request to us.
+If you think a specific function should be done, please submit a pull request to us.
 
 ### How about asynchronous iterables?
 
