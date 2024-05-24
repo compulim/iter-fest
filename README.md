@@ -37,9 +37,11 @@ Majority of functions should work exactly the same way, except below:
 
 ### Why not porting `Array.prototype.push`?
 
-Some functions that modify the array are not brought over, for example, `fill`, `pop`, `push`, `reverse`, `shift`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
+Some functions that modify the array are not brought over, for example, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
 
-Some functions that works from the right side are not brought over, for example, `reduceRight`, etc. Iterables must always start from left side. Iterating from right side may not be efficient in some cases.
+Some functions that do not have actual functionality, such as, `entries`, `forEach`, `keys`, `values`, etc. are not ported.
+
+Some functions that requires iterating from the right side or random access are not brought over, for example, `reduceRight`, `sort`, `toReversed`, `toSorted`, `toSpliced`, etc. This is because iterables must always start from left side. And in majority cases, emulating right side iteration may not be efficient.
 
 If you think a specific function could be done in an efficient way, please submit a pull request to us.
 
