@@ -95,6 +95,10 @@ Generator has more functionalities than iterator and array. It is not recommende
   - `generator.next('something')`, the feedback can be assigned to variable via `const feedback = yield;`
   - For-loop cannot send feedbacks to generator
 
+### What is on the roadmap?
+
+We are planning to bring iterables and alike together. This includes: `Iterable`/`AsyncIterable`, `Iterator`/`AsyncIterator`, `IterableIterator`/`AsyncIterableIterator`, `Generator`/`AsyncGenerator`, `ReadableStream`, and `Observable`.
+
 ## Contributions
 
 Like us? [Star](https://github.com/compulim/iterable-fest/stargazers) us.
