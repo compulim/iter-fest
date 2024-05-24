@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       package-name:
-        default: iterable-fest
+        default: iter-fest
         description: Name of the package
         required: true
         type: string

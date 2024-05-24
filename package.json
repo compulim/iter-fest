@@ -1,12 +1,12 @@
 {
-  "name": "iterable-fest-root",
+  "name": "iter-fest-root",
   "version": "0.0.0-0",
   "description": "",
   "private": true,
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "workspaces": [
-    "packages/iterable-fest",
+    "packages/iter-fest",
     "packages/pages",
     "packages/integration-test"
   ],

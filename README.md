@@ -1,4 +1,4 @@
-# `iterable-fest`
+# `iter-fest`
 
 A collection of iterable utilities.
 
@@ -11,7 +11,7 @@ In this package, we are porting majority of `Array.prototype.*` functions to wor
 ## How to use
 
 ```sh
-npm install iterable-fest
+npm install iter-fest
 ```
 
 ### `Array.prototype` ports
@@ -19,8 +19,8 @@ npm install iterable-fest
 We ported majority of functions from `Array.prototype.*` to `iterable*`.
 
 ```ts
-import { iterableIncludes, iterableReduce } from 'iterable-fest'; // Via default exports.
-import { iterableSome } from 'iterable-fest/iterableSome'; // Via named exports.
+import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
+import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
 
 const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
 
@@ -122,8 +122,8 @@ We are planning to bring iterables and its siblings together, including:
 
 ## Contributions
 
-Like us? [Star](https://github.com/compulim/iterable-fest/stargazers) us.
+Like us? [Star](https://github.com/compulim/iter-fest/stargazers) us.
 
-Want to make it better? [File](https://github.com/compulim/iterable-fest/issues) us an issue.
+Want to make it better? [File](https://github.com/compulim/iter-fest/issues) us an issue.
 
-Don't like something you see? [Submit](https://github.com/compulim/iterable-fest/pulls) a pull request.
+Don't like something you see? [Submit](https://github.com/compulim/iter-fest/pulls) a pull request.

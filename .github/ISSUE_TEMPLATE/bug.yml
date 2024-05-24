@@ -15,7 +15,7 @@ body:
       description: |
         Please verify the issue on latest versions. Support on non-latest version is minimal and on a per case basis.
 
-        If you are using latest production, please verify against our latest development version as the issue could have been resolved recently. To install latest development version, run `npm install iterable-fest@main`.
+        If you are using latest production, please verify against our latest development version as the issue could have been resolved recently. To install latest development version, run `npm install iter-fest@main`.
 
       multiple: true
       options:
@@ -30,8 +30,8 @@ body:
       description: Please describe how you import our package.
       multiple: true
       options:
-        - 'ESM: import { someIterable } from "iterable-fest"'
-        - 'CommonJS: require("iterable-fest/someIterable")'
+        - 'ESM: import { someIterable } from "iter-fest"'
+        - 'CommonJS: require("iter-fest/someIterable")'
         - Others or unrelated
     validations:
       required: true
@@ -78,7 +78,7 @@ body:
         *Support will be slow or denied if a test case is not provided.*
       render: js
       value: |
-        import { iterableEvery } from 'iterable-fest';
+        import { iterableEvery } from 'iter-fest';
 
         test('iterableEvery should work', () => expect(iterableEvery([1, 2, 3].values(), value => value)).toBe(true));
   - type: input

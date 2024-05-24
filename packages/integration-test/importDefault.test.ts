@@ -20,7 +20,7 @@ import {
   iterableToSpliced,
   iterableToString,
   iteratorToIterable
-} from 'iterable-fest';
+} from 'iter-fest';
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 

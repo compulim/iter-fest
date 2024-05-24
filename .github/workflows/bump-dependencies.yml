@@ -11,4 +11,4 @@ jobs:
     secrets: inherit
     uses: compulim/workflows/.github/workflows/bump-dependencies.yml@main
     with:
-      package-name: iterable-fest
+      package-name: iter-fest

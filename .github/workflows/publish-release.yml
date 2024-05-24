@@ -13,5 +13,5 @@ jobs:
     secrets: inherit
     uses: compulim/workflows/.github/workflows/publish-release.yml@main
     with:
-      package-name: iterable-fest
+      package-name: iter-fest
       tag: ${{ github.ref_name }}

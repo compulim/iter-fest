@@ -1,5 +1,5 @@
 {
-  "name": "iterable-fest-pages",
+  "name": "iter-fest-pages",
   "version": "0.0.0-0",
   "description": "",
   "scripts": {
@@ -41,7 +41,7 @@
     }
   },
   "localPeerDependencies": {
-    "iterable-fest": "^0.0.0-0"
+    "iter-fest": "^0.0.0-0"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",
@@ -51,7 +51,7 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "iterable-fest": "^0.0.0-0",
+    "iter-fest": "^0.0.0-0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "use-ref-from": "^0.1.0"

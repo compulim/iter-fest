@@ -12,6 +12,6 @@ jobs:
         react-version: [current, 16, 17, 18]
     uses: compulim/workflows/.github/workflows/pull-request-validation.yml@main
     with:
-      package-name: iterable-fest
+      package-name: iter-fest
       react-version: ${{ matrix.react-version }}
       skip-integration-test: false

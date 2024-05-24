@@ -20,7 +20,7 @@ const {
   iterableToSpliced,
   iterableToString,
   iteratorToIterable
-} = require('iterable-fest');
+} = require('iter-fest');
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 

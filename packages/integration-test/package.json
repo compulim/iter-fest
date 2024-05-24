@@ -1,5 +1,5 @@
 {
-  "name": "iterable-fest-integration-test",
+  "name": "iter-fest-integration-test",
   "version": "0.0.0-0",
   "description": "",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "localPeerDependencies": {
-    "iterable-fest": "^0.0.0-0"
+    "iter-fest": "^0.0.0-0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.5",
@@ -25,6 +25,6 @@
     "jest-environment-jsdom": "^29.7.0"
   },
   "dependencies": {
-    "iterable-fest": "^0.0.0-0"
+    "iter-fest": "^0.0.0-0"
   }
 }
