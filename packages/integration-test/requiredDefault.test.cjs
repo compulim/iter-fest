@@ -44,7 +44,7 @@ test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
 
 test('iterableMap should work', () =>
-  expect(Array.from(iterableMap([1, 2, 3], value => `"${value}"`))).toEqual(['"1"', '"2"', '"3"']));
+  expect(Array.from(iterableMap([1, 2, 3], value => String.fromCharCode(value + 64)))).toEqual(['A', 'B', 'C']));
 
 test('iterableReduce should work', () =>
   expect(iterableReduce([1, 2, 3].values(), (previousValue, currentValue) => previousValue + currentValue, 0)).toBe(6));

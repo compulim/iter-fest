@@ -42,7 +42,7 @@ test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)
 test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 
 test('iterableMap should work', () =>
-  expect(Array.from(iterableMap([1, 2, 3], value => `"${value}"`))).toEqual(['"1"', '"2"', '"3"']));
+  expect(Array.from(iterableMap([1, 2, 3], value => String.fromCharCode(value + 64)))).toEqual(['A', 'B', 'C']));
 
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
 
