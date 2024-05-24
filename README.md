@@ -72,7 +72,7 @@ Some functions that modify the array are not ported, for example, `copyWithin`, 
 
 Some functions that do not have actual functionality in the iterable world are not ported, such as, `entries`, `forEach`, `keys`, `values`, etc.
 
-Some functions that do not retains their complexity or performance characteristics are not ported. These functions usually iterate from the other end or requires random access, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc.
+Some functions that cannot not retains their complexity or performance characteristics are not ported. These functions usually iterate from the other end or requires random access, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc.
 
 If you think a specific function should be done, please submit a pull request to us.
 
