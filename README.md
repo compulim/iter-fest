@@ -109,7 +109,7 @@ function transform<T>(iterable: Iterable<T>): IterableIterator<T>;
 
 ### What is on the roadmap?
 
-We are planning to bring iterables and alikes together. This includes:
+We are planning to bring iterables and its siblings together, including:
 
 - `Iterable` and `AsyncIterable`
 - `Iterator` and `AsyncIterator`
