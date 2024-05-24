@@ -41,9 +41,9 @@ Some functions that modify the array are not brought over, for example, `copyWit
 
 Some functions that do not have actual functionality, such as, `entries`, `forEach`, `keys`, `values`, etc. are not ported.
 
-Some functions that requires iterating from the right side or random access are not brought over, for example, `reduceRight`, `sort`, `toReversed`, `toSorted`, `toSpliced`, etc. This is because iterables must always start from left side. And in majority cases, emulating right side iteration may not be efficient.
+Some functions that requires iterating from the right side or random access are not brought over, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc. This is because iterables must always start from left side. We will not emulate right side iteration if they would take more than `O(n)`.
 
-If you think a specific function could be done in an efficient way, please submit a pull request to us.
+If you think a specific function could be done in an `O(n)` way, please submit a pull request to us.
 
 ### How about asynchronous iterables?
 
