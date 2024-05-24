@@ -26,6 +26,16 @@
         "default": "./dist/iterable-fest.iterableConcat.js"
       }
     },
+    "./iterableEntries": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableEntries.d.mts",
+        "default": "./dist/iterable-fest.iterableEntries.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableEntries.d.ts",
+        "default": "./dist/iterable-fest.iterableEntries.js"
+      }
+    },
     "./iterableEvery": {
       "import": {
         "types": "./dist/iterable-fest.iterableEvery.d.mts",
@@ -106,14 +116,14 @@
         "default": "./dist/iterable-fest.iterableIndexOf.js"
       }
     },
-    "./iterableMap": {
+    "./iterableKeys": {
       "import": {
-        "types": "./dist/iterable-fest.iterableMap.d.mts",
-        "default": "./dist/iterable-fest.iterableMap.mjs"
+        "types": "./dist/iterable-fest.iterableKeys.d.mts",
+        "default": "./dist/iterable-fest.iterableKeys.mjs"
       },
       "require": {
-        "types": "./dist/iterable-fest-iterableMap.d.ts",
-        "default": "./dist/iterable-fest.iterableMap.js"
+        "types": "./dist/iterable-fest-iterableKeys.d.ts",
+        "default": "./dist/iterable-fest.iterableKeys.js"
       }
     },
     "./iterableJoin": {
@@ -124,6 +134,16 @@
       "require": {
         "types": "./dist/iterable-fest-iterableJoin.d.ts",
         "default": "./dist/iterable-fest.iterableJoin.js"
+      }
+    },
+    "./iterableMap": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableMap.d.mts",
+        "default": "./dist/iterable-fest.iterableMap.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableMap.d.ts",
+        "default": "./dist/iterable-fest.iterableMap.js"
       }
     },
     "./iterableReduce": {

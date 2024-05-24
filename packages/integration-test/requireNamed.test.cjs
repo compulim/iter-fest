@@ -1,5 +1,6 @@
 const { iterableAt } = require('iterable-fest/iterableAt');
 const { iterableConcat } = require('iterable-fest/iterableConcat');
+const { iterableEntries } = require('iterable-fest/iterableEntries');
 const { iterableEvery } = require('iterable-fest/iterableEvery');
 const { iterableFilter } = require('iterable-fest/iterableFilter');
 const { iterableFind } = require('iterable-fest/iterableFind');
@@ -9,6 +10,7 @@ const { iterableFindLastIndex } = require('iterable-fest/iterableFindLastIndex')
 const { iterableIncludes } = require('iterable-fest/iterableIncludes');
 const { iterableIndexOf } = require('iterable-fest/iterableIndexOf');
 const { iterableJoin } = require('iterable-fest/iterableJoin');
+const { iterableKeys } = require('iterable-fest/iterableKeys');
 const { iterableMap } = require('iterable-fest/iterableMap');
 const { iterableReduce } = require('iterable-fest/iterableReduce');
 const { iterableSlice } = require('iterable-fest/iterableSlice');
@@ -21,6 +23,13 @@ test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).t
 
 test('iterableConcat should work', () =>
   expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
+
+test('iterableEntries should work', () =>
+  expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([
+    [0, 'A'],
+    [1, 'B'],
+    [2, 'C']
+  ]));
 
 test('iterableEvery should work', () => expect(iterableEvery([1, 2, 3].values(), value => value)).toBe(true));
 
@@ -40,6 +49,8 @@ test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)
 test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
+
+test('iterableKeys should work', () => expect(Array.from(iterableKeys(['A', 'B', 'C']))).toEqual([0, 1, 2]));
 
 test('iterableMap should work', () =>
   expect(Array.from(iterableMap([1, 2, 3], value => String.fromCharCode(value + 64)))).toEqual(['A', 'B', 'C']));

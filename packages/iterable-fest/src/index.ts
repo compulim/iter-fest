@@ -1,5 +1,6 @@
 import { iterableAt } from './iterableAt';
 import { iterableConcat } from './iterableConcat';
+import { iterableEntries } from './iterableEntries';
 import { iterableEvery } from './iterableEvery';
 import { iterableFilter } from './iterableFilter';
 import { iterableFind } from './iterableFind';
@@ -9,6 +10,7 @@ import { iterableFindLastIndex } from './iterableFindLastIndex';
 import { iterableIncludes } from './iterableIncludes';
 import { iterableIndexOf } from './iterableIndexOf';
 import { iterableJoin } from './iterableJoin';
+import { iterableKeys } from './iterableKeys';
 import { iterableMap } from './iterableMap';
 import { iterableReduce } from './iterableReduce';
 import { iterableSlice } from './iterableSlice';
@@ -20,6 +22,7 @@ import { iteratorToIterable } from './iteratorToIterable';
 export {
   iterableAt,
   iterableConcat,
+  iterableEntries,
   iterableEvery,
   iterableFilter,
   iterableFind,
@@ -29,6 +32,7 @@ export {
   iterableIncludes,
   iterableIndexOf,
   iterableJoin,
+  iterableKeys,
   iterableMap,
   iterableReduce,
   iterableSlice,
