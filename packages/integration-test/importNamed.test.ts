@@ -1,3 +1,4 @@
+import { iterableAt } from 'iterable-fest/iterableAt';
 import { iterableConcat } from 'iterable-fest/iterableConcat';
 import { iterableEvery } from 'iterable-fest/iterableEvery';
 import { iterableFilter } from 'iterable-fest/iterableFilter';
@@ -11,6 +12,8 @@ import { iterableJoin } from 'iterable-fest/iterableJoin';
 import { iterableReduce } from 'iterable-fest/iterableReduce';
 import { iterableSlice } from 'iterable-fest/iterableSlice';
 import { iterableSome } from 'iterable-fest/iterableSome';
+
+test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
 test('iterableConcat should work', () =>
   expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));

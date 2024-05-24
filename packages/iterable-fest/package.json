@@ -6,6 +6,16 @@
     "./dist/"
   ],
   "exports": {
+    "./iterableAt": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableAt.d.mts",
+        "default": "./dist/iterable-fest.iterableAt.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableAt.d.ts",
+        "default": "./dist/iterable-fest.iterableAt.js"
+      }
+    },
     "./iterableConcat": {
       "import": {
         "types": "./dist/iterable-fest.iterableConcat.d.mts",

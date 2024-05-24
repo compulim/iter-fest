@@ -1,3 +1,4 @@
+import { iterableAt } from './iterableAt';
 import { iterableConcat } from './iterableConcat';
 import { iterableEvery } from './iterableEvery';
 import { iterableFilter } from './iterableFilter';
@@ -13,6 +14,7 @@ import { iterableSlice } from './iterableSlice';
 import { iterableSome } from './iterableSome';
 
 export {
+  iterableAt,
   iterableConcat,
   iterableEvery,
   iterableFilter,

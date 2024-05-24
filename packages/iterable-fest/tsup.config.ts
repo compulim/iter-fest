@@ -5,6 +5,7 @@ export default defineConfig([
     dts: true,
     entry: {
       'iterable-fest': './src/index.ts',
+      'iterable-fest.iterableAt': './src/iterableAt.ts',
       'iterable-fest.iterableConcat': './src/iterableConcat.ts',
       'iterable-fest.iterableEvery': './src/iterableEvery.ts',
       'iterable-fest.iterableFilter': './src/iterableFilter.ts',

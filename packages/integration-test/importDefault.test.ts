@@ -1,4 +1,5 @@
 import {
+  iterableAt,
   iterableConcat,
   iterableEvery,
   iterableFilter,
@@ -13,6 +14,8 @@ import {
   iterableSlice,
   iterableSome
 } from 'iterable-fest';
+
+test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
 test('iterableConcat should work', () =>
   expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));

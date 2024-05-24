@@ -1,3 +1,4 @@
+const { iterableAt } = require('iterable-fest/iterableAt');
 const { iterableConcat } = require('iterable-fest/iterableConcat');
 const { iterableEvery } = require('iterable-fest/iterableEvery');
 const { iterableFilter } = require('iterable-fest/iterableFilter');
@@ -11,6 +12,8 @@ const { iterableJoin } = require('iterable-fest/iterableJoin');
 const { iterableReduce } = require('iterable-fest/iterableReduce');
 const { iterableSlice } = require('iterable-fest/iterableSlice');
 const { iterableSome } = require('iterable-fest/iterableSome');
+
+test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
 test('iterableConcat should work', () =>
   expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
