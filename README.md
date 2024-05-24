@@ -8,6 +8,8 @@ Iterators become mainstream. However, traversing iterables are not as trivial as
 
 In this package, we are porting majority of `Array.prototype.*` functions to work with iterables. We also added some utility functions to assist iterable, iterator, and generator.
 
+Iterables can contains infinite number of items, please use this package responsibly.
+
 ## How to use
 
 ```sh
@@ -61,7 +63,7 @@ for (const value of iteratorToIterable(iterate())) {
 
 Always use the [TC39](https://github.com/tc39/proposal-iterator-helpers) [version](https://github.com/tc39/proposal-async-iterator-helpers) when they are available in your environment. We will deprecate duplicated features when the proposal is shipped.
 
-`iter-fest` also works with siblings of iterators such as `Generator`, [Streams](https://streams.spec.whatwg.org/) and `Observable`. `iter-fest` will evolve more around the whole iteration universe than focusing on `Iterator`.
+`iter-fest` also works with siblings of iterators such as `Generator`, [Streams](https://streams.spec.whatwg.org/) and `Observable`. `iter-fest` will evolve more around the whole iteration universe than focusing on `Iterator` alone.
 
 ### What are the differences between `Array.prototype` and their ports?
 
@@ -71,8 +73,8 @@ There are minor differences on some functions:
 
 - `findLast` and `findLastIndex`
   - Instead of iterating from the right side, iterables must start from left side
-  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times (`O(N)`)
-  - In contrast, its counterpart in `Array` will be called between 1 and 5 times (`O(log N)`)
+  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times with `O(N)` complexity
+  - In contrast, its counterpart in `Array` will be called between 1 and 5 times with `O(log N)` complexity
 - `at`, `includes`, `indexOf`, `slice`, and `toSpliced`
   - Index arguments cannot be negative finite number
     - Negative finite number means traversing from right side, which an iterator/iterable may not have an end
@@ -94,7 +96,7 @@ Yes, this is on our roadmap. This will enable traverse iterables [across domains
 
 ### How about functions outside of `Array.prototype`?
 
-Maybe. Please submit an issue and discuss with us.
+Possibly. Please submit an issue and discuss with us.
 
 ### Does this work on generator?
 
