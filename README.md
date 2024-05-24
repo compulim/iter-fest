@@ -58,6 +58,17 @@ Yes, this is in our roadmap. This will enable traverse iterables [across domains
 
 Maybe. Please submit an issue and discuss with us.
 
+### Does this work on generator?
+
+Generator has more functionalities than iterator and array. It is not recommended to iterate a generator for some reasons:
+
+- Generator can define the return value (the very last value)
+   - `return { done: true, value: 'the very last value' }`
+   - Iterating generator using for-loop will never get the value from `{ done: true }`
+- Generator can receive feedback values from its iterator
+   - `iterator.next('something')` will be printed assigned via `const feedback = yield;`
+   - For-loop cannot send feedbacks to generator
+
 ## Contributions
 
 Like us? [Star](https://github.com/compulim/iterable-fest/stargazers) us.
