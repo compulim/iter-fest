@@ -14,6 +14,10 @@ In this package, we are building majority of `Array.prototype.*` functions to wo
 npm install iterable-fest
 ```
 
+### `Array.prototype` ports
+
+We ported majority of functions of `Array.prototype.*` to `iterable*`.
+
 ```ts
 import { iterableIncludes, iterableReduce } from 'iterable-fest'; // Via default exports.
 import { iterableSome } from 'iterable-fest/iterableSome'; // Via named exports.
@@ -25,6 +29,26 @@ console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints
 console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 ```
 
+### Converting an iterator to iterable
+
+If you have an iterator or generator, you can use `iteratorToIterable` to convert it into `IterableIterator`.
+
+Iterating a generator is generally not recommended. Please read [this section](#does-this-work-on-generator) to avoid pitfalls when iterating a generator.
+
+```ts
+const generateNumbers = function* () {
+  yield 1;
+  yield 2;
+  yield 3;
+};
+
+const iterable = iteratorToIterable(generateNumbers());
+
+for (const value of iterable) {
+  console.log(value); // Prints "1", "2", "3".
+}
+```
+
 ## Behaviors
 
 ### Are there any differences between its counterparts in `Array.prototype`?
@@ -32,13 +56,13 @@ console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 Majority of functions should work exactly the same way, except below:
 
 - `findLast` and `findLastIndex`
-   - Instead of iterating from the right side, iterables must start from left side
-   - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times
-   - In contrast, its counterpart in `Array` will be called between 1 and 5 times
+  - Instead of iterating from the right side, iterables must start from left side
+  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times
+  - In contrast, its counterpart in `Array` will be called between 1 and 5 times
 - `includes` and `indexOf`
-   - `fromIndex` cannot be negative finite number
-      - Infinites, zeroes, and positive numbers are supported
-      - This could be implemented in an efficient way, we welcome pull requests
+  - `fromIndex` cannot be negative finite number
+    - Infinites, zeroes, and positive numbers are supported
+    - This could be implemented in an efficient way, we welcome pull requests
 
 ### Why not porting `Array.prototype.push`?
 
@@ -63,11 +87,11 @@ Maybe. Please submit an issue and discuss with us.
 Generator has more functionalities than iterator and array. It is not recommended to iterate a generator for some reasons:
 
 - Generator can define the return value (the very last value)
-   - `return { done: true, value: 'the very last value' }`
-   - Iterating generator using for-loop will never get the value from `{ done: true }`
+  - `return { done: true, value: 'the very last value' }`
+  - Iterating generator using for-loop will never get the value from `{ done: true }`
 - Generator can receive feedback values from its iterator
-   - `iterator.next('something')` will be printed assigned via `const feedback = yield;`
-   - For-loop cannot send feedbacks to generator
+  - `iterator.next('something')` will be printed assigned via `const feedback = yield;`
+  - For-loop cannot send feedbacks to generator
 
 ## Contributions
 
