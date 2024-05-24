@@ -68,11 +68,11 @@ There are minor differences on some functions:
 
 ### Why not porting `Array.prototype.push`?
 
-Some functions that modify the array are not brought over, for example, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
+Some functions that modify the array are not ported, for example, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
 
-Some functions that do not have actual functionality, such as, `entries`, `forEach`, `keys`, `values`, etc. are not ported.
+Some functions that do not have actual functionality in the iterable world are not ported, such as, `entries`, `forEach`, `keys`, `values`, etc.
 
-Some functions that requires iterating from the right side or random access are not brought over, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc. This is because iterables must always start from left side. To avoid performance regressions, we generally do not port functions that their complexity would be increased.
+Some functions that do not retains their complexity or performance characteristics are not ported. These functions usually iterate from the other end or requires random access, for example, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc.
 
 If you think a specific function should be done, please submit a pull request to us.
 
