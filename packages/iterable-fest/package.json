@@ -146,6 +146,16 @@
         "default": "./dist/iterable-fest.iterableSome.js"
       }
     },
+    "./iterableToSpliced": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableToSpliced.d.mts",
+        "default": "./dist/iterable-fest.iterableToSpliced.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableToSpliced.d.ts",
+        "default": "./dist/iterable-fest.iterableToSpliced.js"
+      }
+    },
     ".": {
       "import": {
         "types": "./dist/iterable-fest.d.mts",

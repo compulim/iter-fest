@@ -1,6 +1,9 @@
 import { iterableSlice } from './iterableSlice';
 
 describe.each([
+  [[1, 2, 3, 4, 5], undefined, 1],
+  [[1, 2, 3, 4, 5], 1, undefined],
+  [[1, 2, 3, 4, 5], undefined, undefined],
   [[1, 2, 3, 4, 5], 1, 1],
   [[1, 2, 3, 4, 5], 1, 3],
   [[1, 2, 3, 4, 5], 3, 1],
