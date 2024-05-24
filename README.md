@@ -101,10 +101,10 @@ Generator has more functionalities than iterator and array. It is not recommende
 
 ### When should I use `Iterable`, `IterableIterator` and `Iterator`?
 
-For best compatibility, you should generally follow this pattern. `Iterable` for inputs, and `IterableIterator` for outputs. You should rarely use pure `Iterator`.
+For best compatibility, you should generally follow this API signature: use `Iterable` for inputs, and use `IterableIterator` for outputs. You should rarely use pure `Iterator`.
 
 ```ts
-function transform(iterable: Iterable<T>): IterableIterator<T>;
+function transform<T>(iterable: Iterable<T>): IterableIterator<T>;
 ```
 
 ### What is on the roadmap?
