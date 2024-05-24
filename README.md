@@ -16,7 +16,7 @@ npm install iterable-fest
 
 ### `Array.prototype` ports
 
-We ported majority of functions of `Array.prototype.*` to `iterable*`.
+We ported majority of functions from `Array.prototype.*` to `iterable*`.
 
 ```ts
 import { iterableIncludes, iterableReduce } from 'iterable-fest'; // Via default exports.
@@ -31,7 +31,7 @@ console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 
 ### Converting an iterator to iterable
 
-If you have an iterator or generator, you can use `iteratorToIterable` to convert it into `IterableIterator`.
+`iteratorToIterable` can convert iterator and generator into `IterableIterator` and enable for-loop iteration on them.
 
 Iterating a generator is generally not recommended. Please read [this section](#does-this-work-on-generator) to avoid pitfalls when iterating a generator.
 
