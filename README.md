@@ -53,7 +53,7 @@ for (const value of iterable) {
 
 ### Are there any differences between its counterparts in `Array.prototype`?
 
-Majority of functions should work similarly. If they were returning an array, they will be returning iterables in the ports.
+Majority of functions should work similarly. If they return an array, in the port, they will be returning iterables instead.
 
 There are minor differences on some functions:
 
