@@ -66,7 +66,7 @@ There are minor differences on some functions:
     - Infinites, zeroes, and positive numbers are supported
     - This could be implemented with same complexity, we welcome pull requests
 
-### Why not porting `Array.prototype.push`?
+### Why `Array.prototype.push` is not ported?
 
 Some functions that modify the array are not ported, such as, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
 
