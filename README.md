@@ -99,6 +99,14 @@ Generator has more functionalities than iterator and array. It is not recommende
   - `generator.next('something')`, the feedback can be assigned to variable via `const feedback = yield;`
   - For-loop cannot send feedbacks to generator
 
+### When should I use `Iterable`, `IterableIterator` and `Iterator`?
+
+For best compatibility, you should generally follow this pattern. `Iterable` for inputs, and `IterableIterator` for outputs. You should rarely use pure `Iterator`.
+
+```ts
+function transform(iterable: Iterable<T>): IterableIterator<T>;
+```
+
 ### What is on the roadmap?
 
 We are planning to bring iterables and alikes together. This includes:
