@@ -8,6 +8,7 @@ const {
   iterableFindIndex,
   iterableFindLast,
   iterableFindLastIndex,
+  iterableForEach,
   iterableIncludes,
   iterableIndexOf,
   iterableJoin,
@@ -45,6 +46,14 @@ test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], 
 test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
 
 test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
+
+test('iterableForEach should work', () => {
+  const callbackfn = jest.fn();
+
+  iterableForEach([1, 2, 3], callbackfn);
+
+  expect(callbackfn).toHaveBeenCalledTimes(3);
+});
 
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
 

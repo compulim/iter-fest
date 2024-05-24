@@ -7,6 +7,7 @@ import { iterableFind } from 'iterable-fest/iterableFind';
 import { iterableFindIndex } from 'iterable-fest/iterableFindIndex';
 import { iterableFindLast } from 'iterable-fest/iterableFindLast';
 import { iterableFindLastIndex } from 'iterable-fest/iterableFindLastIndex';
+import { iterableForEach } from 'iterable-fest/iterableForEach';
 import { iterableIncludes } from 'iterable-fest/iterableIncludes';
 import { iterableIndexOf } from 'iterable-fest/iterableIndexOf';
 import { iterableJoin } from 'iterable-fest/iterableJoin';
@@ -24,7 +25,12 @@ test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).t
 test('iterableConcat should work', () =>
   expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
 
-test('iterableEntries should work', () => expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([[0, 'A'], [1, 'B'], [2, 'C']]));
+test('iterableEntries should work', () =>
+  expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([
+    [0, 'A'],
+    [1, 'B'],
+    [2, 'C']
+  ]));
 
 test('iterableEvery should work', () => expect(iterableEvery([1, 2, 3].values(), value => value)).toBe(true));
 
@@ -38,6 +44,14 @@ test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], 
 test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
 
 test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
+
+test('iterableForEach should work', () => {
+  const callbackfn = jest.fn();
+
+  iterableForEach([1, 2, 3], callbackfn);
+
+  expect(callbackfn).toHaveBeenCalledTimes(3);
+});
 
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
 

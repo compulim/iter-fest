@@ -7,6 +7,7 @@ const { iterableFind } = require('iterable-fest/iterableFind');
 const { iterableFindIndex } = require('iterable-fest/iterableFindIndex');
 const { iterableFindLast } = require('iterable-fest/iterableFindLast');
 const { iterableFindLastIndex } = require('iterable-fest/iterableFindLastIndex');
+const { iterableForEach } = require('iterable-fest/iterableForEach');
 const { iterableIncludes } = require('iterable-fest/iterableIncludes');
 const { iterableIndexOf } = require('iterable-fest/iterableIndexOf');
 const { iterableJoin } = require('iterable-fest/iterableJoin');
@@ -43,6 +44,14 @@ test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], 
 test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
 
 test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
+
+test('iterableForEach should work', () => {
+  const callbackfn = jest.fn();
+
+  iterableForEach([1, 2, 3], callbackfn);
+
+  expect(callbackfn).toHaveBeenCalledTimes(3);
+});
 
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
 

@@ -96,6 +96,16 @@
         "default": "./dist/iterable-fest.iterableFindLastIndex.js"
       }
     },
+    "./iterableForEach": {
+      "import": {
+        "types": "./dist/iterable-fest.iterableForEach.d.mts",
+        "default": "./dist/iterable-fest.iterableForEach.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iterableForEach.d.ts",
+        "default": "./dist/iterable-fest.iterableForEach.js"
+      }
+    },
     "./iterableIncludes": {
       "import": {
         "types": "./dist/iterable-fest.iterableIncludes.d.mts",
