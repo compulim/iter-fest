@@ -1,7 +1,7 @@
 {
   "name": "iter-fest",
   "version": "0.0.0-0",
-  "description": "A collection of iterable utilities.",
+  "description": "A collection of utilities for iterations.",
   "files": [
     "./dist/"
   ],
