@@ -14,6 +14,7 @@ import { iterableSlice } from './iterableSlice';
 import { iterableSome } from './iterableSome';
 import { iterableToSpliced } from './iterableToSpliced';
 import { iterableToString } from './iterableToString';
+import { iteratorToIterable } from './iteratorToIterable';
 
 export {
   iterableAt,
@@ -31,5 +32,6 @@ export {
   iterableSlice,
   iterableSome,
   iterableToSpliced,
-  iterableToString
+  iterableToString,
+  iteratorToIterable
 };

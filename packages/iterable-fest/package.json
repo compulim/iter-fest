@@ -166,6 +166,16 @@
         "default": "./dist/iterable-fest.iterableToString.js"
       }
     },
+    "./iteratorToIterable": {
+      "import": {
+        "types": "./dist/iterable-fest.iteratorToIterable.d.mts",
+        "default": "./dist/iterable-fest.iteratorToIterable.mjs"
+      },
+      "require": {
+        "types": "./dist/iterable-fest-iteratorToIterable.d.ts",
+        "default": "./dist/iterable-fest.iteratorToIterable.js"
+      }
+    },
     ".": {
       "import": {
         "types": "./dist/iterable-fest.d.mts",
