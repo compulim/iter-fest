@@ -12,7 +12,7 @@
         "default": "./dist/iter-fest.iterableAt.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableAt.d.ts",
+        "types": "./dist/iter-fest.iterableAt.d.ts",
         "default": "./dist/iter-fest.iterableAt.js"
       }
     },
@@ -22,7 +22,7 @@
         "default": "./dist/iter-fest.iterableConcat.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableConcat.d.ts",
+        "types": "./dist/iter-fest.iterableConcat.d.ts",
         "default": "./dist/iter-fest.iterableConcat.js"
       }
     },
@@ -32,7 +32,7 @@
         "default": "./dist/iter-fest.iterableEntries.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableEntries.d.ts",
+        "types": "./dist/iter-fest.iterableEntries.d.ts",
         "default": "./dist/iter-fest.iterableEntries.js"
       }
     },
@@ -42,7 +42,7 @@
         "default": "./dist/iter-fest.iterableEvery.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableEvery.d.ts",
+        "types": "./dist/iter-fest.iterableEvery.d.ts",
         "default": "./dist/iter-fest.iterableEvery.js"
       }
     },
@@ -52,7 +52,7 @@
         "default": "./dist/iter-fest.iterableFilter.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableFilter.d.ts",
+        "types": "./dist/iter-fest.iterableFilter.d.ts",
         "default": "./dist/iter-fest.iterableFilter.js"
       }
     },
@@ -62,7 +62,7 @@
         "default": "./dist/iter-fest.iterableFind.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableFind.d.ts",
+        "types": "./dist/iter-fest.iterableFind.d.ts",
         "default": "./dist/iter-fest.iterableFind.js"
       }
     },
@@ -72,7 +72,7 @@
         "default": "./dist/iter-fest.iterableFindIndex.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableFindIndex.d.ts",
+        "types": "./dist/iter-fest.iterableFindIndex.d.ts",
         "default": "./dist/iter-fest.iterableFindIndex.js"
       }
     },
@@ -82,7 +82,7 @@
         "default": "./dist/iter-fest.iterableFindLast.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableFindLast.d.ts",
+        "types": "./dist/iter-fest.iterableFindLast.d.ts",
         "default": "./dist/iter-fest.iterableFindLast.js"
       }
     },
@@ -92,7 +92,7 @@
         "default": "./dist/iter-fest.iterableFindLastIndex.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableFindLastIndex.d.ts",
+        "types": "./dist/iter-fest.iterableFindLastIndex.d.ts",
         "default": "./dist/iter-fest.iterableFindLastIndex.js"
       }
     },
@@ -102,7 +102,7 @@
         "default": "./dist/iter-fest.iterableForEach.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableForEach.d.ts",
+        "types": "./dist/iter-fest.iterableForEach.d.ts",
         "default": "./dist/iter-fest.iterableForEach.js"
       }
     },
@@ -112,7 +112,7 @@
         "default": "./dist/iter-fest.iterableIncludes.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableIncludes.d.ts",
+        "types": "./dist/iter-fest.iterableIncludes.d.ts",
         "default": "./dist/iter-fest.iterableIncludes.js"
       }
     },
@@ -122,7 +122,7 @@
         "default": "./dist/iter-fest.iterableIndexOf.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableIndexOf.d.ts",
+        "types": "./dist/iter-fest.iterableIndexOf.d.ts",
         "default": "./dist/iter-fest.iterableIndexOf.js"
       }
     },
@@ -132,7 +132,7 @@
         "default": "./dist/iter-fest.iterableKeys.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableKeys.d.ts",
+        "types": "./dist/iter-fest.iterableKeys.d.ts",
         "default": "./dist/iter-fest.iterableKeys.js"
       }
     },
@@ -142,7 +142,7 @@
         "default": "./dist/iter-fest.iterableJoin.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableJoin.d.ts",
+        "types": "./dist/iter-fest.iterableJoin.d.ts",
         "default": "./dist/iter-fest.iterableJoin.js"
       }
     },
@@ -152,7 +152,7 @@
         "default": "./dist/iter-fest.iterableMap.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableMap.d.ts",
+        "types": "./dist/iter-fest.iterableMap.d.ts",
         "default": "./dist/iter-fest.iterableMap.js"
       }
     },
@@ -162,7 +162,7 @@
         "default": "./dist/iter-fest.iterableReduce.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableReduce.d.ts",
+        "types": "./dist/iter-fest.iterableReduce.d.ts",
         "default": "./dist/iter-fest.iterableReduce.js"
       }
     },
@@ -172,7 +172,7 @@
         "default": "./dist/iter-fest.iterableSlice.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableSlice.d.ts",
+        "types": "./dist/iter-fest.iterableSlice.d.ts",
         "default": "./dist/iter-fest.iterableSlice.js"
       }
     },
@@ -182,7 +182,7 @@
         "default": "./dist/iter-fest.iterableSome.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableSome.d.ts",
+        "types": "./dist/iter-fest.iterableSome.d.ts",
         "default": "./dist/iter-fest.iterableSome.js"
       }
     },
@@ -192,7 +192,7 @@
         "default": "./dist/iter-fest.iterableToSpliced.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableToSpliced.d.ts",
+        "types": "./dist/iter-fest.iterableToSpliced.d.ts",
         "default": "./dist/iter-fest.iterableToSpliced.js"
       }
     },
@@ -202,7 +202,7 @@
         "default": "./dist/iter-fest.iterableToString.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iterableToString.d.ts",
+        "types": "./dist/iter-fest.iterableToString.d.ts",
         "default": "./dist/iter-fest.iterableToString.js"
       }
     },
@@ -212,7 +212,7 @@
         "default": "./dist/iter-fest.iteratorToIterable.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest-iteratorToIterable.d.ts",
+        "types": "./dist/iter-fest.iteratorToIterable.d.ts",
         "default": "./dist/iter-fest.iteratorToIterable.js"
       }
     },
