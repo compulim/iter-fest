@@ -80,10 +80,10 @@ test('iteratorToIterable should work', () =>
   expect(
     Array.from(
       iteratorToIterable(
-        (function* () {
-          yield 1;
-          yield 2;
-          yield 3;
+        ((): Iterator<number> => {
+          let value = 0;
+
+          return { next: () => (++value <= 3 ? { done: false, value } : { done: true, value: undefined }) };
         })()
       )
     )

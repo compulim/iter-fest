@@ -31,20 +31,24 @@ console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 
 ### Converting an iterator to iterable
 
-`iteratorToIterable` converts iterator and generator into `IterableIterator` and enable for-loop iteration.
-
-Iterating a generator is generally not recommended. Please read [this section](#does-this-work-on-generator) to avoid pitfalls when iterating a generator.
+`iteratorToIterable` converts a pure iterator into `IterableIterator` and enable for-loop iteration.
 
 ```ts
-const generateNumbers = function* () {
-  yield 1;
-  yield 2;
-  yield 3;
+const iterate = (): Iterator<number> => {
+  let value = 0;
+
+  return {
+    next: () => {
+      if (++value <= 3) {
+        return { done: false, value };
+      }
+
+      return { done: true, value: undefined };
+    }
+  };
 };
 
-const iterable = iteratorToIterable(generateNumbers());
-
-for (const value of iterable) {
+for (const value of iteratorToIterable(iterate())) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
