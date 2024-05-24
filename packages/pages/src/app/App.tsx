@@ -1,5 +1,3 @@
-import './AutoResizeTextArea.css';
-
 import React from 'react';
 
 const App = () => {
