@@ -10,6 +10,10 @@ In this package, we are building majority of `Array.prototype.*` functions to wo
 
 ## How to use
 
+```sh
+npm install iterable-fest
+```
+
 ```ts
 import { iterableIncludes, iterableReduce } from 'iterable-fest'; // Via default exports.
 import { iterableSome } from 'iterable-fest/iterableSome'; // Via named exports.
