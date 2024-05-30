@@ -9,11 +9,9 @@ jobs:
   call-workflow:
     strategy:
       matrix:
-        node-version: [20.x]
-        switch: [current]
+        switch: [current, react-16, react-17, react-18]
     uses: compulim/workflows/.github/workflows/pull-request-validation.yml@main
     with:
-      node-version: ${{ matrix.node-version }}
       package-name: iter-fest
       skip-integration-test: false
       switch: ${{ matrix.switch }}
