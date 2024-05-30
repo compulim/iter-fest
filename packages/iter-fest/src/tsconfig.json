@@ -2,10 +2,12 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "target": "ESNext"
   },
   "extends": "@tsconfig/strictest/tsconfig.json"
 }
