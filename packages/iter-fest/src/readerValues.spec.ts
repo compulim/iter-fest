@@ -136,3 +136,25 @@ test('throw in for-loop should cancel', async () => {
 
   expect(cancel).toHaveBeenCalledTimes(1);
 });
+
+test('pull-based reader', async () => {
+  let index = 0;
+
+  const readableStream = new ReadableStream({
+    pull(controller) {
+      controller.enqueue(++index);
+
+      if (index >= 2) {
+        controller.close();
+      }
+    }
+  });
+
+  const values: number[] = [];
+
+  for await (const value of readerValues(readableStream.getReader())) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2]);
+});
