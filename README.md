@@ -35,12 +35,12 @@ List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at
 
 ## Conversions
 
-| From                          | To                      | Function signature                                                                                                                              |
-| ----------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                      |
-| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                 |
-| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerToAsyncIterableIterator`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#iterating-readablestreamdefaultreader) |
-| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterator: AsyncIterableIterator<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                       |
+| From                          | To                      | Function signature                                                                                                              |
+| ----------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                      |
+| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream) |
+| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerValues`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#iterating-readablestreamdefaultreader)  |
+| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterator: AsyncIterableIterator<T>): Observable<T>`](#converting-an-asynciterable-to-observable)       |
 
 To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as intermediate format](#converting-an-observable-to-asynciterableiterator).
 
@@ -78,7 +78,7 @@ Note: `Observable` is push-based and it does not support flow control. When conv
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
 
-for await (const value of readerToAsyncIterableIterator(readable.getReader())) {
+for await (const value of readerValues(readable.getReader())) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
@@ -118,18 +118,21 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 
 ### Iterating `ReadableStreamDefaultReader`
 
-`readerToAsyncIterableIterator` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
+`readerValues` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
 
 ```ts
 const readableStream = new ReadableStream({
   start(controller) {
     controller.enqueue(1);
     controller.enqueue(2);
+  },
+  pull(controller) {
+    controller.enqueue(3);
     controller.close();
   }
 });
 
-for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
+for await (const value of readerValues(readableStream.getReader())) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
