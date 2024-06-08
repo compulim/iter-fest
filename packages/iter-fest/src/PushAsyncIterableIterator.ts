@@ -3,6 +3,7 @@ import withResolvers from './private/withResolvers';
 const CLOSE = Symbol('close');
 
 export class PushAsyncIterableIterator<T> implements AsyncIterableIterator<T> {
+  #closed: boolean = false;
   #pushResolvers: PromiseWithResolvers<T | typeof CLOSE> = withResolvers();
 
   [Symbol.asyncIterator]() {
@@ -10,6 +11,7 @@ export class PushAsyncIterableIterator<T> implements AsyncIterableIterator<T> {
   }
 
   close() {
+    this.#closed = true;
     this.#pushResolvers.resolve(CLOSE);
   }
 
@@ -24,7 +26,9 @@ export class PushAsyncIterableIterator<T> implements AsyncIterableIterator<T> {
   }
 
   push(value: T) {
-    this.#pushResolvers.resolve(value);
-    this.#pushResolvers = withResolvers();
+    if (!this.#closed) {
+      this.#pushResolvers.resolve(value);
+      this.#pushResolvers = withResolvers();
+    }
   }
 }

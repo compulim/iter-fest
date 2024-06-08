@@ -41,3 +41,13 @@ describe('comprehensive', () => {
     test('should completed the for-loop', () => expect(done).toHaveBeenCalledTimes(1));
   });
 });
+
+test('push after close should close the iterable', async () => {
+  const iterable = new PushAsyncIterableIterator();
+
+  iterable.close();
+  await expect(iterable.next()).resolves.toEqual({ done: true, value: undefined });
+
+  iterable.push(1);
+  await expect(iterable.next()).resolves.toEqual({ done: true, value: undefined });
+});
