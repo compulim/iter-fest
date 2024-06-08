@@ -141,6 +141,8 @@ for await (const value of readerToAsyncIterableIterator(readableStream.getReader
 
 ## Converts `Observable` into `ReadableStream`
 
+`ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
+
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
