@@ -20,6 +20,7 @@ const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
 const { iterableToString } = require('iter-fest/iterableToString');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
+const { observableFromAsync } = require('iter-fest/observableFromAsync');
 const { observableValues } = require('iter-fest/observableValues');
 const { SymbolObservable } = require('iter-fest/symbolObservable');
 
@@ -106,6 +107,25 @@ test('Observable should work', () => {
   expect(next).toHaveBeenCalledTimes(1);
   expect(next).toHaveBeenNthCalledWith(1, 1);
   expect(complete).toHaveBeenCalledTimes(1);
+});
+
+test('observableFromAsync should work', async () => {
+  const observable = observableFromAsync(
+    (async function* () {
+      yield 1;
+      yield 2;
+      yield 3;
+    })()
+  );
+
+  const next = jest.fn();
+
+  await new Promise(resolve => observable.subscribe({ complete: resolve, next }));
+
+  expect(next).toHaveBeenCalledTimes(3);
+  expect(next).toHaveBeenNthCalledWith(1, 1);
+  expect(next).toHaveBeenNthCalledWith(2, 2);
+  expect(next).toHaveBeenNthCalledWith(3, 3);
 });
 
 test('observableValues should work', async () => {

@@ -61,7 +61,7 @@ for (const value of iteratorToIterable(iterate())) {
 
 `Observable` and `Symbol.observable` is re-exported from `core-js-pure` with proper type definitions.
 
-### Converting an `Observable` to `AsyncIterable`
+### Converting an `Observable` to `AsyncIterableIterator`
 
 `observableValues` subscribes to an `Observable` and return as `AsyncIterableIterator`.
 
@@ -73,6 +73,25 @@ const observable = Observable.from([1, 2, 3]);
 for await (const value of observableValues(observable)) {
   console.log(value); // Prints "1", "2", "3".
 }
+```
+
+### Converting an `AsyncIterable` to `Observable`
+
+`Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
+
+`observableFromAsync` will convert `AsyncIterable` into `Observable`.
+
+```ts
+async function* generate() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const observable = observableFromAsync(generate());
+const next = value => console.log(value);
+
+observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
 
 ## Behaviors
