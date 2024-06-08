@@ -216,6 +216,26 @@
         "default": "./dist/iter-fest.iteratorToIterable.js"
       }
     },
+    "./observable": {
+      "import": {
+        "types": "./dist/iter-fest.observable.d.mts",
+        "default": "./dist/iter-fest.observable.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.observable.d.ts",
+        "default": "./dist/iter-fest.observable.js"
+      }
+    },
+    "./symbolObservable": {
+      "import": {
+        "types": "./dist/iter-fest.symbolObservable.d.mts",
+        "default": "./dist/iter-fest.symbolObservable.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.symbolObservable.d.ts",
+        "default": "./dist/iter-fest.symbolObservable.js"
+      }
+    },
     ".": {
       "import": {
         "types": "./dist/iter-fest.d.mts",
@@ -258,6 +278,9 @@
     "url": "https://github.com/compulim/iter-fest/issues"
   },
   "homepage": "https://github.com/compulim/iter-fest#readme",
+  "peerDependencies": {
+    "core-js-pure": "^3.37.1"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.24.6",
     "@babel/preset-typescript": "^7.24.6",
@@ -266,6 +289,7 @@
     "@tsconfig/strictest": "^2.0.5",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.13",
+    "core-js-pure": "^3.37.1",
     "esbuild": "^0.21.4",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

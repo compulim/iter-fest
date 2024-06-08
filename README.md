@@ -57,6 +57,10 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
+### Typed `Observable`
+
+`Observable` and `Symbol.observable` is re-exported from `core-js-pure` with proper type definitions.
+
 ## Behaviors
 
 ### How this compares to the TC39 proposals?
