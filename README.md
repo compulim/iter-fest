@@ -121,6 +121,22 @@ const iterable = new PushAsyncIterableIterator();
 // Prints "1", "2", "3", "Done".
 ```
 
+### Iterating `ReadableStreamDefaultReader`
+
+`readerToAsyncIterableIterator` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
+
+```ts
+const readableStream = new ReadableStream({ start(controller) {
+  controller.enqueue(1);
+  controller.enqueue(2);
+  controller.close();
+} });
+
+for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
+  console.log(value); // Prints "1", "2", "3".
+}
+```
+
 ## Behaviors
 
 ### How this compares to the TC39 proposals?

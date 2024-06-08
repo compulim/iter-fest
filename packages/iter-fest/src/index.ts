@@ -24,3 +24,4 @@ export * from './iterableToString';
 export * from './iteratorToIterable';
 export * from './observableFromAsync';
 export * from './observableValues';
+export * from './readerToAsyncIterableIterator';
