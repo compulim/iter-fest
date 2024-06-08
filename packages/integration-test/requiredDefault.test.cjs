@@ -26,6 +26,7 @@ const {
   observableFromAsync,
   observableValues,
   PushAsyncIterableIterator,
+  readerToAsyncIterableIterator,
   SymbolObservable
 } = require('iter-fest');
 
@@ -178,6 +179,24 @@ test('PushAsyncIterableIterator should work', async () => {
   iterable.close();
   await deferred.promise;
   expect(done).toHaveBeenCalledTimes(1);
+});
+
+test('readerToAsyncIterableIterator should work', async () => {
+  const readableStream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  const values = [];
+
+  for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2]);
 });
 
 test('SymbolObservable should work', () => {

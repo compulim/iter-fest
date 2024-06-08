@@ -256,6 +256,16 @@
         "default": "./dist/iter-fest.pushAsyncIterableIterator.js"
       }
     },
+    "./readerToAsyncIterableIterator": {
+      "import": {
+        "types": "./dist/iter-fest.readerToAsyncIterableIterator.d.mts",
+        "default": "./dist/iter-fest.readerToAsyncIterableIterator.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.readerToAsyncIterableIterator.d.ts",
+        "default": "./dist/iter-fest.readerToAsyncIterableIterator.js"
+      }
+    },
     "./symbolObservable": {
       "import": {
         "types": "./dist/iter-fest.symbolObservable.d.mts",
