@@ -126,15 +126,29 @@ const iterable = new PushAsyncIterableIterator();
 `readerToAsyncIterableIterator` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
 
 ```ts
-const readableStream = new ReadableStream({ start(controller) {
-  controller.enqueue(1);
-  controller.enqueue(2);
-  controller.close();
-} });
+const readableStream = new ReadableStream({
+  start(controller) {
+    controller.enqueue(1);
+    controller.enqueue(2);
+    controller.close();
+  }
+});
 
 for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
   console.log(value); // Prints "1", "2", "3".
 }
+```
+
+## Converts `Observable` into `ReadableStream`
+
+`ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
+
+```ts
+const observable = Observable.from([1, 2, 3]);
+const readable = observableSubscribeAsReadable(observable);
+const reader = readable.getReader();
+
+readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
 ## Behaviors

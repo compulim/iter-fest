@@ -226,6 +226,16 @@
         "default": "./dist/iter-fest.observable.js"
       }
     },
+    "./observableSubscribeAsReadable": {
+      "import": {
+        "types": "./dist/iter-fest.observableSubscribeAsReadable.d.mts",
+        "default": "./dist/iter-fest.observableSubscribeAsReadable.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.observableSubscribeAsReadable.d.ts",
+        "default": "./dist/iter-fest.observableSubscribeAsReadable.js"
+      }
+    },
     "./observableFromAsync": {
       "import": {
         "types": "./dist/iter-fest.observableFromAsync.d.mts",
