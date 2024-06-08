@@ -158,3 +158,24 @@ test('pull-based reader', async () => {
 
   expect(values).toEqual([1, 2]);
 });
+
+test('mixed mode reader', async () => {
+  const readableStream = new ReadableStream({
+    pull(controller) {
+      controller.enqueue(3);
+      controller.close();
+    },
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+    }
+  });
+
+  const values: number[] = [];
+
+  for await (const value of readerValues(readableStream.getReader())) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
+});
