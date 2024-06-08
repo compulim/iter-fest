@@ -1,3 +1,4 @@
+import withResolvers from 'core-js-pure/full/promise/with-resolvers';
 import { iterableAt } from 'iter-fest/iterableAt';
 import { iterableConcat } from 'iter-fest/iterableConcat';
 import { iterableEntries } from 'iter-fest/iterableEntries';
@@ -22,6 +23,7 @@ import { iteratorToIterable } from 'iter-fest/iteratorToIterable';
 import { Observable } from 'iter-fest/observable';
 import { observableFromAsync } from 'iter-fest/observableFromAsync';
 import { observableValues } from 'iter-fest/observableValues';
+import { PushAsyncIterableIterator } from 'iter-fest/pushAsyncIterableIterator';
 import { SymbolObservable } from 'iter-fest/symbolObservable';
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
@@ -137,6 +139,42 @@ test('observableValues should work', async () => {
   }
 
   expect(values).toEqual([1, 2, 3]);
+});
+
+test('PushAsyncIterableIterator should work', async () => {
+  let deferred = withResolvers();
+  const done = jest.fn();
+  const iterable = new PushAsyncIterableIterator();
+  const values = [];
+
+  (async function () {
+    for await (const value of iterable) {
+      values.push(value);
+
+      deferred.resolve();
+      deferred = withResolvers();
+    }
+
+    done();
+    deferred.resolve();
+  })();
+
+  expect(values).toEqual([]);
+  expect(done).not.toHaveBeenCalled();
+
+  iterable.push(1);
+  await deferred.promise;
+  expect(values).toEqual([1]);
+  expect(done).not.toHaveBeenCalled();
+
+  iterable.push(2);
+  await deferred.promise;
+  expect(values).toEqual([1, 2]);
+  expect(done).not.toHaveBeenCalled();
+
+  iterable.close();
+  await deferred.promise;
+  expect(done).toHaveBeenCalledTimes(1);
 });
 
 test('SymbolObservable should work', () => {
