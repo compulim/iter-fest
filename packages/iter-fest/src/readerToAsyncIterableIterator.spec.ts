@@ -98,3 +98,43 @@ test('release and create another reader', async () => {
     expect(value).toBe(2);
   }
 });
+
+test('break in for-loop should cancel', async () => {
+  const cancel = jest.fn();
+  const readableStream = new ReadableStream({
+    cancel,
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  for await (const _ of readerToAsyncIterableIterator(readableStream.getReader())) {
+    break;
+  }
+
+  expect(cancel).toHaveBeenCalledTimes(1);
+});
+
+test('throw in for-loop should cancel', async () => {
+  const cancel = jest.fn();
+  const readableStream = new ReadableStream({
+    cancel,
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  await (async () => {
+    try {
+      for await (const _ of readerToAsyncIterableIterator(readableStream.getReader())) {
+        throw new Error('artificial');
+      }
+    } catch {}
+  })();
+
+  expect(cancel).toHaveBeenCalledTimes(1);
+});

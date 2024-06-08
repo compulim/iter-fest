@@ -23,7 +23,6 @@ import { iteratorToIterable } from 'iter-fest/iteratorToIterable';
 import { Observable } from 'iter-fest/observable';
 import { observableFromAsync } from 'iter-fest/observableFromAsync';
 import { observableSubscribeAsReadable } from 'iter-fest/observableSubscribeAsReadable';
-import { observableValues } from 'iter-fest/observableValues';
 import { PushAsyncIterableIterator } from 'iter-fest/pushAsyncIterableIterator';
 import { readerToAsyncIterableIterator } from 'iter-fest/readerToAsyncIterableIterator';
 import { SymbolObservable } from 'iter-fest/symbolObservable';
@@ -150,17 +149,6 @@ test('observableSubscribeAsReadable should work', async () => {
   await expect(reader.read()).resolves.toEqual({ done: false, value: 'B' });
   await expect(reader.read()).resolves.toEqual({ done: false, value: 'C' });
   await expect(reader.read()).resolves.toEqual({ done: true });
-});
-
-test('observableValues should work', async () => {
-  const observable = Observable.from([1, 2, 3]);
-  const values = [];
-
-  for await (const value of observableValues(observable)) {
-    values.push(value);
-  }
-
-  expect(values).toEqual([1, 2, 3]);
 });
 
 test('PushAsyncIterableIterator should work', async () => {

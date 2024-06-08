@@ -33,9 +33,20 @@ console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
 
 List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
 
+## Conversions
+
+| From                          | To                      | Function signature                                                                                                                              |
+| ----------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                      |
+| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                 |
+| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerToAsyncIterableIterator`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#iterating-readablestreamdefaultreader) |
+| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterator: AsyncIterableIterator<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                       |
+
+To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as intermediate format](#converting-an-observable-to-asynciterableiterator).
+
 ### Converting an iterator to iterable
 
-`iteratorToIterable` converts a pure iterator to `IterableIterator` and enable for-loop iteration.
+`iteratorToIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
 
 ```ts
 const iterate = (): Iterator<number> => {
@@ -44,7 +55,7 @@ const iterate = (): Iterator<number> => {
   return {
     next: () => {
       if (++value <= 3) {
-        return { done: false, value };
+        return { value };
       }
 
       return { done: true, value: undefined };
@@ -57,20 +68,17 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
-### Typed `Observable`
-
-`Observable` and `Symbol.observable` is re-exported from `core-js-pure` with proper type definitions.
-
 ### Converting an `Observable` to `AsyncIterableIterator`
 
-`observableValues` subscribes to an `Observable` and return as `AsyncIterableIterator`.
+`ReadableStream` can be used to when converting an `Observable` to `AsyncIterableIterator`.
 
-`Observable` is push-based and `AsyncIterableIterator` is pull-based. Values from `Observable` may push continuously and will be buffered internally. When for-loop break or complete, the iterator will unsubscribe from the `Observable`.
+Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIteratorrr`, the internal buffer of `ReadableStream` could build up quickly.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
+const readable = observableSubscribeAsReadable(observable);
 
-for await (const value of observableValues(observable)) {
+for await (const value of readerToAsyncIterableIterator(readable.getReader())) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
@@ -94,31 +102,18 @@ const next = value => console.log(value);
 observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
 
-### Producer-consumer queue
+## Converting an `Observable` to `ReadableStream`
 
-`PushAsyncIterableIterator` is a simple push-based producer-consumer queue. The producer can push a new job at anytime. The consumer will wait for jobs to be available.
+`ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
 
-A push-based queue is easier to use than a pull-based queue. However, pull-based queue offers better flow control. For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
+Note: `Observable` is push-based and it does not support flow control. When converting to `ReadableStream`, the internal buffer could build up quickly.
 
 ```ts
-const iterable = new PushAsyncIterableIterator();
+const observable = Observable.from([1, 2, 3]);
+const readable = observableSubscribeAsReadable(observable);
+const reader = readable.getReader();
 
-(async function consumer() {
-  for await (const value of iterable) {
-    console.log(value);
-  }
-
-  console.log('Done');
-})();
-
-(async function producer() {
-  iterable.push(1);
-  iterable.push(2);
-  iterable.push(3);
-  iterable.close();
-})();
-
-// Prints "1", "2", "3", "Done".
+readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
 ### Iterating `ReadableStreamDefaultReader`
@@ -139,16 +134,39 @@ for await (const value of readerToAsyncIterableIterator(readableStream.getReader
 }
 ```
 
-## Converts `Observable` into `ReadableStream`
+## Others
 
-`ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
+### Typed `Observable`
+
+`Observable` and `Symbol.observable` is re-exported from `core-js-pure` with proper type definitions.
+
+### Producer-consumer queue
+
+`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience.
+
+Compare to pull-based queue, a push-based queue is easier to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
+
+For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
 
 ```ts
-const observable = Observable.from([1, 2, 3]);
-const readable = observableSubscribeAsReadable(observable);
-const reader = readable.getReader();
+const iterable = new PushAsyncIterableIterator();
 
-readable.pipeTo(stream.writable); // Will write 1, 2, 3.
+(async function consumer() {
+  for await (const value of iterable) {
+    console.log(value);
+  }
+
+  console.log('Done');
+})();
+
+(async function producer() {
+  iterable.push(1);
+  iterable.push(2);
+  iterable.push(3);
+  iterable.close();
+})();
+
+// Prints "1", "2", "3", "Done".
 ```
 
 ## Behaviors
