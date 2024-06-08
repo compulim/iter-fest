@@ -1,4 +1,5 @@
 export * from './Observable';
+export * from './SymbolObservable';
 export * from './iterableAt';
 export * from './iterableConcat';
 export * from './iterableEntries';
@@ -20,4 +21,4 @@ export * from './iterableSome';
 export * from './iterableToSpliced';
 export * from './iterableToString';
 export * from './iteratorToIterable';
-export * from './SymbolObservable';
+export * from './observableValues';

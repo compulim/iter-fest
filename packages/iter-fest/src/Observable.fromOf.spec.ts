@@ -7,19 +7,13 @@ import {
   type StartFunction,
   type Subscription
 } from './Observable';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockOfFunction<T extends (this: any, ...args: any[]) => any> = jest.Mock<
-  ReturnType<T>,
-  Parameters<T>,
-  ThisParameterType<T>
->;
+import type { JestMockOf } from './private/JestMockOf';
 
 describe('comprehensive', () => {
-  let complete: MockOfFunction<CompleteFunction>;
-  let error: MockOfFunction<ErrorFunction>;
-  let next: MockOfFunction<NextFunction<number>>;
-  let start: MockOfFunction<StartFunction>;
+  let complete: JestMockOf<CompleteFunction>;
+  let error: JestMockOf<ErrorFunction>;
+  let next: JestMockOf<NextFunction<number>>;
+  let start: JestMockOf<StartFunction>;
 
   beforeEach(() => {
     complete = jest.fn();

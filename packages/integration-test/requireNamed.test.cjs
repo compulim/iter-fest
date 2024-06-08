@@ -20,6 +20,7 @@ const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
 const { iterableToString } = require('iter-fest/iterableToString');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
+const { observableValues } = require('iter-fest/observableValues');
 const { SymbolObservable } = require('iter-fest/symbolObservable');
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
@@ -105,6 +106,17 @@ test('Observable should work', () => {
   expect(next).toHaveBeenCalledTimes(1);
   expect(next).toHaveBeenNthCalledWith(1, 1);
   expect(complete).toHaveBeenCalledTimes(1);
+});
+
+test('observableValues should work', async () => {
+  const observable = Observable.from([1, 2, 3]);
+  const values = [];
+
+  for await (const value of observableValues(observable)) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
 });
 
 test('SymbolObservable should work', () => {

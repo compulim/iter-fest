@@ -21,6 +21,7 @@ import {
   iterableToString,
   iteratorToIterable,
   Observable,
+  observableValues,
   SymbolObservable
 } from 'iter-fest';
 
@@ -107,6 +108,17 @@ test('Observable should work', () => {
   expect(next).toHaveBeenCalledTimes(1);
   expect(next).toHaveBeenNthCalledWith(1, 1);
   expect(complete).toHaveBeenCalledTimes(1);
+});
+
+test('observableValues should work', async () => {
+  const observable = Observable.from([1, 2, 3]);
+  const values = [];
+
+  for await (const value of observableValues(observable)) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
 });
 
 test('SymbolObservable should work', () => {
