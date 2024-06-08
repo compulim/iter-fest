@@ -24,7 +24,7 @@ import { Observable } from 'iter-fest/observable';
 import { observableFromAsync } from 'iter-fest/observableFromAsync';
 import { observableSubscribeAsReadable } from 'iter-fest/observableSubscribeAsReadable';
 import { PushAsyncIterableIterator } from 'iter-fest/pushAsyncIterableIterator';
-import { readerToAsyncIterableIterator } from 'iter-fest/readerToAsyncIterableIterator';
+import { readerValues } from 'iter-fest/readerValues';
 import { SymbolObservable } from 'iter-fest/symbolObservable';
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
@@ -187,7 +187,7 @@ test('PushAsyncIterableIterator should work', async () => {
   expect(done).toHaveBeenCalledTimes(1);
 });
 
-test('readerToAsyncIterableIterator should work', async () => {
+test('readerValues should work', async () => {
   const readableStream = new ReadableStream({
     start(controller) {
       controller.enqueue(1);
@@ -198,7 +198,7 @@ test('readerToAsyncIterableIterator should work', async () => {
 
   const values = [];
 
-  for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
+  for await (const value of readerValues(readableStream.getReader())) {
     values.push(value);
   }
 

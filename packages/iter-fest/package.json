@@ -256,14 +256,14 @@
         "default": "./dist/iter-fest.pushAsyncIterableIterator.js"
       }
     },
-    "./readerToAsyncIterableIterator": {
+    "./readerValues": {
       "import": {
-        "types": "./dist/iter-fest.readerToAsyncIterableIterator.d.mts",
-        "default": "./dist/iter-fest.readerToAsyncIterableIterator.mjs"
+        "types": "./dist/iter-fest.readerValues.d.mts",
+        "default": "./dist/iter-fest.readerValues.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest.readerToAsyncIterableIterator.d.ts",
-        "default": "./dist/iter-fest.readerToAsyncIterableIterator.js"
+        "types": "./dist/iter-fest.readerValues.d.ts",
+        "default": "./dist/iter-fest.readerValues.js"
       }
     },
     "./symbolObservable": {
