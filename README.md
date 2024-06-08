@@ -94,6 +94,33 @@ const next = value => console.log(value);
 observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
 
+### Producer-consumer queue
+
+`PushAsyncIterableIterator` is a simple push-based producer-consumer queue. The producer can push a new job at anytime. The consumer will wait for jobs to be available.
+
+A push-based queue is easier to use than a pull-based queue. However, pull-based queue offers better flow control. For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
+
+```ts
+const iterable = new PushAsyncIterableIterator();
+
+(async function consumer() {
+  for await (const value of iterable) {
+    console.log(value);
+  }
+
+  console.log('Done');
+})();
+
+(async function producer() {
+  iterable.push(1);
+  iterable.push(2);
+  iterable.push(3);
+  iterable.close();
+})();
+
+// Prints "1", "2", "3", "Done".
+```
+
 ## Behaviors
 
 ### How this compares to the TC39 proposals?
