@@ -57,6 +57,24 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
+### Typed `Observable`
+
+`Observable` and `Symbol.observable` is re-exported from `core-js-pure` with proper type definitions.
+
+### Converting an `Observable` to `AsyncIterable`
+
+`observableValues` subscribes to an `Observable` and return as `AsyncIterableIterator`.
+
+`Observable` is push-based and `AsyncIterableIterator` is pull-based. Values from `Observable` may push continuously and will be buffered internally. When for-loop break or complete, the iterator will unsubscribe from the `Observable`.
+
+```ts
+const observable = Observable.from([1, 2, 3]);
+
+for await (const value of observableValues(observable)) {
+  console.log(value); // Prints "1", "2", "3".
+}
+```
+
 ## Behaviors
 
 ### How this compares to the TC39 proposals?

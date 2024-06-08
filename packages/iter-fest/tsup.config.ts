@@ -25,7 +25,10 @@ export default defineConfig([
       'iter-fest.iterableSome': './src/iterableSome.ts',
       'iter-fest.iterableToSpliced': './src/iterableToSpliced.ts',
       'iter-fest.iterableToString': './src/iterableToString.ts',
-      'iter-fest.iteratorToIterable': './src/iteratorToIterable.ts'
+      'iter-fest.iteratorToIterable': './src/iteratorToIterable.ts',
+      'iter-fest.observable': './src/Observable.ts',
+      'iter-fest.observableValues': './src/observableValues.ts',
+      'iter-fest.symbolObservable': './src/SymbolObservable.ts'
     },
     format: ['cjs', 'esm'],
     sourcemap: true

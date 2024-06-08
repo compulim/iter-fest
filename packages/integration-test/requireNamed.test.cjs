@@ -19,6 +19,9 @@ const { iterableSome } = require('iter-fest/iterableSome');
 const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
 const { iterableToString } = require('iter-fest/iterableToString');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
+const { Observable } = require('iter-fest/observable');
+const { observableValues } = require('iter-fest/observableValues');
+const { SymbolObservable } = require('iter-fest/symbolObservable');
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
@@ -88,3 +91,36 @@ test('iteratorToIterable should work', () =>
       )
     )
   ).toEqual([1, 2, 3]));
+
+test('Observable should work', () => {
+  const next = jest.fn();
+  const complete = jest.fn();
+
+  const observable = new Observable(observer => {
+    observer.next(1);
+    observer.complete();
+  });
+
+  observable.subscribe({ complete, next });
+
+  expect(next).toHaveBeenCalledTimes(1);
+  expect(next).toHaveBeenNthCalledWith(1, 1);
+  expect(complete).toHaveBeenCalledTimes(1);
+});
+
+test('observableValues should work', async () => {
+  const observable = Observable.from([1, 2, 3]);
+  const values = [];
+
+  for await (const value of observableValues(observable)) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
+});
+
+test('SymbolObservable should work', () => {
+  const observable = new Observable(() => {});
+
+  expect(observable[SymbolObservable]()).toBe(observable);
+});
