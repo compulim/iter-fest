@@ -23,6 +23,7 @@ const { iterableToString } = require('iter-fest/iterableToString');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
 const { observableFromAsync } = require('iter-fest/observableFromAsync');
+const { observableSubscribeAsReadable } = require('iter-fest/observableSubscribeAsReadable');
 const { observableValues } = require('iter-fest/observableValues');
 const { PushAsyncIterableIterator } = require('iter-fest/pushAsyncIterableIterator');
 const { readerToAsyncIterableIterator } = require('iter-fest/readerToAsyncIterableIterator');
@@ -130,6 +131,26 @@ test('observableFromAsync should work', async () => {
   expect(next).toHaveBeenNthCalledWith(1, 1);
   expect(next).toHaveBeenNthCalledWith(2, 2);
   expect(next).toHaveBeenNthCalledWith(3, 3);
+});
+
+test('observableSubscribeAsReadable should work', async () => {
+  const stream = new TextDecoderStream();
+  const observable = Observable.from([65, 66, 67]);
+  const readable = observableSubscribeAsReadable(observable);
+  const numberToInt8Array = new TransformStream({
+    transform(chunk, controller) {
+      controller.enqueue(Int8Array.from([chunk]));
+    }
+  });
+
+  readable.pipeThrough(numberToInt8Array).pipeTo(stream.writable);
+
+  const reader = stream.readable.getReader();
+
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 'A' });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 'B' });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 'C' });
+  await expect(reader.read()).resolves.toEqual({ done: true });
 });
 
 test('observableValues should work', async () => {

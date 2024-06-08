@@ -28,6 +28,7 @@ export default defineConfig([
       'iter-fest.iteratorToIterable': './src/iteratorToIterable.ts',
       'iter-fest.observable': './src/Observable.ts',
       'iter-fest.observableFromAsync': './src/observableFromAsync.ts',
+      'iter-fest.observableSubscribeAsReadable': './src/observableSubscribeAsReadable.ts',
       'iter-fest.observableValues': './src/observableValues.ts',
       'iter-fest.pushAsyncIterableIterator': './src/PushAsyncIterableIterator.ts',
       'iter-fest.readerToAsyncIterableIterator': './src/readerToAsyncIterableIterator.ts',

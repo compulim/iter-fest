@@ -23,5 +23,6 @@ export * from './iterableToSpliced';
 export * from './iterableToString';
 export * from './iteratorToIterable';
 export * from './observableFromAsync';
+export * from './observableSubscribeAsReadable';
 export * from './observableValues';
 export * from './readerToAsyncIterableIterator';
