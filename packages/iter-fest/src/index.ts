@@ -11,6 +11,7 @@ export * from './iterableFindIndex';
 export * from './iterableFindLast';
 export * from './iterableFindLastIndex';
 export * from './iterableForEach';
+export * from './iterableGetReadable';
 export * from './iterableIncludes';
 export * from './iterableIndexOf';
 export * from './iterableJoin';

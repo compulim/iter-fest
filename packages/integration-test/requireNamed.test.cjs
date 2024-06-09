@@ -10,6 +10,7 @@ const { iterableFindIndex } = require('iter-fest/iterableFindIndex');
 const { iterableFindLast } = require('iter-fest/iterableFindLast');
 const { iterableFindLastIndex } = require('iter-fest/iterableFindLastIndex');
 const { iterableForEach } = require('iter-fest/iterableForEach');
+const { iterableGetReadable } = require('iter-fest/iterableGetReadable');
 const { iterableIncludes } = require('iter-fest/iterableIncludes');
 const { iterableIndexOf } = require('iter-fest/iterableIndexOf');
 const { iterableJoin } = require('iter-fest/iterableJoin');
@@ -59,6 +60,17 @@ test('iterableForEach should work', () => {
   iterableForEach([1, 2, 3], callbackfn);
 
   expect(callbackfn).toHaveBeenCalledTimes(3);
+});
+
+test('iterableGetReadable should work', async () => {
+  const iterable = [1, 2, 3].values();
+
+  const reader = iterableGetReadable(iterable).getReader();
+
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 1 });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 2 });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 3 });
+  await expect(reader.read()).resolves.toEqual({ done: true, value: undefined });
 });
 
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
