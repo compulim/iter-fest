@@ -1,5 +1,5 @@
 import hasResolved from './private/hasResolved';
-import { readerToAsyncIterableIterator } from './readerToAsyncIterableIterator';
+import { readerValues } from './readerValues';
 
 describe('comprehensive', () => {
   let controller: ReadableStreamDefaultController<number>;
@@ -16,7 +16,7 @@ describe('comprehensive', () => {
 
     reader = readableStream.getReader();
 
-    iterable = readerToAsyncIterableIterator(reader);
+    iterable = readerValues(reader);
   });
 
   test('iterable.next() should not resolve', () => expect(hasResolved(iterable.next())).resolves.toBe(false));
@@ -67,7 +67,7 @@ test('after close() should still read all', async () => {
 
   const values = [];
 
-  for await (const value of readerToAsyncIterableIterator(readableStream.getReader())) {
+  for await (const value of readerValues(readableStream.getReader())) {
     values.push(value);
   }
 
@@ -85,7 +85,7 @@ test('release and create another reader', async () => {
 
   const reader1 = readableStream.getReader();
 
-  for await (const value of readerToAsyncIterableIterator(reader1)) {
+  for await (const value of readerValues(reader1)) {
     expect(value).toBe(1);
     break;
   }
@@ -94,7 +94,88 @@ test('release and create another reader', async () => {
 
   const reader2 = readableStream.getReader();
 
-  for await (const value of readerToAsyncIterableIterator(reader2)) {
+  for await (const value of readerValues(reader2)) {
     expect(value).toBe(2);
   }
+});
+
+test('break in for-loop should cancel', async () => {
+  const cancel = jest.fn();
+  const readableStream = new ReadableStream({
+    cancel,
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  for await (const _ of readerValues(readableStream.getReader())) {
+    break;
+  }
+
+  expect(cancel).toHaveBeenCalledTimes(1);
+});
+
+test('throw in for-loop should cancel', async () => {
+  const cancel = jest.fn();
+  const readableStream = new ReadableStream({
+    cancel,
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  await (async () => {
+    for await (const _ of readerValues(readableStream.getReader())) {
+      throw new Error('artificial');
+    }
+  })().catch(() => {});
+
+  expect(cancel).toHaveBeenCalledTimes(1);
+});
+
+test('pull-based reader', async () => {
+  let index = 0;
+
+  const readableStream = new ReadableStream({
+    pull(controller) {
+      controller.enqueue(++index);
+
+      if (index >= 2) {
+        controller.close();
+      }
+    }
+  });
+
+  const values: number[] = [];
+
+  for await (const value of readerValues(readableStream.getReader())) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2]);
+});
+
+test('mixed mode reader', async () => {
+  const readableStream = new ReadableStream({
+    pull(controller) {
+      controller.enqueue(3);
+      controller.close();
+    },
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+    }
+  });
+
+  const values: number[] = [];
+
+  for await (const value of readerValues(readableStream.getReader())) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
 });
