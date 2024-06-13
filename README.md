@@ -69,6 +69,8 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
+Note: calling `[Symbol.iterator]` will not refresh the iteration.
+
 ### Converting an `Observable` to `AsyncIterableIterator`
 
 `ReadableStream` can be used to when converting an `Observable` to `AsyncIterableIterator`.
