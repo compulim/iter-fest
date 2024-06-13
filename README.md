@@ -128,7 +128,7 @@ for await (const value of iterable) {
 }
 ```
 
-## Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
+### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
 ```ts
 const iterable = [1, 2, 3].values();
