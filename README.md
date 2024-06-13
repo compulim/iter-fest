@@ -18,14 +18,14 @@ npm install iter-fest
 
 ## Conversions
 
-| From                          | To                      | Function signature                                                                                                                               |
-| ----------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                       |
-| `AsyncIterator`               | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>`](#converting-an-iterator-to-iterable)              |
-| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                  |
-| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerValues`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#iterating-readablestreamdefaultreader)                   |
-| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                                |
-| `AsyncIterable`/`Iterable`    | `ReadableStream`        | [`iterableGetReadable<T>(iterable: AsyncIterable<T> \| Iterable<T>): ReadableStream<T>`](#converting-an-asynciterableiterable-to-readablestream) |
+| From                          | To                      | Function signature                                                                                                                                         |
+| ----------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                                 |
+| `AsyncIterator`               | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>`](#converting-an-iterator-to-iterable)                        |
+| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                            |
+| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerValues`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#converting-a-readablestreamdefaultreader-to-asynciterableiterator) |
+| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                                          |
+| `AsyncIterable`/`Iterable`    | `ReadableStream`        | [`iterableGetReadable<T>(iterable: AsyncIterable<T> \| Iterable<T>): ReadableStream<T>`](#converting-an-asynciterableiterable-to-readablestream)           |
 
 To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as intermediate format](#converting-an-observable-to-asynciterableiterator).
 
@@ -43,7 +43,7 @@ const iterate = (): Iterator<number> => {
         return { value };
       }
 
-      return { done: true, value: undefined };
+      return { done: true, value: undefined } satisfies IteratorResult<number>;
     }
   };
 };
@@ -94,6 +94,8 @@ observable.subscribe({ next }); // Prints "1", "2", "3".
 
 Note: `observableFromAsync` will call `[Symbol.asyncIterator]()` initially to restart the iteration where possible.
 
+Note: It is not recommended to convert `AsyncGenerator` to an `Observable`. `AsyncGenerator` has more functionalities and `Observable` does not support many of them.
+
 ### Converting an `Observable` to `ReadableStream`
 
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
@@ -107,7 +109,7 @@ const readable = observableSubscribeAsReadable(observable);
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
-### Iterating `ReadableStreamDefaultReader`
+### Converting a `ReadableStreamDefaultReader` to `AsyncIterableIterator`
 
 `readerValues` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
 
@@ -189,11 +191,11 @@ The `generatorWithLastValue()` and `asyncGeneratorWithLastValue()` helps bridge 
 ```ts
 const generator = generatorWithLastValue(
   (function* () {
-    yield 1;
-    yield 2;
-    yield 3;
+    yield 1; // { done: false, value: 1 }
+    yield 2; // { done: false, value: 2 }
+    yield 3; // { done: false, value: 3 }
 
-    return 'end';
+    return 'end'; // { done: true, value: 'end' }
   })()
 );
 
