@@ -128,6 +128,8 @@ for await (const value of iterable) {
 }
 ```
 
+Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream.
+
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
 ```ts
