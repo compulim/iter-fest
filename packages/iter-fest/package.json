@@ -16,6 +16,16 @@
         "default": "./dist/iter-fest.asyncGeneratorWithLastValue.js"
       }
     },
+    "./asyncIteratorToAsyncIterable": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorToAsyncIterable.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorToAsyncIterable.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorToAsyncIterable.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorToAsyncIterable.js"
+      }
+    },
     "./generatorWithLastValue": {
       "import": {
         "types": "./dist/iter-fest.generatorWithLastValue.d.mts",

@@ -38,6 +38,7 @@ List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at
 | From                          | To                      | Function signature                                                                                                                               |
 | ----------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                       |
+| `AsyncIterator`               | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>`](#converting-an-iterator-to-iterable)              |
 | `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                  |
 | `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerValues`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#iterating-readablestreamdefaultreader)                   |
 | `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                                |
@@ -47,7 +48,7 @@ To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as int
 
 ### Converting an iterator to iterable
 
-`iteratorToIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
+`iteratorToIterable` and `asyncIteratorToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
 
 ```ts
 const iterate = (): Iterator<number> => {
