@@ -53,7 +53,7 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
-Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not restart the iteration.
+Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not restart the iteration. This is because iterator is an instance of iteration and is not restartable.
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
@@ -91,6 +91,8 @@ const next = value => console.log(value);
 
 observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
+
+Note: `observableFromAsync` will call `[Symbol.asyncIterator]()` initially to restart the iteration where possible.
 
 ### Converting an `Observable` to `ReadableStream`
 
@@ -139,7 +141,7 @@ const readable = iterableGetReadable(iterable);
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
-Note: `iterableGetReadable()` will call `[Symbol.iterator]()` to start a fresh iteration if underlying iterable supports it.
+Note: `iterableGetReadable()` will call `[Symbol.iterator]()` initially to start a fresh iteration if underlying iterable supports it.
 
 ## Others
 
