@@ -53,7 +53,7 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
-Note: calling `[Symbol.iterator]` will not refresh the iteration.
+Note: calling `[Symbol.iterator]` will not restart the iteration.
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
@@ -71,11 +71,13 @@ for await (const value of iterable) {
 }
 ```
 
+Note: calling `[Symbol.asyncIterator]()` will not restart and read from the start of the stream.
+
 ### Converting an `AsyncIterable` to `Observable`
 
 `Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
 
-`observableFromAsync` will convert `AsyncIterable` into `Observable`.
+`observableFromAsync` will convert `AsyncIterable` into `Observable`. It will try to restart the iteration by calling `[Symbol.asyncIterator]()`.
 
 ```ts
 async function* generate() {
@@ -134,6 +136,8 @@ const readable = iterableGetReadable(iterable);
 
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
+
+Note: `iterableGetReadable()` will call `[Symbol.iterator]()` to start a fresh iteration if underlying iterable supports it.
 
 ## Others
 
@@ -208,7 +212,7 @@ const generator = generatorWithLastValue(
 );
 ```
 
-### `Array.prototype` ports
+## `Array.prototype` ports
 
 We ported majority of functions from `Array.prototype.*` to `iterable*`.
 
@@ -273,17 +277,20 @@ Generator has more functionalities than iterator and array. It is not recommende
 - Generator can define the return value
   - `return { done: true, value: 'the very last value' }`
   - Iterating generator using for-loop will not get any values from `{ done: true }`
+  - The `generatorWithLastValue()` will help capturing and retrieving the last return value
 - Generator can receive feedback values from its iterator
   - `generator.next('something')`, the feedback can be assigned to variable via `const feedback = yield;`
   - For-loop cannot send feedbacks to generator
 
 ### When should I use `Iterable`, `IterableIterator` and `Iterator`?
 
-For best compatibility, you should generally follow this API signature: use `Iterable` for inputs, and use `IterableIterator` for outputs. You should avoid exporting pure `Iterator`.
+For best compatibility, you should generally follow this API signature: use `Iterable` for inputs, and use `IterableIterator` for outputs. You should avoid exporting pure `Iterator`. Sample function signature should looks below.
 
 ```ts
-function transform<T>(iterable: Iterable<T>): IterableIterator<T>;
+function myFunction<T>(input: Iterable<T>): IterableIterator<T>;
 ```
+
+`IterableIterator` may opt to support restarting the iteration through `[Symbol.iterator]()`. When consuming an `IterableIterator`, you should call `[Symbol.iterator]()` to obtain a fresh iteration or use for-loop statement if possible. However, `[Symbol.iterator]()` is an opt-in feature and does not always guarantee a fresh iteration.
 
 ### What is on the roadmap?
 
