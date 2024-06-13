@@ -92,7 +92,7 @@ const next = value => console.log(value);
 observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
 
-## Converting an `Observable` to `ReadableStream`
+### Converting an `Observable` to `ReadableStream`
 
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
 
