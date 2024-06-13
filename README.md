@@ -130,7 +130,7 @@ for await (const value of iterable) {
 }
 ```
 
-Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream.
+Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream. Reader is not restartable and streams are not seekable.
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
@@ -141,7 +141,7 @@ const readable = iterableGetReadable(iterable);
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
-Note: `iterableGetReadable()` will call `[Symbol.iterator]()` initially to start a fresh iteration if underlying iterable supports it.
+Note: `iterableGetReadable()` will call `[Symbol.iterator]()` initially to restart the iteration where possible.
 
 ## Others
 
