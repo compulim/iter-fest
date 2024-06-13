@@ -160,3 +160,34 @@ test('passthrough throw', async () => {
   expect(throw_).toHaveBeenNthCalledWith(1, 'artificial');
   expect(shouldNotCall).not.toHaveBeenCalled();
 });
+
+test('return in try-finally', async () => {
+  const generator = asyncGeneratorWithLastValue<number, 'end' | 'finally', void>(
+    (async function* () {
+      try {
+        await undefined;
+
+        yield 1;
+        await undefined;
+
+        return 'end' as const;
+      } finally {
+        await undefined;
+
+        // eslint-disable-next-line no-unsafe-finally
+        return 'finally' as const;
+      }
+    })()
+  );
+
+  await expect(generator.next()).resolves.toEqual({ done: false, value: 1 });
+
+  await expect(generator.next()).resolves.toEqual({ done: true, value: 'finally' });
+  expect(generator.lastValue()).toEqual('finally');
+
+  await expect(generator.next()).resolves.toEqual({ done: true, value: undefined });
+  expect(generator.lastValue()).toEqual(undefined);
+
+  await expect(generator.next()).resolves.toEqual({ done: true, value: undefined });
+  expect(generator.lastValue()).toEqual(undefined);
+});

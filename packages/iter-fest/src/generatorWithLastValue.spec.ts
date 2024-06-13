@@ -136,3 +136,29 @@ test('passthrough throw', () => {
   expect(throw_).toHaveBeenNthCalledWith(1, 'artificial');
   expect(shouldNotCall).not.toHaveBeenCalled();
 });
+
+test('return in try-finally', () => {
+  const generator = generatorWithLastValue<number, 'end' | 'finally', void>(
+    (function* () {
+      try {
+        yield 1;
+
+        return 'end' as const;
+      } finally {
+        // eslint-disable-next-line no-unsafe-finally
+        return 'finally' as const;
+      }
+    })()
+  );
+
+  expect(generator.next()).toEqual({ done: false, value: 1 });
+
+  expect(generator.next()).toEqual({ done: true, value: 'finally' });
+  expect(generator.lastValue()).toEqual('finally');
+
+  expect(generator.next()).toEqual({ done: true, value: undefined });
+  expect(generator.lastValue()).toEqual(undefined);
+
+  expect(generator.next()).toEqual({ done: true, value: undefined });
+  expect(generator.lastValue()).toEqual(undefined);
+});
