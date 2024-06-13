@@ -2,6 +2,7 @@ export * from './Observable';
 export * from './PushAsyncIterableIterator';
 export * from './SymbolObservable';
 export * from './asyncGeneratorWithLastValue';
+export * from './asyncIteratorToAsyncIterable';
 export * from './generatorWithLastValue';
 export * from './iterableAt';
 export * from './iterableConcat';

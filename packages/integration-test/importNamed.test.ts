@@ -1,5 +1,6 @@
 import withResolvers from 'core-js-pure/full/promise/with-resolvers';
 import { asyncGeneratorWithLastValue } from 'iter-fest/asyncGeneratorWithLastValue';
+import { asyncIteratorToAsyncIterable } from 'iter-fest/asyncIteratorToAsyncIterable';
 import { generatorWithLastValue } from 'iter-fest/generatorWithLastValue';
 import { iterableAt } from 'iter-fest/iterableAt';
 import { iterableConcat } from 'iter-fest/iterableConcat';
@@ -44,6 +45,26 @@ test('asyncGeneratorWithLastValue should work', async () => {
   }
 
   expect(asyncGenerator.lastValue()).toEqual('end');
+});
+
+test('asyncIteratorToIterable should work', async () => {
+  const iterable = asyncIteratorToAsyncIterable(
+    ((): AsyncIterator<number> => {
+      let value = 0;
+
+      return {
+        next: () => Promise.resolve(++value <= 3 ? { done: false, value } : { done: true, value: undefined })
+      };
+    })()
+  );
+
+  const values: number[] = [];
+
+  for await (const value of iterable) {
+    values.push(value);
+  }
+
+  expect(values).toEqual([1, 2, 3]);
 });
 
 test('generatorWithLastValue should work', () => {
