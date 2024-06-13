@@ -53,7 +53,7 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
-Note: calling `[Symbol.iterator]` will not restart the iteration.
+Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not restart the iteration.
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
