@@ -1,4 +1,6 @@
 import withResolvers from 'core-js-pure/full/promise/with-resolvers';
+import { asyncGeneratorWithLastValue } from 'iter-fest/asyncGeneratorWithLastValue';
+import { generatorWithLastValue } from 'iter-fest/generatorWithLastValue';
 import { iterableAt } from 'iter-fest/iterableAt';
 import { iterableConcat } from 'iter-fest/iterableConcat';
 import { iterableEntries } from 'iter-fest/iterableEntries';
@@ -27,6 +29,38 @@ import { observableSubscribeAsReadable } from 'iter-fest/observableSubscribeAsRe
 import { PushAsyncIterableIterator } from 'iter-fest/pushAsyncIterableIterator';
 import { readerValues } from 'iter-fest/readerValues';
 import { SymbolObservable } from 'iter-fest/symbolObservable';
+
+test('asyncGeneratorWithLastValue should work', async () => {
+  const asyncGenerator = asyncGeneratorWithLastValue(
+    (async function* () {
+      yield 1;
+
+      return 'end' as const;
+    })()
+  );
+
+  for await (const value of asyncGenerator) {
+    expect(value).toBe(1);
+  }
+
+  expect(asyncGenerator.lastValue()).toEqual('end');
+});
+
+test('generatorWithLastValue should work', () => {
+  const generator = generatorWithLastValue(
+    (function* () {
+      yield 1;
+
+      return 'end' as const;
+    })()
+  );
+
+  for (const value of generator) {
+    expect(value).toBe(1);
+  }
+
+  expect(generator.lastValue()).toEqual('end');
+});
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 

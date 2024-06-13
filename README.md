@@ -69,6 +69,8 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
+Note: calling `[Symbol.iterator]` will not refresh the iteration.
+
 ### Converting an `Observable` to `AsyncIterableIterator`
 
 `ReadableStream` can be used to when converting an `Observable` to `AsyncIterableIterator`.
@@ -180,6 +182,44 @@ const iterable = new PushAsyncIterableIterator();
 })();
 
 // Prints "1", "2", "3", "Done".
+```
+
+### Using for-loop with generator
+
+Compare to `Iterator`, `Generator` offers advanced capability.
+
+When using for-loop with generator, the last value return from the generator is lost.
+
+The `generatorWithLastValue()` and `asyncGeneratorWithLastValue()` helps bridge the for-loop usage by capturing the value returned as `{ done: true }` and make it accessible via `lastValue()`.
+
+```ts
+const generator = generatorWithLastValue(
+  (function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+
+    return 'end';
+  })()
+);
+
+for (const value of generator) {
+  console.log(value); // Prints "1", "2", "3".
+}
+
+console.log(generator.lastValue()); // Prints "end".
+```
+
+Note: `lastValue()` will throw if it is being called before end of iteration. Also, excessive calls to `next()` will return `{ done: true, value: undefined }`, thus, `lastValue()` could become `undefined` if `next()` is called after the end of iteration.
+
+The value returned from `generatorWithLastValue()`/`asyncGeneratorWithLastValue()` will passthrough all function calls to original `Generator` with a minor difference. Calling `[Symbol.iterator]()`/`[Symbol.asyncIterator]()` on the returned generator will not start a fresh iteration. If a fresh iteration is required, create a new one before passing it to `generatorWithLastValue()`/`asyncGeneratorWithLastValue()`.
+
+```ts
+const generator = generatorWithLastValue(
+  (function* () {
+    // ...
+  })()[Symbol.iterator]() // Creates a fresh iteration.
+);
 ```
 
 ## Behaviors

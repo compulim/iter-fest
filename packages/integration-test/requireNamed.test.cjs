@@ -1,5 +1,7 @@
 const withResolvers = require('core-js-pure/full/promise/with-resolvers');
 
+const { asyncGeneratorWithLastValue } = require('iter-fest/asyncGeneratorWithLastValue');
+const { generatorWithLastValue } = require('iter-fest/generatorWithLastValue');
 const { iterableAt } = require('iter-fest/iterableAt');
 const { iterableConcat } = require('iter-fest/iterableConcat');
 const { iterableEntries } = require('iter-fest/iterableEntries');
@@ -28,6 +30,38 @@ const { observableSubscribeAsReadable } = require('iter-fest/observableSubscribe
 const { PushAsyncIterableIterator } = require('iter-fest/pushAsyncIterableIterator');
 const { readerValues } = require('iter-fest/readerValues');
 const { SymbolObservable } = require('iter-fest/symbolObservable');
+
+test('asyncGeneratorWithLastValue should work', async () => {
+  const asyncGenerator = asyncGeneratorWithLastValue(
+    (async function* () {
+      yield 1;
+
+      return 'end';
+    })()
+  );
+
+  for await (const value of asyncGenerator) {
+    expect(value).toBe(1);
+  }
+
+  expect(asyncGenerator.lastValue()).toEqual('end');
+});
+
+test('generatorWithLastValue should work', () => {
+  const generator = generatorWithLastValue(
+    (function* () {
+      yield 1;
+
+      return 'end';
+    })()
+  );
+
+  for (const value of generator) {
+    expect(value).toBe(1);
+  }
+
+  expect(generator.lastValue()).toEqual('end');
+});
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
