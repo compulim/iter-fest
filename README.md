@@ -188,7 +188,7 @@ Compare to `Iterator`, `Generator` offers advanced capability.
 
 When using for-loop with generator, the last value return from the generator is lost.
 
-The `generatorWithLastValue()` and `asyncGeneratorWithLastValue()` helps bridge the for-loop usage by storing the last value and make it accessible via `lastValue()`.
+The `generatorWithLastValue()` and `asyncGeneratorWithLastValue()` helps bridge the for-loop usage by capturing the value returned as `{ done: true }` and make it accessible via `lastValue()`.
 
 ```ts
 const generator = generatorWithLastValue(
@@ -208,7 +208,7 @@ for (const value of generator) {
 console.log(generator.lastValue()); // Prints "end".
 ```
 
-Note: `lastValue()` will throw if it is being called before end of iteration.
+Note: `lastValue()` will throw if it is being called before end of iteration. As excessive calls to `next()` will return `{ done: true, value: undefined }`, thus, `lastValue()` could become `undefined` if `next()` is called after the end of iteration.
 
 The value returned from `generatorWithLastValue()`/`asyncGeneratorWithLastValue()` will passthrough all function calls to original `Generator` with a minor difference. Calling `[Symbol.iterator]()`/`[Symbol.asyncIterator]()` on the returned generator will not start a fresh iteration. If a fresh iteration is required, create a new one before passing it to `generatorWithLastValue()`/`asyncGeneratorWithLastValue()`.
 
