@@ -48,7 +48,7 @@ To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as int
 
 ### Converting an iterator to iterable
 
-`iteratorToIterable` and `asyncIterableToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
+`iteratorToIterable` and `asyncIteratorToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
 
 ```ts
 const iterate = (): Iterator<number> => {
