@@ -71,7 +71,7 @@ for await (const value of iterable) {
 }
 ```
 
-Note: calling `[Symbol.asyncIterator]()` will not restart and read from the start of the stream.
+Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
 
 ### Converting an `AsyncIterable` to `Observable`
 
