@@ -16,23 +16,6 @@ Iterables can contains infinite number of items, please use this package respons
 npm install iter-fest
 ```
 
-### `Array.prototype` ports
-
-We ported majority of functions from `Array.prototype.*` to `iterable*`.
-
-```ts
-import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
-import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
-
-const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
-
-console.log(iterableIncludes(iterable, 3)); // Prints "true".
-console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints "15".
-console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
-```
-
-List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
-
 ## Conversions
 
 | From                          | To                      | Function signature                                                                                                                               |
@@ -70,28 +53,31 @@ for (const value of iteratorToIterable(iterate())) {
 }
 ```
 
-Note: calling `[Symbol.iterator]` will not refresh the iteration.
+Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not restart the iteration. This is because iterator is an instance of iteration and is not restartable.
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
-`ReadableStream` can be used to when converting an `Observable` to `AsyncIterableIterator`.
+`ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
 
 Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIteratorrr`, the internal buffer of `ReadableStream` could build up quickly.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
+const iterable = readerValues(readable.getReader());
 
-for await (const value of readerValues(readable.getReader())) {
+for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
+
+Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
 
 ### Converting an `AsyncIterable` to `Observable`
 
 `Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
 
-`observableFromAsync` will convert `AsyncIterable` into `Observable`.
+`observableFromAsync` will convert `AsyncIterable` into `Observable`. It will try to restart the iteration by calling `[Symbol.asyncIterator]()`.
 
 ```ts
 async function* generate() {
@@ -106,7 +92,9 @@ const next = value => console.log(value);
 observable.subscribe({ next }); // Prints "1", "2", "3".
 ```
 
-## Converting an `Observable` to `ReadableStream`
+Note: `observableFromAsync` will call `[Symbol.asyncIterator]()` initially to restart the iteration where possible.
+
+### Converting an `Observable` to `ReadableStream`
 
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
 
@@ -115,7 +103,6 @@ Note: `Observable` is push-based and it does not support flow control. When conv
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
-const reader = readable.getReader();
 
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
@@ -136,12 +123,16 @@ const readableStream = new ReadableStream({
   }
 });
 
-for await (const value of readerValues(readableStream.getReader())) {
+const iterable = readerValues(readableStream.getReader());
+
+for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
 
-## Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
+Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream. Reader is not restartable and streams are not seekable.
+
+### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
 ```ts
 const iterable = [1, 2, 3].values();
@@ -149,6 +140,8 @@ const readable = iterableGetReadable(iterable);
 
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
+
+Note: `iterableGetReadable()` will call `[Symbol.iterator]()` initially to restart the iteration where possible.
 
 ## Others
 
@@ -158,9 +151,9 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 
 ### Producer-consumer queue
 
-`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience.
+`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience via for-loop.
 
-Compare to pull-based queue, a push-based queue is easier to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
+Compare to pull-based queue, a push-based queue is very easy to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
 
 For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
 
@@ -223,6 +216,23 @@ const generator = generatorWithLastValue(
 );
 ```
 
+## `Array.prototype` ports
+
+We ported majority of functions from `Array.prototype.*` to `iterable*`.
+
+```ts
+import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
+import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
+
+const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
+
+console.log(iterableIncludes(iterable, 3)); // Prints "true".
+console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints "15".
+console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
+```
+
+List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
+
 ## Behaviors
 
 ### How this compares to the TC39 proposals?
@@ -271,17 +281,20 @@ Generator has more functionalities than iterator and array. It is not recommende
 - Generator can define the return value
   - `return { done: true, value: 'the very last value' }`
   - Iterating generator using for-loop will not get any values from `{ done: true }`
+  - The `generatorWithLastValue()` will help capturing and retrieving the last return value
 - Generator can receive feedback values from its iterator
   - `generator.next('something')`, the feedback can be assigned to variable via `const feedback = yield;`
   - For-loop cannot send feedbacks to generator
 
 ### When should I use `Iterable`, `IterableIterator` and `Iterator`?
 
-For best compatibility, you should generally follow this API signature: use `Iterable` for inputs, and use `IterableIterator` for outputs. You should avoid exporting pure `Iterator`.
+For best compatibility, you should generally follow this API signature: use `Iterable` for inputs, and use `IterableIterator` for outputs. You should avoid exporting pure `Iterator`. Sample function signature should looks below.
 
 ```ts
-function transform<T>(iterable: Iterable<T>): IterableIterator<T>;
+function myFunction<T>(input: Iterable<T>): IterableIterator<T>;
 ```
+
+`IterableIterator` may opt to support restarting the iteration through `[Symbol.iterator]()`. When consuming an `IterableIterator`, you should call `[Symbol.iterator]()` to obtain a fresh iteration or use for-loop statement if possible. However, `[Symbol.iterator]()` is an opt-in feature and does not always guarantee a fresh iteration.
 
 ### What is on the roadmap?
 
