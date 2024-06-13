@@ -16,23 +16,6 @@ Iterables can contains infinite number of items, please use this package respons
 npm install iter-fest
 ```
 
-### `Array.prototype` ports
-
-We ported majority of functions from `Array.prototype.*` to `iterable*`.
-
-```ts
-import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
-import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
-
-const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
-
-console.log(iterableIncludes(iterable, 3)); // Prints "true".
-console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints "15".
-console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
-```
-
-List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
-
 ## Conversions
 
 | From                          | To                      | Function signature                                                                                                                               |
@@ -74,15 +57,16 @@ Note: calling `[Symbol.iterator]` will not refresh the iteration.
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
-`ReadableStream` can be used to when converting an `Observable` to `AsyncIterableIterator`.
+`ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
 
 Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIteratorrr`, the internal buffer of `ReadableStream` could build up quickly.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
+const iterable = readerValues(readable.getReader());
 
-for await (const value of readerValues(readable.getReader())) {
+for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
@@ -115,7 +99,6 @@ Note: `Observable` is push-based and it does not support flow control. When conv
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
-const reader = readable.getReader();
 
 readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
@@ -136,7 +119,9 @@ const readableStream = new ReadableStream({
   }
 });
 
-for await (const value of readerValues(readableStream.getReader())) {
+const iterable = readerValues(readableStream.getReader());
+
+for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
@@ -158,9 +143,9 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 
 ### Producer-consumer queue
 
-`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience.
+`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience via for-loop.
 
-Compare to pull-based queue, a push-based queue is easier to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
+Compare to pull-based queue, a push-based queue is very easy to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
 
 For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
 
@@ -222,6 +207,23 @@ const generator = generatorWithLastValue(
   })()[Symbol.iterator]() // Creates a fresh iteration.
 );
 ```
+
+### `Array.prototype` ports
+
+We ported majority of functions from `Array.prototype.*` to `iterable*`.
+
+```ts
+import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
+import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
+
+const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
+
+console.log(iterableIncludes(iterable, 3)); // Prints "true".
+console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints "15".
+console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
+```
+
+List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
 
 ## Behaviors
 
