@@ -5,6 +5,8 @@ export default defineConfig([
     dts: true,
     entry: {
       'iter-fest': './src/index.ts',
+      'iter-fest.asyncGeneratorWithLastValue': './src/asyncGeneratorWithLastValue.ts',
+      'iter-fest.generatorWithLastValue': './src/generatorWithLastValue.ts',
       'iter-fest.iterableAt': './src/iterableAt.ts',
       'iter-fest.iterableConcat': './src/iterableConcat.ts',
       'iter-fest.iterableEntries': './src/iterableEntries.ts',

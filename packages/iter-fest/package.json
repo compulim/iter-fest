@@ -6,6 +6,26 @@
     "./dist/"
   ],
   "exports": {
+    "./asyncGeneratorWithLastValue": {
+      "import": {
+        "types": "./dist/iter-fest.asyncGeneratorWithLastValue.d.mts",
+        "default": "./dist/iter-fest.asyncGeneratorWithLastValue.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncGeneratorWithLastValue.d.ts",
+        "default": "./dist/iter-fest.asyncGeneratorWithLastValue.js"
+      }
+    },
+    "./generatorWithLastValue": {
+      "import": {
+        "types": "./dist/iter-fest.generatorWithLastValue.d.mts",
+        "default": "./dist/iter-fest.generatorWithLastValue.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.generatorWithLastValue.d.ts",
+        "default": "./dist/iter-fest.generatorWithLastValue.js"
+      }
+    },
     "./iterableAt": {
       "import": {
         "types": "./dist/iter-fest.iterableAt.d.mts",

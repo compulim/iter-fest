@@ -3,6 +3,8 @@ import {
   Observable,
   PushAsyncIterableIterator,
   SymbolObservable,
+  asyncGeneratorWithLastValue,
+  generatorWithLastValue,
   iterableAt,
   iterableConcat,
   iterableEntries,
@@ -29,6 +31,38 @@ import {
   observableSubscribeAsReadable,
   readerValues
 } from 'iter-fest';
+
+test('asyncGeneratorWithLastValue should work', async () => {
+  const asyncGenerator = asyncGeneratorWithLastValue(
+    (async function* () {
+      yield 1;
+
+      return 'end' as const;
+    })()
+  );
+
+  for await (const value of asyncGenerator) {
+    expect(value).toBe(1);
+  }
+
+  expect(asyncGenerator.lastValue()).toEqual('end');
+});
+
+test('generatorWithLastValue should work', () => {
+  const generator = generatorWithLastValue(
+    (function* () {
+      yield 1;
+
+      return 'end' as const;
+    })()
+  );
+
+  for (const value of generator) {
+    expect(value).toBe(1);
+  }
+
+  expect(generator.lastValue()).toEqual('end');
+});
 
 test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
 
