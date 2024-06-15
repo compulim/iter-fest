@@ -4,11 +4,6 @@ const {
   asyncGeneratorWithLastValue,
   asyncIteratorToAsyncIterable,
   generatorWithLastValue,
-  iterableFindIndex,
-  iterableFindLast,
-  iterableFindLastIndex,
-  iterableIncludes,
-  iterableIndexOf,
   iterableJoin,
   iterableKeys,
   iterableSlice,
@@ -75,16 +70,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], value => value % 2)).toBe(0));
-
-test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
-
-test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
-
-test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
-
-test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
 

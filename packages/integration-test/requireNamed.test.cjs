@@ -3,11 +3,6 @@ const withResolvers = require('core-js-pure/full/promise/with-resolvers');
 const { asyncGeneratorWithLastValue } = require('iter-fest/asyncGeneratorWithLastValue');
 const { asyncIteratorToAsyncIterable } = require('iter-fest/asyncIteratorToAsyncIterable');
 const { generatorWithLastValue } = require('iter-fest/generatorWithLastValue');
-const { iterableFindIndex } = require('iter-fest/iterableFindIndex');
-const { iterableFindLast } = require('iter-fest/iterableFindLast');
-const { iterableFindLastIndex } = require('iter-fest/iterableFindLastIndex');
-const { iterableIncludes } = require('iter-fest/iterableIncludes');
-const { iterableIndexOf } = require('iter-fest/iterableIndexOf');
 const { iterableJoin } = require('iter-fest/iterableJoin');
 const { iterableKeys } = require('iter-fest/iterableKeys');
 const { iterableSlice } = require('iter-fest/iterableSlice');
@@ -73,16 +68,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], value => value % 2)).toBe(0));
-
-test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
-
-test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
-
-test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
-
-test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 
 test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
 

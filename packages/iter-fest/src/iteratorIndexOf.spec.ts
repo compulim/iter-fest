@@ -1,4 +1,4 @@
-import { iterableIndexOf } from './iterableIndexOf';
+import { iteratorIndexOf } from './iteratorIndexOf';
 
 describe.each([
   [[1, 2, 3], 1, undefined],
@@ -10,39 +10,39 @@ describe.each([
   [[1, 2, 3], 1, -Infinity],
   [[], 0, undefined]
 ])('when compare to %s.indexOf(%s, %s)', (array: number[], searchElement: number, fromIndex: number | undefined) => {
-  let iterable: Iterable<number>;
+  let iterator: Iterator<number>;
   let arrayResult: number;
-  let iterableResult: number;
+  let iteratorResult: number;
 
   beforeEach(() => {
-    iterable = array.values();
+    iterator = array.values();
 
     arrayResult = array.indexOf(searchElement, fromIndex);
-    iterableResult = iterableIndexOf(iterable, searchElement, fromIndex);
+    iteratorResult = iteratorIndexOf(iterator, searchElement, fromIndex);
   });
 
-  test('should return same result', () => expect(iterableResult).toBe(arrayResult));
+  test('should return same result', () => expect(iteratorResult).toBe(arrayResult));
 });
 
 test('when passing fromIndex of -1 should throw TypeError', () =>
-  expect(() => iterableIndexOf([], 0, -1)).toThrow('fromIndex cannot be a negative finite number'));
+  expect(() => iteratorIndexOf([].values(), 0, -1)).toThrow('fromIndex cannot be a negative finite number'));
 
 describe('when passing fromIndex of Infinity', () => {
   let next: jest.Mock<IteratorResult<number>, []>;
-  let iterable: IterableIterator<number>;
+  let iterator: IterableIterator<number>;
   let result: number;
 
   beforeEach(() => {
     next = jest.fn(() => ({ done: true, value: undefined }));
 
-    iterable = {
+    iterator = {
       [Symbol.iterator]() {
-        return iterable;
+        return iterator;
       },
       next
     };
 
-    result = iterableIndexOf(iterable, 0, Infinity);
+    result = iteratorIndexOf(iterator, 0, Infinity);
   });
 
   test('should return -1', () => expect(result).toBe(-1));
