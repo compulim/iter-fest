@@ -1,5 +1,4 @@
 export * from './Observable';
-export * from './PushAsyncIterableIterator';
 export * from './SymbolObservable';
 export * from './asyncGeneratorWithLastValue';
 export * from './asyncIteratorToAsyncIterable';
@@ -24,6 +23,7 @@ export * from './iterableSlice';
 export * from './iterableSome';
 export * from './iterableToSpliced';
 export * from './iterableToString';
+export * from './iterableWritableStream';
 export * from './iteratorToIterable';
 export * from './observableFromAsync';
 export * from './observableSubscribeAsReadable';
