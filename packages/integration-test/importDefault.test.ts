@@ -6,7 +6,6 @@ import {
   asyncGeneratorWithLastValue,
   asyncIteratorToAsyncIterable,
   generatorWithLastValue,
-  iterableIncludes,
   iterableIndexOf,
   iterableJoin,
   iterableKeys,
@@ -71,8 +70,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
 
 test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
 

@@ -1,12 +1,13 @@
+import { iteratorToIterable } from './iteratorToIterable';
 import toIntegerOrInfinity from './private/toIntegerOrInfinity';
 
 /**
- * Determines whether an iterable includes a certain element, returning true or false as appropriate.
+ * Determines whether an iterator includes a certain element, returning true or false as appropriate.
  *
  * @param searchElement The element to search for.
- * @param fromIndex The position in this iterable at which to begin searching for searchElement.
+ * @param fromIndex The position in this iterator at which to begin searching for searchElement.
  */
-export function iterableIncludes<T>(iterable: Iterable<T>, searchElement: T, fromIndex: number = 0): boolean {
+export function iteratorIncludes<T>(iterator: Iterator<T>, searchElement: T, fromIndex: number = 0): boolean {
   let index = 0;
 
   fromIndex = toIntegerOrInfinity(fromIndex);
@@ -19,7 +20,7 @@ export function iterableIncludes<T>(iterable: Iterable<T>, searchElement: T, fro
       throw new TypeError('fromIndex cannot be a negative finite number');
     }
 
-    for (const item of iterable) {
+    for (const item of iteratorToIterable(iterator)) {
       if (index++ >= fromIndex && Object.is(item, searchElement)) {
         return true;
       }

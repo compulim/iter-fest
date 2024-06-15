@@ -36,16 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableIncludes": {
-      "import": {
-        "types": "./dist/iter-fest.iterableIncludes.d.mts",
-        "default": "./dist/iter-fest.iterableIncludes.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableIncludes.d.ts",
-        "default": "./dist/iter-fest.iterableIncludes.js"
-      }
-    },
     "./iterableIndexOf": {
       "import": {
         "types": "./dist/iter-fest.iterableIndexOf.d.mts",
@@ -244,6 +234,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorFrom.d.ts",
         "default": "./dist/iter-fest.iteratorFrom.js"
+      }
+    },
+    "./iteratorIncludes": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorIncludes.d.mts",
+        "default": "./dist/iter-fest.iteratorIncludes.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorIncludes.d.ts",
+        "default": "./dist/iter-fest.iteratorIncludes.js"
       }
     },
     "./iteratorMap": {
