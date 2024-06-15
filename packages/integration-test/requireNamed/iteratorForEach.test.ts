@@ -2,9 +2,12 @@
 const { iteratorForEach } = require('iter-fest/iteratorForEach');
 
 test('iteratorForEach should work', () => {
-  const callbackfn = jest.fn();
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  const log: number[] = [];
+  const fn = (value: number) => log.push(value);
+  const iter = [1, 2, 3].values();
 
-  iteratorForEach([1, 2, 3].values(), callbackfn);
+  iteratorForEach(iter, fn);
 
-  expect(callbackfn).toHaveBeenCalledTimes(3);
+  expect(log.join(', ')).toBe('1, 2, 3');
 });

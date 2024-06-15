@@ -1,4 +1,5 @@
 import { iteratorSome } from './iteratorSome';
+import { iteratorTake } from './iteratorTake';
 
 describe.each([[[1, 2, 3]], [[]]])('when compare to %s.some()', array => {
   let arrayPredicate: jest.Mock<unknown, [number, number, number[]]>;
@@ -40,3 +41,24 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.some()', array => {
 test('should throw TypeError when passing an invalid predicate', () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(() => iteratorSome([].values(), 0 as any)).toThrow('is not a function'));
+
+test('should work with TC39 sample', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+
+    while (true) {
+      yield i;
+
+      i += 1;
+    }
+  }
+
+  const iter = iteratorTake(naturals(), 4);
+
+  expect(iteratorSome(iter, v => v > 1)).toEqual(true);
+  expect(iteratorSome(iter, () => true)).toEqual(false); // iterator is already consumed.
+
+  expect(iteratorSome(iteratorTake(naturals(), 4), v => v > 1)).toEqual(true);
+  expect(iteratorSome(iteratorTake(naturals(), 4), v => v == 1)).toEqual(true); // acting on a new iterator
+});

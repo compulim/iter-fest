@@ -1,3 +1,16 @@
 import { iteratorFind } from 'iter-fest/iteratorFind';
 
-test('iteratorFind should work', () => expect(iteratorFind([1, 2, 3].values(), value => value % 2)).toBe(1));
+test('iteratorFind should work', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+
+    while (true) {
+      yield i;
+
+      i += 1;
+    }
+  }
+
+  expect(iteratorFind(naturals(), v => v > 1)).toBe(2);
+});

@@ -1,5 +1,23 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { iteratorFilter } = require('iter-fest');
 
-test('iteratorFilter should work', () =>
-  expect(Array.from(iteratorFilter([1, 2, 3].values(), value => value % 2))).toEqual([1, 3]));
+test('iteratorFilter should work', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+
+    while (true) {
+      yield i;
+
+      i += 1;
+    }
+  }
+
+  const result = iteratorFilter(naturals(), value => {
+    return value % 2 == 0;
+  });
+
+  expect(result.next()).toEqual({ done: false, value: 0 });
+  expect(result.next()).toEqual({ done: false, value: 2 });
+  expect(result.next()).toEqual({ done: false, value: 4 });
+});
