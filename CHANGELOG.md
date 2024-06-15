@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added typed `Observable` from `core-js-pure`, in PR [#8](https://github.com/compulim/iter-fest/pull/8)
 - Added `observableFromAsync` to convert `AsyncIterable` into `Observable` in PR [#9](https://github.com/compulim/iter-fest/pull/9)
-- Added `PushAsyncIterableIterator` in PR [#11](https://github.com/compulim/iter-fest/pull/11)
+- Added `IterableWritableStream` in PR [#11](https://github.com/compulim/iter-fest/pull/11) and [#23](https://github.com/compulim/iter-fest/pull/23)
 - Added `readerValues` in PR [#12](https://github.com/compulim/iter-fest/pull/12) and [#14](https://github.com/compulim/iter-fest/pull/14)
 - Added `observableSubscribeAsReadable` in PR [#13](https://github.com/compulim/iter-fest/pull/13)
 - Added `readableStreamFrom` in PR [#15](https://github.com/compulim/iter-fest/pull/15) and [#22](https://github.com/compulim/iter-fest/pull/22)

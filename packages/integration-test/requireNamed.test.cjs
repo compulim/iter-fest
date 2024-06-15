@@ -23,11 +23,11 @@ const { iterableSlice } = require('iter-fest/iterableSlice');
 const { iterableSome } = require('iter-fest/iterableSome');
 const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
 const { iterableToString } = require('iter-fest/iterableToString');
+const { IterableWritableStream } = require('iter-fest/iterableWritableStream');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
 const { observableFromAsync } = require('iter-fest/observableFromAsync');
 const { observableSubscribeAsReadable } = require('iter-fest/observableSubscribeAsReadable');
-const { PushAsyncIterableIterator } = require('iter-fest/pushAsyncIterableIterator');
 const { readableStreamFrom } = require('iter-fest/readableStreamFrom');
 const { readerValues } = require('iter-fest/readerValues');
 const { SymbolObservable } = require('iter-fest/symbolObservable');
@@ -140,6 +140,43 @@ test('iterableToSpliced should work', () =>
 
 test('iterableToString should work', () => expect(iterableToString([1, 2, 3])).toBe('1,2,3'));
 
+test('IterableWritableStream should work', async () => {
+  let deferred = withResolvers();
+  const done = jest.fn();
+  const iterable = new IterableWritableStream();
+  const writer = iterable.getWriter();
+  const values = [];
+
+  (async function () {
+    for await (const value of iterable) {
+      values.push(value);
+
+      deferred.resolve();
+      deferred = withResolvers();
+    }
+
+    done();
+    deferred.resolve();
+  })();
+
+  expect(values).toEqual([]);
+  expect(done).not.toHaveBeenCalled();
+
+  writer.write(1);
+  await deferred.promise;
+  expect(values).toEqual([1]);
+  expect(done).not.toHaveBeenCalled();
+
+  writer.write(2);
+  await deferred.promise;
+  expect(values).toEqual([1, 2]);
+  expect(done).not.toHaveBeenCalled();
+
+  writer.close();
+  await deferred.promise;
+  expect(done).toHaveBeenCalledTimes(1);
+});
+
 test('iteratorToIterable should work', () =>
   expect(
     Array.from(
@@ -206,42 +243,6 @@ test('observableSubscribeAsReadable should work', async () => {
   await expect(reader.read()).resolves.toEqual({ done: false, value: 'B' });
   await expect(reader.read()).resolves.toEqual({ done: false, value: 'C' });
   await expect(reader.read()).resolves.toEqual({ done: true });
-});
-
-test('PushAsyncIterableIterator should work', async () => {
-  let deferred = withResolvers();
-  const done = jest.fn();
-  const iterable = new PushAsyncIterableIterator();
-  const values = [];
-
-  (async function () {
-    for await (const value of iterable) {
-      values.push(value);
-
-      deferred.resolve();
-      deferred = withResolvers();
-    }
-
-    done();
-    deferred.resolve();
-  })();
-
-  expect(values).toEqual([]);
-  expect(done).not.toHaveBeenCalled();
-
-  iterable.push(1);
-  await deferred.promise;
-  expect(values).toEqual([1]);
-  expect(done).not.toHaveBeenCalled();
-
-  iterable.push(2);
-  await deferred.promise;
-  expect(values).toEqual([1, 2]);
-  expect(done).not.toHaveBeenCalled();
-
-  iterable.close();
-  await deferred.promise;
-  expect(done).toHaveBeenCalledTimes(1);
 });
 
 test('readableStreamFrom should work', async () => {

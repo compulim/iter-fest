@@ -236,6 +236,16 @@
         "default": "./dist/iter-fest.iterableToString.js"
       }
     },
+    "./iterableWritableStream": {
+      "import": {
+        "types": "./dist/iter-fest.iterableWritableStream.d.mts",
+        "default": "./dist/iter-fest.iterableWritableStream.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iterableWritableStream.d.ts",
+        "default": "./dist/iter-fest.iterableWritableStream.js"
+      }
+    },
     "./iteratorToIterable": {
       "import": {
         "types": "./dist/iter-fest.iteratorToIterable.d.mts",
@@ -274,16 +284,6 @@
       "require": {
         "types": "./dist/iter-fest.observableSubscribeAsReadable.d.ts",
         "default": "./dist/iter-fest.observableSubscribeAsReadable.js"
-      }
-    },
-    "./pushAsyncIterableIterator": {
-      "import": {
-        "types": "./dist/iter-fest.pushAsyncIterableIterator.d.mts",
-        "default": "./dist/iter-fest.pushAsyncIterableIterator.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.pushAsyncIterableIterator.d.ts",
-        "default": "./dist/iter-fest.pushAsyncIterableIterator.js"
       }
     },
     "./readableStreamFrom": {

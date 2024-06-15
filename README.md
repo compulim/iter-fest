@@ -155,14 +155,20 @@ Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restar
 
 ### Producer-consumer queue
 
-`PushAsyncIterableIterator` is a simple push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience via for-loop.
+`IterableWritableStream` is a push-based producer-consumer queue and designed to decouple the flow between a producer and consumer. The producer can push a new job at anytime. The consumer can pull a job at its own convenience via for-loop.
 
-Compare to pull-based queue, a push-based queue is very easy to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
+`IterableWritableStream` supports multiple consumers and continuation:
+
+- Multiple consumers: when 2 or more consumers are active at the same time, jobs will be distributed across all consumers in a round robin fashion when possible
+- Continuation: when the last consumer disconnected while producer keep produce new jobs, the next consumer will pick up where the last consumer left
+
+Compare to pull-based queue, a push-based queue is easy to use. However, pull-based queue offers better flow control as it will produce a job only if there is a consumer ready to consume.
 
 For a full-featured producer-consumer queue that supports flow control, use `ReadableStream` instead.
 
 ```ts
-const iterable = new PushAsyncIterableIterator();
+const iterable = new IterableWritableStream();
+const writer = iterable.getWriter();
 
 (async function consumer() {
   for await (const value of iterable) {
@@ -173,10 +179,10 @@ const iterable = new PushAsyncIterableIterator();
 })();
 
 (async function producer() {
-  iterable.push(1);
-  iterable.push(2);
-  iterable.push(3);
-  iterable.close();
+  writer.write(1);
+  writer.write(2);
+  writer.write(3);
+  writer.close();
 })();
 
 // Prints "1", "2", "3", "Done".
