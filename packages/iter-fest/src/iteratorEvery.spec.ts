@@ -1,4 +1,5 @@
 import { iteratorEvery } from './iteratorEvery';
+import { iteratorTake } from './iteratorTake';
 
 describe.each([[[1, 2, 3]], [[]]])('when compare to %s.every()', array => {
   let arrayPredicate: jest.Mock<unknown, [number, number, number[]]>;
@@ -40,3 +41,22 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.every()', array => {
 test('should throw TypeError when passing an invalid callbackFn', () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(() => iteratorEvery([].values(), 0 as any)).toThrow('is not a function'));
+
+test('should work with TC39 sample', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+    while (true) {
+      yield i;
+      i += 1;
+    }
+  }
+
+  const iter = iteratorTake(naturals(), 10);
+
+  expect(iteratorEvery(iter, v => v >= 0)).toBe(true);
+  expect(iteratorEvery(iter, () => false)).toBe(true); // iterator is already consumed.
+
+  expect(iteratorEvery(iteratorTake(naturals(), 4), v => v > 0)).toEqual(false); // first value is 0
+  expect(iteratorEvery(iteratorTake(naturals(), 4), v => v >= 0)).toEqual(true); // acting on a new iterator
+});

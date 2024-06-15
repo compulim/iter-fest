@@ -40,3 +40,18 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.find()', array => {
 test('should throw TypeError when passing an invalid callbackFn', () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(() => iteratorFind([].values(), 0 as any)).toThrow('is not a function'));
+
+test('should work with TC39 sample', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+
+    while (true) {
+      yield i;
+
+      i += 1;
+    }
+  }
+
+  expect(iteratorFind(naturals(), v => v > 1)).toBe(2);
+});

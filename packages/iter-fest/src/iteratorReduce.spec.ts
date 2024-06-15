@@ -1,4 +1,5 @@
 import { iteratorReduce } from './iteratorReduce';
+import { iteratorTake } from './iteratorTake';
 
 describe.each([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
   let arrayReducer: jest.Mock<string, [string, number, number, number[]]>;
@@ -40,3 +41,26 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
 test('should throw TypeError when passing an invalid callbackfn', () =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expect(() => iteratorReduce([].values(), 0 as any)).toThrow('is not a function'));
+
+test('should work with TC39 sample', () => {
+  // Copied from https://github.com/tc39/proposal-iterator-helpers.
+  function* naturals() {
+    let i = 0;
+
+    while (true) {
+      yield i;
+
+      i += 1;
+    }
+  }
+
+  const result = iteratorReduce(
+    iteratorTake(naturals(), 5),
+    (sum, value) => {
+      return sum + value;
+    },
+    3
+  );
+
+  expect(result).toBe(13);
+});
