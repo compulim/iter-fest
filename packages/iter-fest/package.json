@@ -36,16 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableFindLastIndex": {
-      "import": {
-        "types": "./dist/iter-fest.iterableFindLastIndex.d.mts",
-        "default": "./dist/iter-fest.iterableFindLastIndex.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableFindLastIndex.d.ts",
-        "default": "./dist/iter-fest.iterableFindLastIndex.js"
-      }
-    },
     "./iterableIncludes": {
       "import": {
         "types": "./dist/iter-fest.iterableIncludes.d.mts",
@@ -214,6 +204,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorFindLast.d.ts",
         "default": "./dist/iter-fest.iteratorFindLast.js"
+      }
+    },
+    "./iteratorFindLastIndex": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorFindLastIndex.d.mts",
+        "default": "./dist/iter-fest.iteratorFindLastIndex.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorFindLastIndex.d.ts",
+        "default": "./dist/iter-fest.iteratorFindLastIndex.js"
       }
     },
     "./iteratorFlatMap": {
