@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `PushAsyncIterableIterator` in PR [#11](https://github.com/compulim/iter-fest/pull/11)
 - Added `readerValues` in PR [#12](https://github.com/compulim/iter-fest/pull/12) and [#14](https://github.com/compulim/iter-fest/pull/14)
 - Added `observableSubscribeAsReadable` in PR [#13](https://github.com/compulim/iter-fest/pull/13)
-- Added `readableStreamFrom` in PR [#15](https://github.com/compulim/iter-fest/pull/15) and [#XXX](https://github.com/compulim/iter-fest/pull/XXX)
+- Added `readableStreamFrom` in PR [#15](https://github.com/compulim/iter-fest/pull/15) and [#22](https://github.com/compulim/iter-fest/pull/22)
 - Added `generatorWithLastValue`/`asyncGeneratorWithLastValue` in PR [#17](https://github.com/compulim/iter-fest/pull/17)
 - Added `asyncIteratorToAsyncIterable` in PR [#18](https://github.com/compulim/iter-fest/pull/18)
 
