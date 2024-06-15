@@ -224,22 +224,41 @@ const generator = generatorWithLastValue(
 );
 ```
 
+## Adding types to `core-js-pure`
+
+We added types to implementation from `core-js-pure`:
+
+- [`Iterator.drop`](https://tc39.es/ecma262/#sec-array.prototype.drop)
+- [`Iterator.every`](https://tc39.es/ecma262/#sec-array.prototype.every)
+- [`Iterator.filter`](https://tc39.es/ecma262/#sec-array.prototype.filter)
+- [`Iterator.find`](https://tc39.es/ecma262/#sec-array.prototype.find)
+- [`Iterator.flatMap`](https://tc39.es/ecma262/#sec-array.prototype.flatmap)
+- [`Iterator.forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach)
+- [`Iterator.from`](https://tc39.es/ecma262/#sec-array.prototype.from)
+- [`Iterator.map`](https://tc39.es/ecma262/#sec-array.prototype.map)
+- [`Iterator.reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce)
+- [`Iterator.some`](https://tc39.es/ecma262/#sec-array.prototype.some)
+- [`Iterator.take`](https://tc39.es/ecma262/#sec-array.prototype.take)
+- [`Iterator.toArray`](https://tc39.es/ecma262/#sec-array.prototype.toarray)
+
 ## `Array.prototype` ports
+
+> Note: we are working to move them from `iterable*` to `iterator*` to make them similar to TC39 proposals.
 
 We ported majority of functions from `Array.prototype.*` to `iterable*`.
 
 ```ts
-import { iterableIncludes, iterableReduce } from 'iter-fest'; // Via default exports.
-import { iterableSome } from 'iter-fest/iterableSome'; // Via named exports.
+import { iteratorIncludes, iteratorReduce } from 'iter-fest'; // Via default exports.
+import { iteratorSome } from 'iter-fest/iteratorSome'; // Via named exports.
 
-const iterable: Iterable<number> = [1, 2, 3, 4, 5].values();
+const iterator: iterator<number> = [1, 2, 3, 4, 5].values();
 
-console.log(iterableIncludes(iterable, 3)); // Prints "true".
-console.log(iterableReduce(iterable, (sum, value) => sum + value, 0)); // Prints "15".
-console.log(iterableSome(iterable, value => value % 2)); // Prints "true".
+console.log(iteratorIncludes(iterator, 3)); // Prints "true".
+console.log(iteratorReduce(iterator, (sum, value) => sum + value, 0)); // Prints "15".
+console.log(iteratorSome(iterator, value => value % 2)); // Prints "true".
 ```
 
-List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`every`](https://tc39.es/ecma262/#sec-array.prototype.every), [`filter`](https://tc39.es/ecma262/#sec-array.prototype.filter), [`find`](https://tc39.es/ecma262/#sec-array.prototype.find), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`map`](https://tc39.es/ecma262/#sec-array.prototype.map), [`reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`some`](https://tc39.es/ecma262/#sec-array.prototype.some), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
+List of ported functions: [`at`](https://tc39.es/ecma262/#sec-array.prototype.at), [`concat`](https://tc39.es/ecma262/#sec-array.prototype.concat), [`entries`](https://tc39.es/ecma262/#sec-array.prototype.entries), [`findIndex`](https://tc39.es/ecma262/#sec-array.prototype.findindex), [`findLast`](https://tc39.es/ecma262/#sec-array.prototype.findlast), [`findLastIndex`](https://tc39.es/ecma262/#sec-array.prototype.findlastindex), [`includes`](https://tc39.es/ecma262/#sec-array.prototype.includes), [`indexOf`](https://tc39.es/ecma262/#sec-array.prototype.indexof), [`join`](https://tc39.es/ecma262/#sec-array.prototype.join), [`keys`](https://tc39.es/ecma262/#sec-array.prototype.keys), [`slice`](https://tc39.es/ecma262/#sec-array.prototype.slice), [`toSpliced`](https://tc39.es/ecma262/#sec-array.prototype.tospliced), and [`toString`](https://tc39.es/ecma262/#sec-array.prototype.tostring).
 
 ## Behaviors
 
