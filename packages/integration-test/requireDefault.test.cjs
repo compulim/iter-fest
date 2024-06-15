@@ -1,35 +1,38 @@
-import withResolvers from 'core-js-pure/full/promise/with-resolvers';
-import { asyncGeneratorWithLastValue } from 'iter-fest/asyncGeneratorWithLastValue';
-import { asyncIteratorToAsyncIterable } from 'iter-fest/asyncIteratorToAsyncIterable';
-import { generatorWithLastValue } from 'iter-fest/generatorWithLastValue';
-import { iterableAt } from 'iter-fest/iterableAt';
-import { iterableConcat } from 'iter-fest/iterableConcat';
-import { iterableEntries } from 'iter-fest/iterableEntries';
-import { iterableFindIndex } from 'iter-fest/iterableFindIndex';
-import { iterableFindLast } from 'iter-fest/iterableFindLast';
-import { iterableFindLastIndex } from 'iter-fest/iterableFindLastIndex';
-import { iterableIncludes } from 'iter-fest/iterableIncludes';
-import { iterableIndexOf } from 'iter-fest/iterableIndexOf';
-import { iterableJoin } from 'iter-fest/iterableJoin';
-import { iterableKeys } from 'iter-fest/iterableKeys';
-import { iterableSlice } from 'iter-fest/iterableSlice';
-import { iterableToSpliced } from 'iter-fest/iterableToSpliced';
-import { iterableToString } from 'iter-fest/iterableToString';
-import { IterableWritableStream } from 'iter-fest/iterableWritableStream';
-import { iteratorToIterable } from 'iter-fest/iteratorToIterable';
-import { Observable } from 'iter-fest/observable';
-import { observableFromAsync } from 'iter-fest/observableFromAsync';
-import { observableSubscribeAsReadable } from 'iter-fest/observableSubscribeAsReadable';
-import { readableStreamFrom } from 'iter-fest/readableStreamFrom';
-import { readerValues } from 'iter-fest/readerValues';
-import { SymbolObservable } from 'iter-fest/symbolObservable';
+const withResolvers = require('core-js-pure/full/promise/with-resolvers');
+
+const {
+  asyncGeneratorWithLastValue,
+  asyncIteratorToAsyncIterable,
+  generatorWithLastValue,
+  iterableAt,
+  iterableConcat,
+  iterableEntries,
+  iterableFindIndex,
+  iterableFindLast,
+  iterableFindLastIndex,
+  iterableIncludes,
+  iterableIndexOf,
+  iterableJoin,
+  iterableKeys,
+  iterableSlice,
+  iterableToSpliced,
+  iterableToString,
+  IterableWritableStream,
+  iteratorToIterable,
+  Observable,
+  observableFromAsync,
+  observableSubscribeAsReadable,
+  readableStreamFrom,
+  readerValues,
+  SymbolObservable
+} = require('iter-fest');
 
 test('asyncGeneratorWithLastValue should work', async () => {
   const asyncGenerator = asyncGeneratorWithLastValue(
     (async function* () {
       yield 1;
 
-      return 'end' as const;
+      return 'end';
     })()
   );
 
@@ -42,7 +45,7 @@ test('asyncGeneratorWithLastValue should work', async () => {
 
 test('asyncIteratorToIterable should work', async () => {
   const iterable = asyncIteratorToAsyncIterable(
-    ((): AsyncIterator<number> => {
+    (() => {
       let value = 0;
 
       return {
@@ -51,7 +54,7 @@ test('asyncIteratorToIterable should work', async () => {
     })()
   );
 
-  const values: number[] = [];
+  const values = [];
 
   for await (const value of iterable) {
     values.push(value);
@@ -65,7 +68,7 @@ test('generatorWithLastValue should work', () => {
     (function* () {
       yield 1;
 
-      return 'end' as const;
+      return 'end';
     })()
   );
 
@@ -150,7 +153,7 @@ test('iteratorToIterable should work', () =>
   expect(
     Array.from(
       iteratorToIterable(
-        ((): Iterator<number> => {
+        (() => {
           let value = 0;
 
           return { next: () => (++value <= 3 ? { done: false, value } : { done: true, value: undefined }) };
@@ -186,7 +189,7 @@ test('observableFromAsync should work', async () => {
 
   const next = jest.fn();
 
-  await new Promise<void>(resolve => observable.subscribe({ complete: resolve, next }));
+  await new Promise(resolve => observable.subscribe({ complete: resolve, next }));
 
   expect(next).toHaveBeenCalledTimes(3);
   expect(next).toHaveBeenNthCalledWith(1, 1);
