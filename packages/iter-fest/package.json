@@ -36,16 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableToSpliced": {
-      "import": {
-        "types": "./dist/iter-fest.iterableToSpliced.d.mts",
-        "default": "./dist/iter-fest.iterableToSpliced.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableToSpliced.d.ts",
-        "default": "./dist/iter-fest.iterableToSpliced.js"
-      }
-    },
     "./iterableWritableStream": {
       "import": {
         "types": "./dist/iter-fest.iterableWritableStream.d.mts",
@@ -294,6 +284,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorToIterable.d.ts",
         "default": "./dist/iter-fest.iteratorToIterable.js"
+      }
+    },
+    "./iteratorToSpliced": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorToSpliced.d.mts",
+        "default": "./dist/iter-fest.iteratorToSpliced.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorToSpliced.d.ts",
+        "default": "./dist/iter-fest.iteratorToSpliced.js"
       }
     },
     "./iteratorToString": {

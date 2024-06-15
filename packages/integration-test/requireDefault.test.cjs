@@ -4,7 +4,6 @@ const {
   asyncGeneratorWithLastValue,
   asyncIteratorToAsyncIterable,
   generatorWithLastValue,
-  iterableToSpliced,
   IterableWritableStream,
   iteratorToIterable,
   Observable,
@@ -66,9 +65,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableToSpliced should work', () =>
-  expect(Array.from(iterableToSpliced([1, 2, 3].values(), 1, 1, 9))).toEqual([1, 9, 3]));
 
 test('IterableWritableStream should work', async () => {
   let deferred = withResolvers();

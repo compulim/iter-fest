@@ -1,3 +1,4 @@
+import { iteratorToIterable } from './iteratorToIterable';
 import toIntegerOrInfinity from './private/toIntegerOrInfinity';
 
 /**
@@ -7,12 +8,12 @@ import toIntegerOrInfinity from './private/toIntegerOrInfinity';
  * @param items Elements to insert into the copied array in place of the deleted elements.
  * @returns The copied array.
  */
-export function iterableToSpliced<T>(
-  iterable: Iterable<T>,
+export function iteratorToSpliced<T>(
+  iterator: Iterator<T>,
   start?: number | undefined,
   deleteCount?: number | undefined,
   ...items: T[]
-): Iterable<T>;
+): IterableIterator<T>;
 
 /**
  * Copies an array and removes elements while returning the remaining elements.
@@ -20,18 +21,18 @@ export function iterableToSpliced<T>(
  * @param deleteCount The number of elements to remove.
  * @returns A copy of the original array with the remaining elements.
  */
-export function iterableToSpliced<T>(
-  iterable: Iterable<T>,
+export function iteratorToSpliced<T>(
+  iterator: Iterator<T>,
   start?: number | undefined,
   deleteCount?: number | undefined
-): Iterable<T>;
+): IterableIterator<T>;
 
-export function* iterableToSpliced<T>(
-  iterable: Iterable<T>,
+export function* iteratorToSpliced<T>(
+  iterator: Iterator<T>,
   start: number = 0,
   deleteCount: number = 0,
   ...items: T[]
-): Iterable<T> {
+): IterableIterator<T> {
   let index = 0;
 
   start = toIntegerOrInfinity(start);
@@ -43,7 +44,7 @@ export function* iterableToSpliced<T>(
 
   let inserted = false;
 
-  for (const item of iterable) {
+  for (const item of iteratorToIterable(iterator)) {
     if (index + 1 > start && !inserted) {
       yield* items;
       inserted = true;

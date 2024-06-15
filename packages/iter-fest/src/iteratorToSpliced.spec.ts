@@ -1,4 +1,4 @@
-import { iterableToSpliced } from './iterableToSpliced';
+import { iteratorToSpliced } from './iteratorToSpliced';
 
 describe.each([
   [[1, 2, 3, 4, 5], undefined, 1, [9]],
@@ -16,20 +16,20 @@ describe.each([
 ])(
   'when compare to %s.slice(%s, %s, ...%s)',
   (array: number[], start: number | undefined, deleteCount: number | undefined, items: number[]) => {
-    let iterable: Iterable<number>;
+    let iterator: Iterator<number>;
     let arrayResult: number[];
-    let iterableResult: number[];
+    let iteratorResult: number[];
 
     beforeEach(() => {
-      iterable = array.values();
+      iterator = array.values();
 
       arrayResult = array.toSpliced(start as number, deleteCount as number, ...items);
-      iterableResult = Array.from(iterableToSpliced(iterable, start, deleteCount, ...items));
+      iteratorResult = Array.from(iteratorToSpliced(iterator, start, deleteCount, ...items));
     });
 
-    test('should return same result', () => expect(iterableResult).toEqual(arrayResult));
+    test('should return same result', () => expect(iteratorResult).toEqual(arrayResult));
   }
 );
 
 test('when passing start of -1 should throw TypeError', () =>
-  expect(() => Array.from(iterableToSpliced([], -1, 0))).toThrow('start cannot be a negative finite number'));
+  expect(() => Array.from(iteratorToSpliced([].values(), -1, 0))).toThrow('start cannot be a negative finite number'));
