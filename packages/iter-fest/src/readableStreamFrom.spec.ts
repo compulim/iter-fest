@@ -1,7 +1,7 @@
-import { iterableGetReadable } from './iterableGetReadable';
 import type { JestMockOf } from './private/JestMockOf';
 import hasResolved from './private/hasResolved';
 import withResolvers from './private/withResolvers';
+import { readableStreamFrom } from './readableStreamFrom';
 
 describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type => {
   let next: JestMockOf<() => unknown>;
@@ -19,7 +19,7 @@ describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type =
 
       next = iterator.next as JestMockOf<() => unknown>;
 
-      readable = iterableGetReadable({
+      readable = readableStreamFrom({
         [Symbol.asyncIterator]() {
           return iterator;
         }
@@ -34,7 +34,7 @@ describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type =
 
       next = iterator.next as JestMockOf<() => unknown>;
 
-      readable = iterableGetReadable({
+      readable = readableStreamFrom({
         [Symbol.iterator]() {
           return iterator;
         }
@@ -90,7 +90,7 @@ describe('comprehensive', () => {
 
     next = iterator.next as JestMockOf<() => Promise<IteratorResult<number>>>;
 
-    readable = iterableGetReadable({
+    readable = readableStreamFrom({
       [Symbol.asyncIterator]() {
         return iterator;
       }

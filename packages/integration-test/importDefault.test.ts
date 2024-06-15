@@ -16,7 +16,6 @@ import {
   iterableFindLast,
   iterableFindLastIndex,
   iterableForEach,
-  iterableGetReadable,
   iterableIncludes,
   iterableIndexOf,
   iterableJoin,
@@ -30,6 +29,7 @@ import {
   iteratorToIterable,
   observableFromAsync,
   observableSubscribeAsReadable,
+  readableStreamFrom,
   readerValues
 } from 'iter-fest';
 
@@ -116,17 +116,6 @@ test('iterableForEach should work', () => {
   iterableForEach([1, 2, 3], callbackfn);
 
   expect(callbackfn).toHaveBeenCalledTimes(3);
-});
-
-test('iterableGetReadable should work', async () => {
-  const iterable = [1, 2, 3].values();
-
-  const reader = iterableGetReadable(iterable).getReader();
-
-  await expect(reader.read()).resolves.toEqual({ done: false, value: 1 });
-  await expect(reader.read()).resolves.toEqual({ done: false, value: 2 });
-  await expect(reader.read()).resolves.toEqual({ done: false, value: 3 });
-  await expect(reader.read()).resolves.toEqual({ done: true, value: undefined });
 });
 
 test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
@@ -254,6 +243,17 @@ test('PushAsyncIterableIterator should work', async () => {
   iterable.close();
   await deferred.promise;
   expect(done).toHaveBeenCalledTimes(1);
+});
+
+test('readableStreamFrom should work', async () => {
+  const iterable = [1, 2, 3].values();
+
+  const reader = readableStreamFrom(iterable).getReader();
+
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 1 });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 2 });
+  await expect(reader.read()).resolves.toEqual({ done: false, value: 3 });
+  await expect(reader.read()).resolves.toEqual({ done: true, value: undefined });
 });
 
 test('readerValues should work', async () => {
