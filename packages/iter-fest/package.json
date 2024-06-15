@@ -136,16 +136,6 @@
         "default": "./dist/iter-fest.iterableForEach.js"
       }
     },
-    "./iterableGetReadable": {
-      "import": {
-        "types": "./dist/iter-fest.iterableGetReadable.d.mts",
-        "default": "./dist/iter-fest.iterableGetReadable.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableGetReadable.d.ts",
-        "default": "./dist/iter-fest.iterableGetReadable.js"
-      }
-    },
     "./iterableIncludes": {
       "import": {
         "types": "./dist/iter-fest.iterableIncludes.d.mts",
@@ -294,6 +284,16 @@
       "require": {
         "types": "./dist/iter-fest.pushAsyncIterableIterator.d.ts",
         "default": "./dist/iter-fest.pushAsyncIterableIterator.js"
+      }
+    },
+    "./readableStreamFrom": {
+      "import": {
+        "types": "./dist/iter-fest.readableStreamFrom.d.mts",
+        "default": "./dist/iter-fest.readableStreamFrom.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.readableStreamFrom.d.ts",
+        "default": "./dist/iter-fest.readableStreamFrom.js"
       }
     },
     "./readerValues": {

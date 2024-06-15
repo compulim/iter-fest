@@ -18,7 +18,6 @@ export default defineConfig([
       'iter-fest.iterableFindLast': './src/iterableFindLast.ts',
       'iter-fest.iterableFindLastIndex': './src/iterableFindLastIndex.ts',
       'iter-fest.iterableForEach': './src/iterableForEach.ts',
-      'iter-fest.iterableGetReadable': './src/iterableGetReadable.ts',
       'iter-fest.iterableIncludes': './src/iterableIncludes.ts',
       'iter-fest.iterableIndexOf': './src/iterableIndexOf.ts',
       'iter-fest.iterableJoin': './src/iterableJoin.ts',
@@ -34,6 +33,7 @@ export default defineConfig([
       'iter-fest.observableFromAsync': './src/observableFromAsync.ts',
       'iter-fest.observableSubscribeAsReadable': './src/observableSubscribeAsReadable.ts',
       'iter-fest.pushAsyncIterableIterator': './src/PushAsyncIterableIterator.ts',
+      'iter-fest.readableStreamFrom': './src/readableStreamFrom.ts',
       'iter-fest.readerValues': './src/readerValues.ts',
       'iter-fest.symbolObservable': './src/SymbolObservable.ts'
     },
