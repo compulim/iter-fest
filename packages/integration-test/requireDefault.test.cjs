@@ -4,8 +4,6 @@ const {
   asyncGeneratorWithLastValue,
   asyncIteratorToAsyncIterable,
   generatorWithLastValue,
-  iterableAt,
-  iterableConcat,
   iterableEntries,
   iterableFindIndex,
   iterableFindLast,
@@ -78,11 +76,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
-
-test('iterableConcat should work', () =>
-  expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
 
 test('iterableEntries should work', () =>
   expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([

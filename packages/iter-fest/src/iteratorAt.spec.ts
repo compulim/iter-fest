@@ -1,4 +1,4 @@
-import { iterableAt } from './iterableAt';
+import { iteratorAt } from './iteratorAt';
 
 describe.each([
   [[1, 2, 3], 0],
@@ -9,19 +9,19 @@ describe.each([
   [[1, 2, 3], 0.1],
   [[], 0]
 ])('when compare to %s.at(%s)', (array: number[], index: number) => {
-  let iterable: Iterable<number>;
+  let iterator: Iterator<number>;
   let arrayResult: number | undefined;
-  let iterableResult: number | undefined;
+  let iteratorResult: number | undefined;
 
   beforeEach(() => {
-    iterable = array.values();
+    iterator = array.values();
 
     arrayResult = array.at(index);
-    iterableResult = iterableAt(iterable, index);
+    iteratorResult = iteratorAt(iterator, index);
   });
 
-  test('should return same result', () => expect(iterableResult).toBe(arrayResult));
+  test('should return same result', () => expect(iteratorResult).toBe(arrayResult));
 });
 
 test('when passing fromIndex of -1 should throw TypeError', () =>
-  expect(() => iterableAt([], -1)).toThrow('index cannot be a negative finite number'));
+  expect(() => iteratorAt([].values(), -1)).toThrow('index cannot be a negative finite number'));

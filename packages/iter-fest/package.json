@@ -36,26 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableAt": {
-      "import": {
-        "types": "./dist/iter-fest.iterableAt.d.mts",
-        "default": "./dist/iter-fest.iterableAt.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableAt.d.ts",
-        "default": "./dist/iter-fest.iterableAt.js"
-      }
-    },
-    "./iterableConcat": {
-      "import": {
-        "types": "./dist/iter-fest.iterableConcat.d.mts",
-        "default": "./dist/iter-fest.iterableConcat.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableConcat.d.ts",
-        "default": "./dist/iter-fest.iterableConcat.js"
-      }
-    },
     "./iterableEntries": {
       "import": {
         "types": "./dist/iter-fest.iterableEntries.d.mts",
@@ -174,6 +154,26 @@
       "require": {
         "types": "./dist/iter-fest.iterableWritableStream.d.ts",
         "default": "./dist/iter-fest.iterableWritableStream.js"
+      }
+    },
+    "./iteratorAt": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorAt.d.mts",
+        "default": "./dist/iter-fest.iteratorAt.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorAt.d.ts",
+        "default": "./dist/iter-fest.iteratorAt.js"
+      }
+    },
+    "./iteratorConcat": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorConcat.d.mts",
+        "default": "./dist/iter-fest.iteratorConcat.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorConcat.d.ts",
+        "default": "./dist/iter-fest.iteratorConcat.js"
       }
     },
     "./iteratorDrop": {

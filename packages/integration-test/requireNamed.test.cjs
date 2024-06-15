@@ -3,8 +3,6 @@ const withResolvers = require('core-js-pure/full/promise/with-resolvers');
 const { asyncGeneratorWithLastValue } = require('iter-fest/asyncGeneratorWithLastValue');
 const { asyncIteratorToAsyncIterable } = require('iter-fest/asyncIteratorToAsyncIterable');
 const { generatorWithLastValue } = require('iter-fest/generatorWithLastValue');
-const { iterableAt } = require('iter-fest/iterableAt');
-const { iterableConcat } = require('iter-fest/iterableConcat');
 const { iterableEntries } = require('iter-fest/iterableEntries');
 const { iterableFindIndex } = require('iter-fest/iterableFindIndex');
 const { iterableFindLast } = require('iter-fest/iterableFindLast');
@@ -76,11 +74,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
-
-test('iterableConcat should work', () =>
-  expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
 
 test('iterableEntries should work', () =>
   expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([
