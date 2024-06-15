@@ -136,6 +136,8 @@ Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
+> Notes: this feature is part of [Streams Standard](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/from_static).
+
 ```ts
 const iterable = [1, 2, 3].values();
 const readable = readableStreamFrom(iterable);
