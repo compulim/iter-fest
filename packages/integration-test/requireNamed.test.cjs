@@ -3,11 +3,9 @@ const withResolvers = require('core-js-pure/full/promise/with-resolvers');
 const { asyncGeneratorWithLastValue } = require('iter-fest/asyncGeneratorWithLastValue');
 const { asyncIteratorToAsyncIterable } = require('iter-fest/asyncIteratorToAsyncIterable');
 const { generatorWithLastValue } = require('iter-fest/generatorWithLastValue');
-const { iterableJoin } = require('iter-fest/iterableJoin');
 const { iterableKeys } = require('iter-fest/iterableKeys');
 const { iterableSlice } = require('iter-fest/iterableSlice');
 const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
-const { iterableToString } = require('iter-fest/iterableToString');
 const { IterableWritableStream } = require('iter-fest/iterableWritableStream');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
@@ -69,16 +67,12 @@ test('generatorWithLastValue should work', () => {
   expect(generator.lastValue()).toEqual('end');
 });
 
-test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
-
 test('iterableKeys should work', () => expect(Array.from(iterableKeys(['A', 'B', 'C']))).toEqual([0, 1, 2]));
 
 test('iterableSlice should work', () => expect(Array.from(iterableSlice([1, 2, 3, 4, 5], 1, 4))).toEqual([2, 3, 4]));
 
 test('iterableToSpliced should work', () =>
   expect(Array.from(iterableToSpliced([1, 2, 3].values(), 1, 1, 9))).toEqual([1, 9, 3]));
-
-test('iterableToString should work', () => expect(iterableToString([1, 2, 3])).toBe('1,2,3'));
 
 test('IterableWritableStream should work', async () => {
   let deferred = withResolvers();

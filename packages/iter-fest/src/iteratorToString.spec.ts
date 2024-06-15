@@ -1,16 +1,16 @@
-import { iterableJoin } from './iterableJoin';
+import { iteratorJoin } from './iteratorJoin';
 
 describe.each([[[1, 2, 3]], [[1, 2, 3]], [[1, 2, 3]], [[1, undefined, 2, null, 3]]])(
   'when compare to %s.toString()',
   (array: (number | null | undefined)[]) => {
     let arrayResult: string;
-    let iterableResult: string;
+    let iteratorResult: string;
 
     beforeEach(() => {
       arrayResult = array.toString();
-      iterableResult = iterableJoin(array.values());
+      iteratorResult = iteratorJoin(array.values());
     });
 
-    test('should return same result', () => expect(iterableResult).toEqual(arrayResult));
+    test('should return same result', () => expect(iteratorResult).toEqual(arrayResult));
   }
 );

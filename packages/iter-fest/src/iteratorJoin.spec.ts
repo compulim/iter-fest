@@ -1,4 +1,4 @@
-import { iterableJoin } from './iterableJoin';
+import { iteratorJoin } from './iteratorJoin';
 
 describe.each([
   [[1, 2, 3], undefined],
@@ -7,12 +7,12 @@ describe.each([
   [[1, undefined, 2, null, 3], undefined]
 ])('when compare to %s.join()', (array: (number | null | undefined)[], separator: string | undefined) => {
   let arrayResult: string;
-  let iterableResult: string;
+  let iteratorResult: string;
 
   beforeEach(() => {
     arrayResult = array.join(separator);
-    iterableResult = iterableJoin(array.values(), separator);
+    iteratorResult = iteratorJoin(array.values(), separator);
   });
 
-  test('should return same result', () => expect(iterableResult).toEqual(arrayResult));
+  test('should return same result', () => expect(iteratorResult).toEqual(arrayResult));
 });

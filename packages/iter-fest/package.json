@@ -46,16 +46,6 @@
         "default": "./dist/iter-fest.iterableKeys.js"
       }
     },
-    "./iterableJoin": {
-      "import": {
-        "types": "./dist/iter-fest.iterableJoin.d.mts",
-        "default": "./dist/iter-fest.iterableJoin.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableJoin.d.ts",
-        "default": "./dist/iter-fest.iterableJoin.js"
-      }
-    },
     "./iterableSlice": {
       "import": {
         "types": "./dist/iter-fest.iterableSlice.d.mts",
@@ -74,16 +64,6 @@
       "require": {
         "types": "./dist/iter-fest.iterableToSpliced.d.ts",
         "default": "./dist/iter-fest.iterableToSpliced.js"
-      }
-    },
-    "./iterableToString": {
-      "import": {
-        "types": "./dist/iter-fest.iterableToString.d.mts",
-        "default": "./dist/iter-fest.iterableToString.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableToString.d.ts",
-        "default": "./dist/iter-fest.iterableToString.js"
       }
     },
     "./iterableWritableStream": {
@@ -246,6 +226,16 @@
         "default": "./dist/iter-fest.iteratorIndexOf.js"
       }
     },
+    "./iteratorJoin": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorJoin.d.mts",
+        "default": "./dist/iter-fest.iteratorJoin.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorJoin.d.ts",
+        "default": "./dist/iter-fest.iteratorJoin.js"
+      }
+    },
     "./iteratorMap": {
       "import": {
         "types": "./dist/iter-fest.iteratorMap.d.mts",
@@ -304,6 +294,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorToIterable.d.ts",
         "default": "./dist/iter-fest.iteratorToIterable.js"
+      }
+    },
+    "./iteratorToString": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorToString.d.mts",
+        "default": "./dist/iter-fest.iteratorToString.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorToString.d.ts",
+        "default": "./dist/iter-fest.iteratorToString.js"
       }
     },
     "./observable": {
