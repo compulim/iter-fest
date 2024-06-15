@@ -36,16 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableEntries": {
-      "import": {
-        "types": "./dist/iter-fest.iterableEntries.d.mts",
-        "default": "./dist/iter-fest.iterableEntries.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableEntries.d.ts",
-        "default": "./dist/iter-fest.iterableEntries.js"
-      }
-    },
     "./iterableFindIndex": {
       "import": {
         "types": "./dist/iter-fest.iterableFindIndex.d.mts",
@@ -184,6 +174,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorDrop.d.ts",
         "default": "./dist/iter-fest.iteratorDrop.js"
+      }
+    },
+    "./iteratorEntries": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorEntries.d.mts",
+        "default": "./dist/iter-fest.iteratorEntries.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorEntries.d.ts",
+        "default": "./dist/iter-fest.iteratorEntries.js"
       }
     },
     "./iteratorEvery": {

@@ -6,7 +6,6 @@ import {
   asyncGeneratorWithLastValue,
   asyncIteratorToAsyncIterable,
   generatorWithLastValue,
-  iterableEntries,
   iterableFindIndex,
   iterableFindLast,
   iterableFindLastIndex,
@@ -75,13 +74,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableEntries should work', () =>
-  expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([
-    [0, 'A'],
-    [1, 'B'],
-    [2, 'C']
-  ]));
 
 test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], value => value % 2)).toBe(0));
 
