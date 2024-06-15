@@ -36,16 +36,6 @@
         "default": "./dist/iter-fest.generatorWithLastValue.js"
       }
     },
-    "./iterableSlice": {
-      "import": {
-        "types": "./dist/iter-fest.iterableSlice.d.mts",
-        "default": "./dist/iter-fest.iterableSlice.mjs"
-      },
-      "require": {
-        "types": "./dist/iter-fest.iterableSlice.d.ts",
-        "default": "./dist/iter-fest.iterableSlice.js"
-      }
-    },
     "./iterableToSpliced": {
       "import": {
         "types": "./dist/iter-fest.iterableToSpliced.d.mts",
@@ -254,6 +244,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorReduce.d.ts",
         "default": "./dist/iter-fest.iteratorReduce.js"
+      }
+    },
+    "./iteratorSlice": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorSlice.d.mts",
+        "default": "./dist/iter-fest.iteratorSlice.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorSlice.d.ts",
+        "default": "./dist/iter-fest.iteratorSlice.js"
       }
     },
     "./iteratorSome": {

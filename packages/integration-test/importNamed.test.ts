@@ -2,7 +2,6 @@ import withResolvers from 'core-js-pure/full/promise/with-resolvers';
 import { asyncGeneratorWithLastValue } from 'iter-fest/asyncGeneratorWithLastValue';
 import { asyncIteratorToAsyncIterable } from 'iter-fest/asyncIteratorToAsyncIterable';
 import { generatorWithLastValue } from 'iter-fest/generatorWithLastValue';
-import { iterableSlice } from 'iter-fest/iterableSlice';
 import { iterableToSpliced } from 'iter-fest/iterableToSpliced';
 import { IterableWritableStream } from 'iter-fest/iterableWritableStream';
 import { iteratorToIterable } from 'iter-fest/iteratorToIterable';
@@ -64,8 +63,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableSlice should work', () => expect(Array.from(iterableSlice([1, 2, 3, 4, 5], 1, 4))).toEqual([2, 3, 4]));
 
 test('iterableToSpliced should work', () =>
   expect(Array.from(iterableToSpliced([1, 2, 3].values(), 1, 1, 9))).toEqual([1, 9, 3]));
