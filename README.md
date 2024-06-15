@@ -243,9 +243,7 @@ We added types to implementation from `core-js-pure`:
 
 ## `Array.prototype` ports
 
-> Note: we are working to move them from `iterable*` to `iterator*` to make them similar to TC39 proposals.
-
-We ported majority of functions from `Array.prototype.*` to `iterable*`.
+We ported majority of functions from `Array.prototype.*` to `iterator*`.
 
 ```ts
 import { iteratorIncludes, iteratorReduce } from 'iter-fest'; // Via default exports.
@@ -275,27 +273,27 @@ Majority of functions should work the same way with same complexity and performa
 There are minor differences on some functions:
 
 - `findLast` and `findLastIndex`
-  - Instead of iterating from the right side, iterables must start from left side
-  - Thus, with an iterable of 5 items, `predicate` will be called exactly 5 times with `O(N)` complexity
+  - Instead of iterating from the right side, iterators must start from left side
+  - Thus, with an iterator of 5 items, `predicate` will be called exactly 5 times with `O(N)` complexity
   - In contrast, its counterpart in `Array` will be called between 1 and 5 times with `O(log N)` complexity
 - `at`, `includes`, `indexOf`, `slice`, and `toSpliced`
   - Index arguments cannot be negative finite number
-    - Negative finite number means traversing from right side, which an iterator/iterable may not have an end
+    - Negative finite number means traversing from right side, which an iterator may not have an end
     - Infinites, zeroes, and positive numbers are supported
 
 ### Why `Array.prototype.push` is not ported?
 
-Some functions that modify the array are not ported, such as, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterables are read-only and we prefer to keep it that way.
+Some functions that modify the array are not ported, such as, `copyWithin`, `fill`, `pop`, `push`, `reverse`, `shift`, `splice`, `unshift`, etc. Iterators are read-only and we prefer to keep it that way.
 
-Some functions that do not have actual functionality in the iterable world are not ported, such as, `values`, etc.
+Some functions that do not have actual functionality in the iterator world are not ported, such as, `values`, etc.
 
 Some functions that cannot not retains their complexity or performance characteristics are not ported. These functions usually iterate from the other end or requires random access, such as, `lastIndexOf`, `reduceRight`, `sort`, `toReversed`, `toSorted`, etc.
 
 If you think a specific function should be ported, please submit a pull request to us.
 
-### How about asynchronous iterables?
+### How about asynchronous iterators?
 
-Yes, this is on our roadmap. This will enable traverse iterables [across domains/workers via `MessagePort`](https://npmjs.com/package/message-port-rpc). We welcome pull requests.
+Yes, this is on our roadmap. This will enable traverse iterators [across domains/workers via `MessagePort`](https://npmjs.com/package/message-port-rpc). We welcome pull requests.
 
 ### How about functions outside of `Array.prototype`?
 
