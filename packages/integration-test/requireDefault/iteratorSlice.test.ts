@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { iteratorSlice } = require('iter-fest');
 
 test('iteratorSlice should work', () =>
