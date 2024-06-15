@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Following functions will be using ponyfill from `core-js-pure` with types, in PR [#24](https://github.com/compulim/iter-fest/pull/24) and [#25](https://github.com/compulim/iter-fest/pull/25)
    - `iteratorEvery`, `iteratorFilter`, `iteratorFind`, `iteratorForEach`, `iteratorMap`, `iteratorReduce`, `iteratorSome`
+- `iterable*` is now `iterator*`, in PR [#26](https://github.com/compulim/iter-fest/pull/26)
 - Bumped dependencies, in PR [#7](https://github.com/compulim/iter-fest/pull/7)
    - Development dependencies
       - [`@babel/preset-env@7.24.6`](https://npmjs.com/package/@babel/preset-env/v/7.24.6)

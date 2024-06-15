@@ -3,19 +3,6 @@ const withResolvers = require('core-js-pure/full/promise/with-resolvers');
 const { asyncGeneratorWithLastValue } = require('iter-fest/asyncGeneratorWithLastValue');
 const { asyncIteratorToAsyncIterable } = require('iter-fest/asyncIteratorToAsyncIterable');
 const { generatorWithLastValue } = require('iter-fest/generatorWithLastValue');
-const { iterableAt } = require('iter-fest/iterableAt');
-const { iterableConcat } = require('iter-fest/iterableConcat');
-const { iterableEntries } = require('iter-fest/iterableEntries');
-const { iterableFindIndex } = require('iter-fest/iterableFindIndex');
-const { iterableFindLast } = require('iter-fest/iterableFindLast');
-const { iterableFindLastIndex } = require('iter-fest/iterableFindLastIndex');
-const { iterableIncludes } = require('iter-fest/iterableIncludes');
-const { iterableIndexOf } = require('iter-fest/iterableIndexOf');
-const { iterableJoin } = require('iter-fest/iterableJoin');
-const { iterableKeys } = require('iter-fest/iterableKeys');
-const { iterableSlice } = require('iter-fest/iterableSlice');
-const { iterableToSpliced } = require('iter-fest/iterableToSpliced');
-const { iterableToString } = require('iter-fest/iterableToString');
 const { IterableWritableStream } = require('iter-fest/iterableWritableStream');
 const { iteratorToIterable } = require('iter-fest/iteratorToIterable');
 const { Observable } = require('iter-fest/observable');
@@ -76,39 +63,6 @@ test('generatorWithLastValue should work', () => {
 
   expect(generator.lastValue()).toEqual('end');
 });
-
-test('iterableAt should work', () => expect(iterableAt([1, 2, 3].values(), 1)).toBe(2));
-
-test('iterableConcat should work', () =>
-  expect(Array.from(iterableConcat([1, 2].values(), [3, 4].values()))).toEqual([1, 2, 3, 4]));
-
-test('iterableEntries should work', () =>
-  expect(Array.from(iterableEntries(['A', 'B', 'C']))).toEqual([
-    [0, 'A'],
-    [1, 'B'],
-    [2, 'C']
-  ]));
-
-test('iterableFindIndex should work', () => expect(iterableFindIndex([1, 2, 3], value => value % 2)).toBe(0));
-
-test('iterableFindLast should work', () => expect(iterableFindLast([1, 2, 3], value => value % 2)).toBe(3));
-
-test('iterableFindLastIndex should work', () => expect(iterableFindLastIndex([1, 2, 3], value => value % 2)).toBe(2));
-
-test('iterableIncludes should work', () => expect(iterableIncludes([1, 2, 3], 2)).toBe(true));
-
-test('iterableIndexOf should work', () => expect(iterableIndexOf([1, 2, 3], 2)).toBe(1));
-
-test('iterableJoin should work', () => expect(iterableJoin([1, 2, 3], ', ')).toBe('1, 2, 3'));
-
-test('iterableKeys should work', () => expect(Array.from(iterableKeys(['A', 'B', 'C']))).toEqual([0, 1, 2]));
-
-test('iterableSlice should work', () => expect(Array.from(iterableSlice([1, 2, 3, 4, 5], 1, 4))).toEqual([2, 3, 4]));
-
-test('iterableToSpliced should work', () =>
-  expect(Array.from(iterableToSpliced([1, 2, 3].values(), 1, 1, 9))).toEqual([1, 9, 3]));
-
-test('iterableToString should work', () => expect(iterableToString([1, 2, 3])).toBe('1,2,3'));
 
 test('IterableWritableStream should work', async () => {
   let deferred = withResolvers();
