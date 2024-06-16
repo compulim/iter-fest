@@ -157,7 +157,7 @@ Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restar
 observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>;
 ```
 
-`Observable` can be converted to `AsyncIterableIterator` for easier consumption. However, `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer could build up quickly.
+`Observable` can be converted to `AsyncIterableIterator` for easier consumption.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
@@ -167,6 +167,8 @@ for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
+
+Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer could build up quickly.
 
 ## Others
 
