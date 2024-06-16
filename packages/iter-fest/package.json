@@ -16,6 +16,16 @@
         "default": "./dist/iter-fest.asyncGeneratorWithLastValue.js"
       }
     },
+    "./asyncIteratorMap": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorMap.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorMap.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorMap.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorMap.js"
+      }
+    },
     "./asyncIteratorToAsyncIterable": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorToAsyncIterable.d.mts",
