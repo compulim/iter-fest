@@ -170,7 +170,7 @@ for await (const value of iterable) {
 
 Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer could build up quickly.
 
-Note: When the observable throw an exception via `observer.error()`, it will become rejection of `AsyncIterator.next()`. The exception will be hoisted back to the caller.
+Note: when the observable throw an exception via `observer.error()`, it will become rejection of `AsyncIterator.next()`. The exception will be hoisted back to the caller.
 
 ## Others
 
