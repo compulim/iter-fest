@@ -226,7 +226,7 @@ const generator = generatorWithLastValue(
 
 ## Adding types to `core-js-pure`
 
-We added types to implementation from `core-js-pure`:
+We added types to [Iterator Helpers](https://github.com/tc39/proposal-iterator-helpers) and [Async Iterator Helpers](https://github.com/tc39/proposal-async-iterator-helpers) implementation from `core-js-pure`:
 
 - [`Iterator.drop`](https://tc39.es/ecma262/#sec-array.prototype.drop)
 - [`Iterator.every`](https://tc39.es/ecma262/#sec-array.prototype.every)
