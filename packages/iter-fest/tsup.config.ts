@@ -7,6 +7,7 @@ export default defineConfig([
       'iter-fest': './src/index.ts',
       'iter-fest.asyncGeneratorWithLastValue': './src/asyncGeneratorWithLastValue.ts',
       'iter-fest.asyncIteratorDrop': './src/asyncIteratorDrop.ts',
+      'iter-fest.asyncIteratorEvery': './src/asyncIteratorEvery.ts',
       'iter-fest.asyncIteratorFilter': './src/asyncIteratorFilter.ts',
       'iter-fest.asyncIteratorFlatMap': './src/asyncIteratorFlatMap.ts',
       'iter-fest.asyncIteratorForEach': './src/asyncIteratorForEach.ts',

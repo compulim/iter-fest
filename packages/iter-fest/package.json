@@ -26,6 +26,16 @@
         "default": "./dist/iter-fest.asyncIteratorDrop.js"
       }
     },
+    "./asyncIteratorEvery": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorEvery.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorEvery.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorEvery.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorEvery.js"
+      }
+    },
     "./asyncIteratorFilter": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorFilter.d.mts",
