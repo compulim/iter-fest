@@ -7,6 +7,7 @@ export * from './asyncIteratorFlatMap';
 export * from './asyncIteratorMap';
 export * from './asyncIteratorReduce';
 export * from './asyncIteratorTake';
+export * from './asyncIteratorToArray';
 export * from './asyncIteratorToAsyncIterable';
 export * from './generatorWithLastValue';
 export * from './iterableWritableStream';

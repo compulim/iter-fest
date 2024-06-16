@@ -12,6 +12,7 @@ export default defineConfig([
       'iter-fest.asyncIteratorMap': './src/asyncIteratorMap.ts',
       'iter-fest.asyncIteratorReduce': './src/asyncIteratorReduce.ts',
       'iter-fest.asyncIteratorTake': './src/asyncIteratorTake.ts',
+      'iter-fest.asyncIteratorToArray': './src/asyncIteratorToArray.ts',
       'iter-fest.asyncIteratorToAsyncIterable': './src/asyncIteratorToAsyncIterable.ts',
       'iter-fest.generatorWithLastValue': './src/generatorWithLastValue.ts',
       'iter-fest.iterableWritableStream': './src/iterableWritableStream.ts',
