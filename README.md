@@ -26,8 +26,7 @@ npm install iter-fest
 | `ReadableStream`           | `AsyncIterableIterator` | [`readableStreamValues`](#converting-a-readablestream-to-asynciterableiterator) |
 | `AsyncIterable`            | `Observable`            | [`observableFromAsync`](#converting-an-asynciterable-to-observable)             |
 | `AsyncIterable`/`Iterable` | `ReadableStream`        | [`readableStreamFrom`](#converting-an-asynciterableiterable-to-readablestream)  |
-
-To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as intermediate format](#converting-an-observable-to-asynciterableiterator).
+| `Observable`               | `AsyncIterableIterator` | [`observableValues`](#converting-an-observable-to-asynciterableiterator)        |
 
 ### Converting an iterator to iterable
 
@@ -154,21 +153,20 @@ Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restar
 
 ### Converting an `Observable` to `AsyncIterableIterator`
 
-`ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
+```ts
+observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>;
+```
+
+`Observable` can be converted to `AsyncIterableIterator` for easier consumption. However, `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer could build up quickly.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
-const readable = observableSubscribeAsReadable(observable);
-const iterable = readableStreamValues(readable);
+const iterable = observableValues(readable);
 
 for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
-
-Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
-
-Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
 
 ## Others
 

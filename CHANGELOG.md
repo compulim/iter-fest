@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `asyncIteratorToAsyncIterable` in PR [#18](https://github.com/compulim/iter-fest/pull/18)
 - Added `iteratorDrop`, `iteratorFlatMap`, `iteratorFrom`, `iteratorTake`, `iteratorToArray` in PR [#24](https://github.com/compulim/iter-fest/pull/24) and [#25](https://github.com/compulim/iter-fest/pull/25)
 - Added [Async Iterator Helpers](https://github.com/tc39/proposal-async-iterator-helpers) from `core-js-pure` as `asyncIterator*` in PR [#28](https://github.com/compulim/iter-fest/pull/28) and [#29](https://github.com/compulim/iter-fest/pull/29)
+- Added `observableValues` in PR [#30](https://github.com/compulim/iter-fest/pull/30)
 
 ### Changed
 
