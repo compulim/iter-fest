@@ -60,24 +60,6 @@ for (const value of iteratorToIterable(iterate())) {
 
 Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not restart the iteration. This is because iterator is an instance of iteration and is not restartable.
 
-### Converting an `Observable` to `AsyncIterableIterator`
-
-`ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
-
-```ts
-const observable = Observable.from([1, 2, 3]);
-const readable = observableSubscribeAsReadable(observable);
-const iterable = readableStreamValues(readable);
-
-for await (const value of iterable) {
-  console.log(value); // Prints "1", "2", "3".
-}
-```
-
-Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
-
-Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
-
 ### Converting an `AsyncIterable` to `Observable`
 
 ```ts
@@ -169,6 +151,24 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ```
 
 Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restart the iteration where possible.
+
+### Converting an `Observable` to `AsyncIterableIterator`
+
+`ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
+
+```ts
+const observable = Observable.from([1, 2, 3]);
+const readable = observableSubscribeAsReadable(observable);
+const iterable = readableStreamValues(readable);
+
+for await (const value of iterable) {
+  console.log(value); // Prints "1", "2", "3".
+}
+```
+
+Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
+
+Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
 
 ## Others
 
