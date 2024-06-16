@@ -76,6 +76,16 @@
         "default": "./dist/iter-fest.asyncIteratorForEach.js"
       }
     },
+    "./asyncIteratorFrom": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorFrom.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorFrom.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorFrom.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorFrom.js"
+      }
+    },
     "./asyncIteratorMap": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorMap.d.mts",

@@ -1,6 +1,6 @@
 import { iteratorFrom } from 'iter-fest';
 
-test('iteratorFrom', () => {
+test('iteratorFrom should work', () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.
   class Iter {
     next() {

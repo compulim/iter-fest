@@ -7,6 +7,7 @@ export * from './asyncIteratorFilter';
 export * from './asyncIteratorFind';
 export * from './asyncIteratorFlatMap';
 export * from './asyncIteratorForEach';
+export * from './asyncIteratorFrom';
 export * from './asyncIteratorMap';
 export * from './asyncIteratorReduce';
 export * from './asyncIteratorSome';
