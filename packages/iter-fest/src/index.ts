@@ -1,6 +1,7 @@
 export * from './Observable';
 export * from './SymbolObservable';
 export * from './asyncGeneratorWithLastValue';
+export * from './asyncIteratorFilter';
 export * from './asyncIteratorMap';
 export * from './asyncIteratorToAsyncIterable';
 export * from './generatorWithLastValue';
