@@ -1,4 +1,6 @@
-export function readerValues<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T> {
+export function readableStreamValues<T>(readable: ReadableStream<T>): AsyncIterableIterator<T> {
+  const reader = readable.getReader();
+
   const iterable: AsyncIterableIterator<T> = {
     [Symbol.asyncIterator]() {
       return iterable;
@@ -13,8 +15,8 @@ export function readerValues<T>(reader: ReadableStreamDefaultReader<T>): AsyncIt
       return { value: result.value };
     },
     async return() {
-      // Throw inside for-loop is return().
-      reader.cancel();
+      // Break/throw inside for-loop will trigger return().
+      reader.releaseLock();
 
       return { done: true, value: undefined };
     }

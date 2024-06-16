@@ -1,10 +1,9 @@
 import hasResolved from './private/hasResolved';
-import { readerValues } from './readerValues';
+import { readableStreamValues } from './readableStreamValues';
 
 describe('comprehensive', () => {
   let controller: ReadableStreamDefaultController<number>;
   let iterable: AsyncIterableIterator<number>;
-  let reader: ReadableStreamDefaultReader<number>;
   let readableStream: ReadableStream<number>;
 
   beforeEach(() => {
@@ -14,9 +13,7 @@ describe('comprehensive', () => {
       }
     });
 
-    reader = readableStream.getReader();
-
-    iterable = readerValues(reader);
+    iterable = readableStreamValues(readableStream);
   });
 
   test('iterable.next() should not resolve', () => expect(hasResolved(iterable.next())).resolves.toBe(false));
@@ -67,7 +64,7 @@ test('after close() should still read all', async () => {
 
   const values = [];
 
-  for await (const value of readerValues(readableStream.getReader())) {
+  for await (const value of readableStreamValues(readableStream)) {
     values.push(value);
   }
 
@@ -83,26 +80,18 @@ test('release and create another reader', async () => {
     }
   });
 
-  const reader1 = readableStream.getReader();
-
-  for await (const value of readerValues(reader1)) {
+  for await (const value of readableStreamValues(readableStream)) {
     expect(value).toBe(1);
     break;
   }
 
-  reader1.releaseLock();
-
-  const reader2 = readableStream.getReader();
-
-  for await (const value of readerValues(reader2)) {
+  for await (const value of readableStreamValues(readableStream)) {
     expect(value).toBe(2);
   }
 });
 
-test('break in for-loop should cancel', async () => {
-  const cancel = jest.fn();
+test('break in for-loop should release', async () => {
   const readableStream = new ReadableStream({
-    cancel,
     start(controller) {
       controller.enqueue(1);
       controller.enqueue(2);
@@ -110,17 +99,16 @@ test('break in for-loop should cancel', async () => {
     }
   });
 
-  for await (const _ of readerValues(readableStream.getReader())) {
+  for await (const _ of readableStreamValues(readableStream)) {
+    expect(readableStream.locked).toBe(true);
     break;
   }
 
-  expect(cancel).toHaveBeenCalledTimes(1);
+  expect(readableStream.locked).toBe(false);
 });
 
-test('throw in for-loop should cancel', async () => {
-  const cancel = jest.fn();
+test('throw in for-loop should release', async () => {
   const readableStream = new ReadableStream({
-    cancel,
     start(controller) {
       controller.enqueue(1);
       controller.enqueue(2);
@@ -129,12 +117,14 @@ test('throw in for-loop should cancel', async () => {
   });
 
   await (async () => {
-    for await (const _ of readerValues(readableStream.getReader())) {
+    for await (const _ of readableStreamValues(readableStream)) {
+      expect(readableStream.locked).toBe(true);
+
       throw new Error('artificial');
     }
   })().catch(() => {});
 
-  expect(cancel).toHaveBeenCalledTimes(1);
+  expect(readableStream.locked).toBe(false);
 });
 
 test('pull-based reader', async () => {
@@ -152,7 +142,7 @@ test('pull-based reader', async () => {
 
   const values: number[] = [];
 
-  for await (const value of readerValues(readableStream.getReader())) {
+  for await (const value of readableStreamValues(readableStream)) {
     values.push(value);
   }
 
@@ -173,7 +163,7 @@ test('mixed mode reader', async () => {
 
   const values: number[] = [];
 
-  for await (const value of readerValues(readableStream.getReader())) {
+  for await (const value of readableStreamValues(readableStream)) {
     values.push(value);
   }
 

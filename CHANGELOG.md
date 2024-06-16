@@ -16,13 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added typed `Observable` from `core-js-pure`, in PR [#8](https://github.com/compulim/iter-fest/pull/8)
 - Added `observableFromAsync` to convert `AsyncIterable` into `Observable` in PR [#9](https://github.com/compulim/iter-fest/pull/9)
 - Added `IterableWritableStream` in PR [#11](https://github.com/compulim/iter-fest/pull/11) and [#23](https://github.com/compulim/iter-fest/pull/23)
-- Added `readerValues` in PR [#12](https://github.com/compulim/iter-fest/pull/12) and [#14](https://github.com/compulim/iter-fest/pull/14)
+- Added `readableStreamValues` in PR [#12](https://github.com/compulim/iter-fest/pull/12), [#14](https://github.com/compulim/iter-fest/pull/14), and [#30](https://github.com/compulim/iter-fest/pull/30)
 - Added `observableSubscribeAsReadable` in PR [#13](https://github.com/compulim/iter-fest/pull/13)
 - Added `readableStreamFrom` in PR [#15](https://github.com/compulim/iter-fest/pull/15) and [#22](https://github.com/compulim/iter-fest/pull/22)
 - Added `generatorWithLastValue`/`asyncGeneratorWithLastValue` in PR [#17](https://github.com/compulim/iter-fest/pull/17)
 - Added `asyncIteratorToAsyncIterable` in PR [#18](https://github.com/compulim/iter-fest/pull/18)
 - Added `iteratorDrop`, `iteratorFlatMap`, `iteratorFrom`, `iteratorTake`, `iteratorToArray` in PR [#24](https://github.com/compulim/iter-fest/pull/24) and [#25](https://github.com/compulim/iter-fest/pull/25)
 - Added [Async Iterator Helpers](https://github.com/tc39/proposal-async-iterator-helpers) from `core-js-pure` as `asyncIterator*` in PR [#28](https://github.com/compulim/iter-fest/pull/28) and [#29](https://github.com/compulim/iter-fest/pull/29)
+- Added `observableValues` in PR [#30](https://github.com/compulim/iter-fest/pull/30)
 
 ### Changed
 

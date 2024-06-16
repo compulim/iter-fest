@@ -8,6 +8,6 @@ import from from 'core-js-pure/full/iterator/from';
  *
  * @link https://github.com/tc39/proposal-iterator-helpers/blob/main/README.md
  */
-export function iteratorFrom<T>(iteratorLike: Iterator<T>): Iterator<T> {
+export function iteratorFrom<T>(iteratorLike: Pick<Iterator<T>, 'next'>): Iterator<T> {
   return from(iteratorLike);
 }

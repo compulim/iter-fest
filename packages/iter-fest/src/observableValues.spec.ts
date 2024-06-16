@@ -1,11 +1,6 @@
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable';
-import { observableSubscribeAsReadable } from './observableSubscribeAsReadable';
+import { observableValues } from './observableValues';
 import type { JestMockOf } from './private/JestMockOf';
-import { readerValues } from './readerValues';
-
-function observableToAsyncIterableIteratorViaReadableStream<T>(observable: Observable<T>): AsyncIterableIterator<T> {
-  return readerValues(observableSubscribeAsReadable(observable).getReader());
-}
 
 describe('comprehensive', () => {
   describe('step-by-step', () => {
@@ -24,7 +19,7 @@ describe('comprehensive', () => {
       });
 
       observable = new Observable(subscriberFunction);
-      iterator = observableToAsyncIterableIteratorViaReadableStream(observable);
+      iterator = observableValues(observable);
     });
 
     describe('when iterator.next() is called', () => {
@@ -63,7 +58,7 @@ describe('comprehensive', () => {
 
     beforeEach(() => {
       observable = Observable.from([1, 2, 3]);
-      iterator = observableToAsyncIterableIteratorViaReadableStream(observable);
+      iterator = observableValues(observable);
     });
 
     describe('when iterate', () => {
@@ -96,7 +91,7 @@ describe('comprehensive', () => {
     const values: number[] = [];
 
     const promise = (async function () {
-      const iterator = observableToAsyncIterableIteratorViaReadableStream<number>(observable);
+      const iterator = observableValues<number>(observable);
 
       for await (const value of iterator) {
         values.push(value);
