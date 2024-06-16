@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `generatorWithLastValue`/`asyncGeneratorWithLastValue` in PR [#17](https://github.com/compulim/iter-fest/pull/17)
 - Added `asyncIteratorToAsyncIterable` in PR [#18](https://github.com/compulim/iter-fest/pull/18)
 - Added `iteratorDrop`, `iteratorFlatMap`, `iteratorFrom`, `iteratorTake`, `iteratorToArray` in PR [#24](https://github.com/compulim/iter-fest/pull/24) and [#25](https://github.com/compulim/iter-fest/pull/25)
+- Added `asyncIterator*` in PR [#XXX](https://github.com/compulim/iter-fest/pull/XXX)
 
 ### Changed
 
