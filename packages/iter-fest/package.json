@@ -36,6 +36,16 @@
         "default": "./dist/iter-fest.asyncIteratorFilter.js"
       }
     },
+    "./asyncIteratorFlatMap": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorFlatMap.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorFlatMap.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorFlatMap.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorFlatMap.js"
+      }
+    },
     "./asyncIteratorMap": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorMap.d.mts",
@@ -314,6 +324,16 @@
       "require": {
         "types": "./dist/iter-fest.iteratorToArray.d.ts",
         "default": "./dist/iter-fest.iteratorToArray.js"
+      }
+    },
+    "./iteratorToAsync": {
+      "import": {
+        "types": "./dist/iter-fest.iteratorToAsync.d.mts",
+        "default": "./dist/iter-fest.iteratorToAsync.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.iteratorToAsync.d.ts",
+        "default": "./dist/iter-fest.iteratorToAsync.js"
       }
     },
     "./iteratorToIterable": {
