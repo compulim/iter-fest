@@ -7,6 +7,7 @@ export * from './asyncIteratorFlatMap';
 export * from './asyncIteratorForEach';
 export * from './asyncIteratorMap';
 export * from './asyncIteratorReduce';
+export * from './asyncIteratorSome';
 export * from './asyncIteratorTake';
 export * from './asyncIteratorToArray';
 export * from './asyncIteratorToAsyncIterable';
