@@ -133,7 +133,7 @@ for await (const value of iterable) {
 
 Note: The stream will be locked as soon as the iterable is created. When using iterating outside of for-loop, make sure to call `AsyncIterator.return` when the iteration is done to release the lock on the stream.
 
-Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream. Reader is not restartable and streams are not seekable.
+Note: `[Symbol.asyncIterator]()` will not restart the stream.
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
