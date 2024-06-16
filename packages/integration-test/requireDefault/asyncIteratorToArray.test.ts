@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { asyncIteratorTake, asyncIteratorToArray } = require('iter-fest/asyncIteratorTake');
+const { asyncIteratorTake, asyncIteratorToArray } = require('iter-fest');
 
 test('asyncIteratorToArray should work', async () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.
