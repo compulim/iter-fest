@@ -16,6 +16,16 @@
         "default": "./dist/iter-fest.asyncGeneratorWithLastValue.js"
       }
     },
+    "./asyncIteratorDrop": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorDrop.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorDrop.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorDrop.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorDrop.js"
+      }
+    },
     "./asyncIteratorFilter": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorFilter.d.mts",
