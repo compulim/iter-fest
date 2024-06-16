@@ -1,10 +1,10 @@
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable';
 import { observableSubscribeAsReadable } from './observableSubscribeAsReadable';
 import type { JestMockOf } from './private/JestMockOf';
-import { readerValues } from './readerValues';
+import { readableStreamValues } from './readableStreamValues';
 
 function observableToAsyncIterableIteratorViaReadableStream<T>(observable: Observable<T>): AsyncIterableIterator<T> {
-  return readerValues(observableSubscribeAsReadable(observable).getReader());
+  return readableStreamValues(observableSubscribeAsReadable(observable));
 }
 
 describe('comprehensive', () => {
