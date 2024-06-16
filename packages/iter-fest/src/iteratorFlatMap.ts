@@ -10,6 +10,6 @@ import flatMap from 'core-js-pure/full/iterator/flat-map';
  *
  * @link https://github.com/tc39/proposal-iterator-helpers/blob/main/README.md
  */
-export function iteratorFlatMap<T, U>(iterable: Iterable<T>, mapperFn: (value: T, index: number) => U): Iterator<T> {
-  return flatMap(iterable, mapperFn);
+export function iteratorFlatMap<T, U>(iterator: Iterator<T>, mapperFn: (value: T, index: number) => U): Iterator<T> {
+  return flatMap(iterator, mapperFn);
 }

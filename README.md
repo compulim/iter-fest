@@ -226,7 +226,7 @@ const generator = generatorWithLastValue(
 
 ## Adding types to `core-js-pure`
 
-We added types to implementation from `core-js-pure`:
+We added types to [Iterator Helpers](https://github.com/tc39/proposal-iterator-helpers) and [Async Iterator Helpers](https://github.com/tc39/proposal-async-iterator-helpers) implementation from `core-js-pure`:
 
 - [`Iterator.drop`](https://tc39.es/ecma262/#sec-array.prototype.drop)
 - [`Iterator.every`](https://tc39.es/ecma262/#sec-array.prototype.every)
@@ -240,6 +240,18 @@ We added types to implementation from `core-js-pure`:
 - [`Iterator.some`](https://tc39.es/ecma262/#sec-array.prototype.some)
 - [`Iterator.take`](https://tc39.es/ecma262/#sec-array.prototype.take)
 - [`Iterator.toArray`](https://tc39.es/ecma262/#sec-array.prototype.toarray)
+- [`AsyncIterator.drop`](https://tc39.es/ecma262/#sec-array.prototype.drop)
+- [`AsyncIterator.every`](https://tc39.es/ecma262/#sec-array.prototype.every)
+- [`AsyncIterator.filter`](https://tc39.es/ecma262/#sec-array.prototype.filter)
+- [`AsyncIterator.find`](https://tc39.es/ecma262/#sec-array.prototype.find)
+- [`AsyncIterator.flatMap`](https://tc39.es/ecma262/#sec-array.prototype.flatmap)
+- [`AsyncIterator.forEach`](https://tc39.es/ecma262/#sec-array.prototype.foreach)
+- [`AsyncIterator.from`](https://tc39.es/ecma262/#sec-array.prototype.from)
+- [`AsyncIterator.map`](https://tc39.es/ecma262/#sec-array.prototype.map)
+- [`AsyncIterator.reduce`](https://tc39.es/ecma262/#sec-array.prototype.reduce)
+- [`AsyncIterator.some`](https://tc39.es/ecma262/#sec-array.prototype.some)
+- [`AsyncIterator.take`](https://tc39.es/ecma262/#sec-array.prototype.take)
+- [`AsyncIterator.toArray`](https://tc39.es/ecma262/#sec-array.prototype.toarray)
 
 ## `Array.prototype` ports
 
