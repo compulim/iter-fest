@@ -59,7 +59,7 @@ Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not resta
 
 `ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
 
-Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIteratorrr`, the internal buffer of `ReadableStream` could build up quickly.
+Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
 
 ```ts
 const observable = Observable.from([1, 2, 3]);
