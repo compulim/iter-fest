@@ -46,4 +46,4 @@ export * from './iteratorToString';
 export * from './observableFromAsync';
 export * from './observableSubscribeAsReadable';
 export * from './readableStreamFrom';
-export * from './readerValues';
+export * from './readableStreamValues';

@@ -476,14 +476,14 @@
         "default": "./dist/iter-fest.readableStreamFrom.js"
       }
     },
-    "./readerValues": {
+    "./readableStreamValues": {
       "import": {
-        "types": "./dist/iter-fest.readerValues.d.mts",
-        "default": "./dist/iter-fest.readerValues.mjs"
+        "types": "./dist/iter-fest.readableStreamValues.d.mts",
+        "default": "./dist/iter-fest.readableStreamValues.mjs"
       },
       "require": {
-        "types": "./dist/iter-fest.readerValues.d.ts",
-        "default": "./dist/iter-fest.readerValues.js"
+        "types": "./dist/iter-fest.readableStreamValues.d.ts",
+        "default": "./dist/iter-fest.readableStreamValues.js"
       }
     },
     "./symbolObservable": {

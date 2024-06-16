@@ -18,18 +18,23 @@ npm install iter-fest
 
 ## Conversions
 
-| From                          | To                      | Function signature                                                                                                                                         |
-| ----------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>`](#converting-an-iterator-to-iterable)                                                 |
-| `AsyncIterator`               | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>`](#converting-an-iterator-to-iterable)                        |
-| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>`](#converting-an-observable-to-readablestream)                            |
-| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readerValues`<T>(reader: ReadableStreamDefaultReader<T>): AsyncIterableIterator<T>`](#converting-a-readablestreamdefaultreader-to-asynciterableiterator) |
-| `AsyncIterable`               | `Observable`            | [`observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>`](#converting-an-asynciterable-to-observable)                                          |
-| `AsyncIterable`/`Iterable`    | `ReadableStream`        | [`readableStreamFrom<T>(anyIterable: AsyncIterable<T> \| Iterable<T>): ReadableStream<T>`](#converting-an-asynciterableiterable-to-readablestream)         |
+| From                          | To                      | Function                                                                                     |
+| ----------------------------- | ----------------------- | -------------------------------------------------------------------------------------------- |
+| `Iterator`                    | `IterableIterator`      | [`iteratorToIterable`](#converting-an-iterator-to-iterable)                                  |
+| `AsyncIterator`               | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable`](#converting-an-iterator-to-iterable)                        |
+| `Observable`                  | `ReadableStream`        | [`observableSubscribeAsReadable`](#converting-an-observable-to-readablestream)               |
+| `ReadableStreamDefaultReader` | `AsyncIterableIterator` | [`readableStreamValues`](#converting-a-readablestreamdefaultreader-to-asynciterableiterator) |
+| `AsyncIterable`               | `Observable`            | [`observableFromAsync`](#converting-an-asynciterable-to-observable)                          |
+| `AsyncIterable`/`Iterable`    | `ReadableStream`        | [`readableStreamFrom`](#converting-an-asynciterableiterable-to-readablestream)               |
 
 To convert `Observable` to `AsyncIterableIterator`, [use `ReadableStream` as intermediate format](#converting-an-observable-to-asynciterableiterator).
 
 ### Converting an iterator to iterable
+
+```ts
+iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>
+asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>
+```
 
 `iteratorToIterable` and `asyncIteratorToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
 
@@ -59,21 +64,25 @@ Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not resta
 
 `ReadableStream` can be used as an intermediate format when converting an `Observable` to `AsyncIterableIterator`.
 
-Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
-
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const readable = observableSubscribeAsReadable(observable);
-const iterable = readerValues(readable.getReader());
+const iterable = readableStreamValues(readable);
 
 for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
 
+Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer of `ReadableStream` could build up quickly.
+
 Note: calling `[Symbol.asyncIterator]()` will not resubscribe and read from the start of the observable. This is because the intermediate format does not support restart.
 
 ### Converting an `AsyncIterable` to `Observable`
+
+```ts
+observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>
+```
 
 `Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
 
@@ -98,6 +107,10 @@ Note: It is not recommended to convert `AsyncGenerator` to an `Observable`. `Asy
 
 ### Converting an `Observable` to `ReadableStream`
 
+```ts
+observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>
+```
+
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
 
 Note: `Observable` is push-based and it does not support flow control. When converting to `ReadableStream`, the internal buffer could build up quickly.
@@ -111,10 +124,14 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 
 ### Converting a `ReadableStreamDefaultReader` to `AsyncIterableIterator`
 
-`readerValues` will convert default reader of `ReadableStream` into an `AsyncIterableIterator` to use in for-loop.
+```ts
+readableStreamValues`<T>(readable: ReadableStream<T>): AsyncIterableIterator<T>
+```
+
+`readableStreamValues` allow iteration of `ReadableStream` as an `AsyncIterableIterator`.
 
 ```ts
-const readableStream = new ReadableStream({
+const readable = new ReadableStream({
   start(controller) {
     controller.enqueue(1);
     controller.enqueue(2);
@@ -125,16 +142,22 @@ const readableStream = new ReadableStream({
   }
 });
 
-const iterable = readerValues(readableStream.getReader());
+const iterable = readableStreamValues(readable);
 
 for await (const value of iterable) {
   console.log(value); // Prints "1", "2", "3".
 }
 ```
 
+Note: The stream will be locked as soon as the iterable is created. When using iterating outside of for-loop, make sure to call `AsyncIterator.return` when the iteration is done to release the lock on the stream.
+
 Note: `[Symbol.asyncIterator]()` will not restart the reader and read from start of the stream. Reader is not restartable and streams are not seekable.
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
+
+```ts
+readableStreamFrom<T>(anyIterable: AsyncIterable<T> | Iterable<T>): ReadableStream<T>
+```
 
 > Notes: this feature is part of [Streams Standard](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/from_static).
 

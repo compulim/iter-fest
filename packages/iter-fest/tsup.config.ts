@@ -52,7 +52,7 @@ export default defineConfig([
       'iter-fest.observableFromAsync': './src/observableFromAsync.ts',
       'iter-fest.observableSubscribeAsReadable': './src/observableSubscribeAsReadable.ts',
       'iter-fest.readableStreamFrom': './src/readableStreamFrom.ts',
-      'iter-fest.readerValues': './src/readerValues.ts',
+      'iter-fest.readableStreamValues': './src/readableStreamValues.ts',
       'iter-fest.symbolObservable': './src/SymbolObservable.ts'
     },
     format: ['cjs', 'esm'],
