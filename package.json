@@ -1,6 +1,6 @@
 {
   "name": "iter-fest-root",
-  "version": "0.1.1-0",
+  "version": "0.2.0",
   "description": "",
   "private": true,
   "author": "William Wong (https://github.com/compulim)",
@@ -22,7 +22,7 @@
     "postscaffold:eslint:react": "npm run bump:eslintrc",
     "precommit": "npm run precommit --if-present --workspaces",
     "switch:_": "npm run --if-present --workspaces switch && npm install --legacy-peer-deps --prefer-dedupe",
-        "test": "npm run test --if-present --workspaces"
+    "test": "npm run test --if-present --workspaces"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.4.0",
