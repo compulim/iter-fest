@@ -31,8 +31,9 @@ npm install iter-fest
 ### Converting an iterator to iterable
 
 ```ts
-iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>
-asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>
+function iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>
+
+function asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>
 ```
 
 `iteratorToIterable` and `asyncIteratorToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
@@ -62,7 +63,7 @@ Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not resta
 ### Converting an `AsyncIterable` to `Observable`
 
 ```ts
-observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>
+function observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>
 ```
 
 `Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
@@ -89,7 +90,7 @@ Note: It is not recommended to convert `AsyncGenerator` to an `Observable`. `Asy
 ### Converting an `Observable` to `ReadableStream`
 
 ```ts
-observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>
+function observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>
 ```
 
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
@@ -106,7 +107,7 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ### Converting a `ReadableStream` to `AsyncIterableIterator`
 
 ```ts
-readableStreamValues`<T>(readable: ReadableStream<T>): AsyncIterableIterator<T>
+function readableStreamValues`<T>(readable: ReadableStream<T>): AsyncIterableIterator<T>
 ```
 
 `readableStreamValues` allow iteration of `ReadableStream` as an `AsyncIterableIterator`.
@@ -137,7 +138,7 @@ Note: `[Symbol.asyncIterator]()` will not restart the stream.
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
 ```ts
-readableStreamFrom<T>(anyIterable: AsyncIterable<T> | Iterable<T>): ReadableStream<T>
+function readableStreamFrom<T>(anyIterable: AsyncIterable<T> | Iterable<T>): ReadableStream<T>
 ```
 
 > Notes: this feature is part of [Streams Standard](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/from_static).
@@ -154,7 +155,7 @@ Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restar
 ### Converting an `Observable` to `AsyncIterableIterator`
 
 ```ts
-observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>;
+function observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>
 ```
 
 `Observable` can be converted to `AsyncIterableIterator` for easier consumption.
