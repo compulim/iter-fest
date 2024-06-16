@@ -46,6 +46,16 @@
         "default": "./dist/iter-fest.asyncIteratorFlatMap.js"
       }
     },
+    "./asyncIteratorForEach": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorForEach.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorForEach.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorForEach.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorForEach.js"
+      }
+    },
     "./asyncIteratorMap": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorMap.d.mts",
