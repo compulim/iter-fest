@@ -8,6 +8,7 @@ export default defineConfig([
       'iter-fest.asyncGeneratorWithLastValue': './src/asyncGeneratorWithLastValue.ts',
       'iter-fest.asyncIteratorFilter': './src/asyncIteratorFilter.ts',
       'iter-fest.asyncIteratorMap': './src/asyncIteratorMap.ts',
+      'iter-fest.asyncIteratorTake': './src/asyncIteratorTake.ts',
       'iter-fest.asyncIteratorToAsyncIterable': './src/asyncIteratorToAsyncIterable.ts',
       'iter-fest.generatorWithLastValue': './src/generatorWithLastValue.ts',
       'iter-fest.iterableWritableStream': './src/iterableWritableStream.ts',

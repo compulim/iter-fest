@@ -3,6 +3,7 @@ export * from './SymbolObservable';
 export * from './asyncGeneratorWithLastValue';
 export * from './asyncIteratorFilter';
 export * from './asyncIteratorMap';
+export * from './asyncIteratorTake';
 export * from './asyncIteratorToAsyncIterable';
 export * from './generatorWithLastValue';
 export * from './iterableWritableStream';
