@@ -12,6 +12,7 @@ export default defineConfig([
       'iter-fest.asyncIteratorFind': './src/asyncIteratorFind.ts',
       'iter-fest.asyncIteratorFlatMap': './src/asyncIteratorFlatMap.ts',
       'iter-fest.asyncIteratorForEach': './src/asyncIteratorForEach.ts',
+      'iter-fest.asyncIteratorFrom': './src/asyncIteratorFrom.ts',
       'iter-fest.asyncIteratorMap': './src/asyncIteratorMap.ts',
       'iter-fest.asyncIteratorReduce': './src/asyncIteratorReduce.ts',
       'iter-fest.asyncIteratorSome': './src/asyncIteratorSome.ts',
