@@ -5,6 +5,7 @@ export * from './asyncIteratorDrop';
 export * from './asyncIteratorFilter';
 export * from './asyncIteratorFlatMap';
 export * from './asyncIteratorMap';
+export * from './asyncIteratorReduce';
 export * from './asyncIteratorTake';
 export * from './asyncIteratorToAsyncIterable';
 export * from './generatorWithLastValue';

@@ -56,6 +56,16 @@
         "default": "./dist/iter-fest.asyncIteratorMap.js"
       }
     },
+    "./asyncIteratorReduce": {
+      "import": {
+        "types": "./dist/iter-fest.asyncIteratorReduce.d.mts",
+        "default": "./dist/iter-fest.asyncIteratorReduce.mjs"
+      },
+      "require": {
+        "types": "./dist/iter-fest.asyncIteratorReduce.d.ts",
+        "default": "./dist/iter-fest.asyncIteratorReduce.js"
+      }
+    },
     "./asyncIteratorTake": {
       "import": {
         "types": "./dist/iter-fest.asyncIteratorTake.d.mts",
