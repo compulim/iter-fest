@@ -1,6 +1,7 @@
-import { readerValues } from 'iter-fest';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { readableStreamValues } = require('iter-fest/readableStreamValues');
 
-test('readerValues should work', async () => {
+test('readableStreamValues should work', async () => {
   const readableStream = new ReadableStream({
     start(controller) {
       controller.enqueue(1);
@@ -11,7 +12,7 @@ test('readerValues should work', async () => {
 
   const values = [];
 
-  for await (const value of readerValues(readableStream.getReader())) {
+  for await (const value of readableStreamValues(readableStream)) {
     values.push(value);
   }
 
