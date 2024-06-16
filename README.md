@@ -159,8 +159,6 @@ observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>;
 
 `Observable` can be converted to `AsyncIterableIterator` for easier consumption.
 
-When the observable throw an exception via `observer.error()`, it will become rejection of `AsyncIterator.next()`. The exception will be hoisted back to the caller.
-
 ```ts
 const observable = Observable.from([1, 2, 3]);
 const iterable = observableValues(readable);
@@ -171,6 +169,8 @@ for await (const value of iterable) {
 ```
 
 Note: `Observable` is push-based and it does not support flow control. When converting to `AsyncIterableIterator`, the internal buffer could build up quickly.
+
+Note: When the observable throw an exception via `observer.error()`, it will become rejection of `AsyncIterator.next()`. The exception will be hoisted back to the caller.
 
 ## Others
 
