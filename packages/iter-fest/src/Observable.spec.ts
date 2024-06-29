@@ -7,8 +7,8 @@ import {
   type StartFunction,
   type SubscriberFunction,
   type Subscription
-} from './Observable.js';
-import { SymbolObservable } from './SymbolObservable.js';
+} from './Observable.ts';
+import { SymbolObservable } from './SymbolObservable.ts';
 import type { JestMockOf } from './private/JestMockOf.js';
 
 describe('comprehensive', () => {

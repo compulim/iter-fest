@@ -6,7 +6,7 @@ import {
   type Observer,
   type StartFunction,
   type Subscription
-} from './Observable.js';
+} from './Observable.ts';
 import type { JestMockOf } from './private/JestMockOf.js';
 
 describe('comprehensive', () => {

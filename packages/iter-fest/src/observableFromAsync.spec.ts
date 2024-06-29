@@ -1,8 +1,8 @@
-import type { CompleteFunction, ErrorFunction, NextFunction, Observable, StartFunction } from './Observable.js';
-import { observableFromAsync } from './observableFromAsync.js';
+import type { CompleteFunction, ErrorFunction, NextFunction, Observable, StartFunction } from './Observable.ts';
+import { observableFromAsync } from './observableFromAsync.ts';
 
 import { type JestMockOf } from './private/JestMockOf.js';
-import withResolvers from './private/withResolvers.js';
+import withResolvers from './private/withResolvers.ts';
 
 describe('comprehensive', () => {
   let complete: JestMockOf<CompleteFunction>;
