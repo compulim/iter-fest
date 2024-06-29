@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed ESM imports under Node.js, in PR [#37](https://github.com/compulim/iter-fest/pull/37)
+- Fixed ESM imports under Node.js, in PR [#37](https://github.com/compulim/iter-fest/pull/37) and [#38](https://github.com/compulim/iter-fest/pull/38)
 
 ### Added
 
