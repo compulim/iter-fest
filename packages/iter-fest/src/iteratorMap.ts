@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import map from 'core-js-pure/full/iterator/map';
+import map from 'core-js-pure/full/iterator/map.js';
 
 /**
  * Calls a defined callback function on each element of an array, and returns an array that contains the results.

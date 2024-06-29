@@ -1,6 +1,6 @@
-import type { Observable } from './Observable';
-import { observableSubscribeAsReadable } from './observableSubscribeAsReadable';
-import { readableStreamValues } from './readableStreamValues';
+import type { Observable } from './Observable.js';
+import { observableSubscribeAsReadable } from './observableSubscribeAsReadable.ts';
+import { readableStreamValues } from './readableStreamValues.ts';
 
 export function observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T> {
   const readable = observableSubscribeAsReadable(observable);

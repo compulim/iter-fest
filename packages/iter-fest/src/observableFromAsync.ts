@@ -1,4 +1,4 @@
-import { Observable } from './Observable';
+import { Observable } from './Observable.ts';
 
 export function observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T> {
   return new Observable(subscriber => {

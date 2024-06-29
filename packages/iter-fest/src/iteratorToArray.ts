@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import toArray from 'core-js-pure/full/iterator/to-array';
+import toArray from 'core-js-pure/full/iterator/to-array.js';
 
 /**
  * When you have a non-infinite iterator which you wish to transform into an array, you can do so with the builtin toArray method.

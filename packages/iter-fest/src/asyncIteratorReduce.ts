@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import reduce from 'core-js-pure/full/async-iterator/reduce';
+import reduce from 'core-js-pure/full/async-iterator/reduce.js';
 
 /**
  * Calls the specified callback function for all the elements in an iterator. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.

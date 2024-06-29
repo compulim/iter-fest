@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import find from 'core-js-pure/full/iterator/find';
+import find from 'core-js-pure/full/iterator/find.js';
 
 /**
  * Returns the value of the first element in the iterator where predicate is true, and undefined

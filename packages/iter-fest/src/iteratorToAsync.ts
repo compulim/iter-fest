@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import toAsync from 'core-js-pure/full/iterator/to-async';
+import toAsync from 'core-js-pure/full/iterator/to-async.js';
 
 /**
  * Converts an iterator into async iterator.

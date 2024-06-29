@@ -1,4 +1,0 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { iteratorToString } = require('iter-fest');
-
-test('iteratorToString should work', () => expect(iteratorToString([1, 2, 3].values())).toBe('1,2,3'));

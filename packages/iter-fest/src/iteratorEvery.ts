@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import every from 'core-js-pure/full/iterator/every';
+import every from 'core-js-pure/full/iterator/every.js';
 
 /**
  * Determines whether all the members of an iterator satisfy the specified test.
