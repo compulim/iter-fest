@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] - 2024-06-16
 
+### Fixed
+
+- Fixed ESM imports under Node.js, in PR [#XXX](https://github.com/compulim/iter-fest/pull/XXX)
+
 ### Added
 
 - Added typed `Observable` from `core-js-pure`, in PR [#8](https://github.com/compulim/iter-fest/pull/8)

@@ -1,4 +1,4 @@
-import type { Observable, Subscription } from './Observable';
+import type { Observable, Subscription } from './Observable.js';
 
 export function observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T> {
   let subscription: Subscription;

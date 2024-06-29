@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import from from 'core-js-pure/full/async-iterator/from';
+import from from 'core-js-pure/full/async-iterator/from.js';
 
 /**
  * `.from` is a static method (unlike the others listed above) which takes an object as an argument. This method allows wrapping "iterator-like" objects with an iterator.

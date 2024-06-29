@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import take from 'core-js-pure/full/async-iterator/take';
+import take from 'core-js-pure/full/async-iterator/take.js';
 
 /**
  * `take` takes an integer as an argument. It returns an iterator that produces, at most, the given number of elements produced by the underlying iterator.

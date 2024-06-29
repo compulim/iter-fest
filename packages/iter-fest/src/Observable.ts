@@ -1,7 +1,7 @@
 // @ts-expect-error core-js is not typed.
-import CoreJSObservable from 'core-js-pure/full/observable';
+import CoreJSObservable from 'core-js-pure/full/observable/index.js';
 
-import { SymbolObservable } from './SymbolObservable';
+import { SymbolObservable } from './SymbolObservable.js';
 
 export interface SubscriptionObserver<T> {
   /** Sends the next value in the sequence */

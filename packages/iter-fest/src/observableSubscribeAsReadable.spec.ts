@@ -1,7 +1,7 @@
-import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable';
-import { observableSubscribeAsReadable } from './observableSubscribeAsReadable';
-import type { JestMockOf } from './private/JestMockOf';
-import hasResolved from './private/hasResolved';
+import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.js';
+import { observableSubscribeAsReadable } from './observableSubscribeAsReadable.js';
+import type { JestMockOf } from './private/JestMockOf.js';
+import hasResolved from './private/hasResolved.js';
 
 describe('comprehensive', () => {
   let observable: Observable<number>;

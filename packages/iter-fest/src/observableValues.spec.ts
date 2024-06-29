@@ -1,6 +1,6 @@
-import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable';
-import { observableValues } from './observableValues';
-import type { JestMockOf } from './private/JestMockOf';
+import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.js';
+import { observableValues } from './observableValues.js';
+import type { JestMockOf } from './private/JestMockOf.js';
 
 describe('comprehensive', () => {
   describe('step-by-step', () => {

@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import forEach from 'core-js-pure/full/async-iterator/for-each';
+import forEach from 'core-js-pure/full/async-iterator/for-each.js';
 
 /**
  * Performs the specified action for each element in an iterator.

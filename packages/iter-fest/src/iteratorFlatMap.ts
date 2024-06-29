@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import flatMap from 'core-js-pure/full/iterator/flat-map';
+import flatMap from 'core-js-pure/full/iterator/flat-map.js';
 
 /**
  * `.flatMap` takes a mapping function as an argument. It returns an iterator that produces all elements of the iterators produced by applying the mapping function to the elements produced by the underlying iterator.

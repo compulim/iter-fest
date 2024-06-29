@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import filter from 'core-js-pure/full/iterator/filter';
+import filter from 'core-js-pure/full/iterator/filter.js';
 
 /**
  * Returns the elements of an iterator that meet the condition specified in a callback function.

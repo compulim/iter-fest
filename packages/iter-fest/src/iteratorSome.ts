@@ -1,5 +1,5 @@
 // @ts-expect-error core-js-pure is not typed.
-import some from 'core-js-pure/full/iterator/some';
+import some from 'core-js-pure/full/iterator/some.js';
 
 /**
  * Determines whether the specified callback function returns true for any element of an iterable.
