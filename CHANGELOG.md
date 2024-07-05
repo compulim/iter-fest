@@ -5,11 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Fixed
-
-- Fixed ESM imports under Node.js, in PR [#37](https://github.com/compulim/iter-fest/pull/37) and [#38](https://github.com/compulim/iter-fest/pull/38)
+## [0.2.1] - 2024-07-05
 
 ### Changed
 
@@ -23,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`prettier@3.3.2`](https://npmjs.com/package/prettier/v/3.3.2)
       - [`tsup@8.1.0`](https://npmjs.com/package/tsup/v/8.1.0)
       - [`typescript@5.5.2`](https://npmjs.com/package/typescript/v/5.5.2)
+
+### Fixed
+
+- Fixed ESM imports under Node.js, in PR [#37](https://github.com/compulim/iter-fest/pull/37) and [#38](https://github.com/compulim/iter-fest/pull/38)
 
 ## [0.2.0] - 2024-06-16
 
@@ -63,5 +63,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First public release
 
+[0.2.1]: https://github.com/compulim/iter-fest/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/compulim/iter-fest/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/compulim/iter-fest/releases/tag/v0.1.0
