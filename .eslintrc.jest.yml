@@ -8,6 +8,3 @@ rules:
   react/display-name: off
   # Disable for convenience
   react/prop-types: off
-
-  import/no-commonjs: off
-  import/no-extension: off
