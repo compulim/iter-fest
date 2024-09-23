@@ -1,4 +1,4 @@
-import { iteratorJoin } from './iteratorJoin';
+import { iteratorJoin } from './iteratorJoin.ts';
 
 /**
  * Returns a string representation of an iterator.

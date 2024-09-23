@@ -1,4 +1,4 @@
-import withResolvers from './private/withResolvers';
+import withResolvers from './private/withResolvers.ts';
 
 const CLOSE = Symbol();
 

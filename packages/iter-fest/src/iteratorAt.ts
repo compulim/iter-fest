@@ -1,5 +1,5 @@
-import { iteratorToIterable } from './iteratorToIterable';
-import toIntegerOrInfinity from './private/toIntegerOrInfinity';
+import { iteratorToIterable } from './iteratorToIterable.ts';
+import toIntegerOrInfinity from './private/toIntegerOrInfinity.ts';
 
 /**
  * Returns the item located at the specified index.

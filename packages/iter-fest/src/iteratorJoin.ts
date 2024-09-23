@@ -1,4 +1,4 @@
-import { iteratorToIterable } from './iteratorToIterable';
+import { iteratorToIterable } from './iteratorToIterable.ts';
 
 /**
  * Adds all the elements of an iterator into a string, separated by the specified separator string.

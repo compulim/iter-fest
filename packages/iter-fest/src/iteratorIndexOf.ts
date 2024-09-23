@@ -1,5 +1,5 @@
-import { iteratorToIterable } from './iteratorToIterable';
-import toIntegerOrInfinity from './private/toIntegerOrInfinity';
+import { iteratorToIterable } from './iteratorToIterable.ts';
+import toIntegerOrInfinity from './private/toIntegerOrInfinity.ts';
 
 /**
  * Returns the index of the first occurrence of a value in an iterator, or -1 if it is not present.
