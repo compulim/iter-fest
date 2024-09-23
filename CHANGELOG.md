@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Added ESLint import/export syntax, in PR [#43](https://github.com/compulim/iter-fest/pull/43)
+- Added [ESLint import/export syntax](https://npmjs.com/package/eslint-plugin-import), in PR [#43](https://github.com/compulim/iter-fest/pull/43)
+- Added [`publint`](https://npmjs.com/package/publint), in PR [#45](https://github.com/compulim/iter-fest/pull/45)
 
 ## [0.2.1] - 2024-07-05
 
