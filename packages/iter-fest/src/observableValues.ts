@@ -1,4 +1,4 @@
-import type { Observable } from './Observable.js';
+import { type Observable } from './Observable.ts';
 import { observableSubscribeAsReadable } from './observableSubscribeAsReadable.ts';
 import { readableStreamValues } from './readableStreamValues.ts';
 

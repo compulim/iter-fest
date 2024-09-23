@@ -1,4 +1,4 @@
-import { iteratorToIterable } from './iteratorToIterable';
+import { iteratorToIterable } from './iteratorToIterable.ts';
 
 /**
  * Returns an iterator of keys in the iterator

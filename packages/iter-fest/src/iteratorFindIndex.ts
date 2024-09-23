@@ -1,4 +1,4 @@
-import { iteratorToIterable } from './iteratorToIterable';
+import { iteratorToIterable } from './iteratorToIterable.ts';
 
 /**
  * Returns the index of the first element in the iterator where predicate is true, and -1

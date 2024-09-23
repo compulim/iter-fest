@@ -1,5 +1,5 @@
-import { iteratorToIterable } from './iteratorToIterable';
-import toIntegerOrInfinity from './private/toIntegerOrInfinity';
+import { iteratorToIterable } from './iteratorToIterable.ts';
+import toIntegerOrInfinity from './private/toIntegerOrInfinity.ts';
 
 /**
  * Returns a copy of a section of an iterator.

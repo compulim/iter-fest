@@ -1,4 +1,4 @@
-import { iteratorToIterable } from './iteratorToIterable';
+import { iteratorToIterable } from './iteratorToIterable.ts';
 
 function isIterator<T>(value: unknown): value is Iterator<T> {
   return !!value && typeof value === 'object' && Symbol.iterator in value;

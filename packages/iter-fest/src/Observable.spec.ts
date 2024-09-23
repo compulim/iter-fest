@@ -9,7 +9,7 @@ import {
   type Subscription
 } from './Observable.ts';
 import { SymbolObservable } from './SymbolObservable.ts';
-import type { JestMockOf } from './private/JestMockOf.js';
+import type { JestMockOf } from './private/JestMockOf.ts';
 
 describe('comprehensive', () => {
   let complete: JestMockOf<CompleteFunction>;
