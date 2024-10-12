@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added [ESLint import/export syntax](https://npmjs.com/package/eslint-plugin-import), in PR [#43](https://github.com/compulim/iter-fest/pull/43)
 - Added [`publint`](https://npmjs.com/package/publint), in PR [#45](https://github.com/compulim/iter-fest/pull/45)
+- Bumped dependencies, in PR [#50](https://github.com/compulim/iter-fest/pull/50)
 
 ## [0.2.1] - 2024-07-05
 
@@ -70,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First public release
 
+[Unreleased]: https://github.com/compulim/iter-fest/compare/v0.2.1...HEAD
 [0.2.1]: https://github.com/compulim/iter-fest/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/compulim/iter-fest/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/compulim/iter-fest/releases/tag/v0.1.0
