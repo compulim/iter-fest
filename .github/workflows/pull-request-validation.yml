@@ -12,6 +12,7 @@ jobs:
         switch: [current]
     uses: compulim/workflows/.github/workflows/pull-request-validation.yml@main
     with:
+      node-version: 22 # Requires Node.js 22 for some tests.
       package-name: iter-fest
       skip-integration-test: false
       switch: ${{ matrix.switch }}

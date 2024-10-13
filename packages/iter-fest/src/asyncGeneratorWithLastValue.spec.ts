@@ -191,3 +191,17 @@ test('return in try-finally', async () => {
   await expect(generator.next()).resolves.toEqual({ done: true, value: undefined });
   expect(generator.lastValue()).toEqual(undefined);
 });
+
+test('passthrough asyncDispose', async () => {
+  const dispose = jest.fn();
+  const symbolAsyncDispose: typeof Symbol.asyncDispose = Symbol.asyncDispose || Symbol.for('Symbol.asyncDispose');
+
+  const generator = (async function* () {})();
+
+  // Currently, in Node.js 22.9.0, `Generator` does not have `asyncDispose` yet. We are ponyfilling it in.
+  generator[symbolAsyncDispose] || (generator[symbolAsyncDispose] = dispose);
+
+  await asyncGeneratorWithLastValue<number, void, void>(generator)[symbolAsyncDispose]?.();
+
+  expect(dispose).toHaveBeenCalledTimes(1);
+});
