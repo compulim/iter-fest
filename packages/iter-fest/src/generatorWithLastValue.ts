@@ -12,6 +12,7 @@ export function generatorWithLastValue<T = unknown, TReturn = any, TNext = unkno
   let lastValue: typeof STILL_ITERATING | TReturn = STILL_ITERATING;
 
   const generatorWithLastValue = {
+    ...generator,
     [Symbol.iterator]() {
       return generatorWithLastValue;
     },

@@ -162,3 +162,13 @@ test('return in try-finally', () => {
   expect(generator.next()).toEqual({ done: true, value: undefined });
   expect(generator.lastValue()).toEqual(undefined);
 });
+
+test('passthrough map', () => {
+  const generator = (function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+  })();
+
+  expect(generator.reduce((sum, value) => sum + value, 0)).toBe(6);
+});

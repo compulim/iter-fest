@@ -16,6 +16,7 @@ export function asyncGeneratorWithLastValue<T = unknown, TReturn = any, TNext = 
   let lastValue: typeof STILL_ITERATING | TReturn = STILL_ITERATING;
 
   const asyncGeneratorWithLastValue = {
+    ...generator,
     [Symbol.asyncIterator]() {
       return asyncGeneratorWithLastValue;
     },
