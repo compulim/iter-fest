@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `generatorWithLastValue`/`asyncGeneratorWithLastValue` will passthrough function calls to underlying `Generator`/`AsyncGenerator`, in PR [#65](https://github.com/compulim/iter-fest/pull/65)
+
 ### Changed
 
 - Added [ESLint import/export syntax](https://npmjs.com/package/eslint-plugin-import), in PR [#43](https://github.com/compulim/iter-fest/pull/43)
