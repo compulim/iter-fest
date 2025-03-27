@@ -19,4 +19,21 @@ describe('readableStreamValues', () => {
 
     expect(values).toEqual([1, 2]);
   });
+
+  it('should work with AbortSignal', async () => {
+    const abortController = new AbortController();
+    let controller;
+
+    const readableStream = new ReadableStream({
+      start(c) {
+        controller = c;
+      }
+    });
+
+    const values = readableStreamValues(readableStream, { signal: abortController.signal });
+
+    abortController.abort();
+
+    await expect(values.next()).rejects.toThrow('Aborted');
+  });
 });
