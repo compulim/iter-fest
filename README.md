@@ -107,7 +107,12 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 ### Converting a `ReadableStream` to `AsyncIterableIterator`
 
 ```ts
-function readableStreamValues`<T>(readable: ReadableStream<T>): AsyncIterableIterator<T>
+function readableStreamValues`<T>(
+  readable: ReadableStream<T>,
+  init: {
+    signal?: AbortSignal | undefined;
+  }
+): AsyncIterableIterator<T>
 ```
 
 `readableStreamValues` allow iteration of `ReadableStream` as an `AsyncIterableIterator`.
@@ -134,6 +139,30 @@ for await (const value of iterable) {
 Note: The stream will be locked as soon as the iterable is created. When using iterating outside of for-loop, make sure to call `AsyncIterator.return` when the iteration is done to release the lock on the stream.
 
 Note: `[Symbol.asyncIterator]()` will not restart the stream.
+
+Note: When the iterating for-loop has broken, thrown, or is aborted via `init.signal`, the readable stream will be released and can be read again and continue where it left.
+
+#### Breaking the loop early
+
+To break early without awaiting for the next value, pass an `AbortSignal` to `init.signal`. When the signal is aborted, the `await` will be rejected with error message "Aborted" and release the reader gracefully. The reader can be reopened and will continue where it left.
+
+```ts
+const abortController = new AbortController();
+const iterable = readableStreamValues(readable, { signal: abortController.signal });
+
+setTimeout(() => {
+  abortController.abort();
+}, 100);
+
+try {
+  for await (const value of iterable) {
+    console.log(value);
+  }
+} catch (error) {
+  // Will throw with error message "Aborted".
+}
+```
+
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 

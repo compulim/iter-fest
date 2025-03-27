@@ -1,4 +1,13 @@
-export function readableStreamValues<T>(readable: ReadableStream<T>): AsyncIterableIterator<T> {
+import abortSignalAsRejectedPromise from './private/abortSignalAsRejectedPromise';
+
+type Init = {
+  signal?: AbortSignal | undefined;
+};
+
+export function readableStreamValues<T>(
+  readable: ReadableStream<T>,
+  init?: Init | undefined
+): AsyncIterableIterator<T> {
   const reader = readable.getReader();
 
   const iterable: AsyncIterableIterator<T> = {
@@ -6,7 +15,16 @@ export function readableStreamValues<T>(readable: ReadableStream<T>): AsyncItera
       return iterable;
     },
     async next(): Promise<IteratorResult<T>> {
-      const result = await Promise.race([reader.read(), reader.closed]);
+      const abortPromise = init?.signal && abortSignalAsRejectedPromise(init.signal);
+      let result: ReadableStreamReadResult<T> | void;
+
+      try {
+        result = await Promise.race([reader.read(), reader.closed, ...(abortPromise ? [abortPromise] : [])]);
+      } catch (error) {
+        reader.releaseLock();
+
+        throw error;
+      }
 
       if (!result || result.done) {
         return { done: true, value: undefined };
