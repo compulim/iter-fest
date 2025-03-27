@@ -107,6 +107,30 @@ test('break in for-loop should release', async () => {
   expect(readableStream.locked).toBe(false);
 });
 
+test('break in for-loop should continue where it break', async () => {
+  const readableStream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  for await (const value of readableStreamValues(readableStream)) {
+    expect(value).toBe(1);
+    break;
+  }
+
+  for await (const value of readableStreamValues(readableStream)) {
+    expect(value).toBe(2);
+    break;
+  }
+
+  for await (const _ of readableStreamValues(readableStream)) {
+    throw new Error('Should not iterate.');
+  }
+});
+
 test('throw in for-loop should release', async () => {
   const readableStream = new ReadableStream({
     start(controller) {
@@ -125,6 +149,34 @@ test('throw in for-loop should release', async () => {
   })().catch(() => {});
 
   expect(readableStream.locked).toBe(false);
+});
+
+test('throw in for-loop should continue where it break', async () => {
+  const readableStream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(1);
+      controller.enqueue(2);
+      controller.close();
+    }
+  });
+
+  try {
+    for await (const value of readableStreamValues(readableStream)) {
+      expect(value).toBe(1);
+      throw new Error('artificial');
+    }
+  } catch {}
+
+  try {
+    for await (const value of readableStreamValues(readableStream)) {
+      expect(value).toBe(2);
+      throw new Error('artificial');
+    }
+  } catch {}
+
+  for await (const _ of readableStreamValues(readableStream)) {
+    throw new Error('Should not iterate.');
+  }
 });
 
 test('pull-based reader', async () => {
@@ -168,4 +220,60 @@ test('mixed mode reader', async () => {
   }
 
   expect(values).toEqual([1, 2, 3]);
+});
+
+describe('with signal', () => {
+  let abortController: AbortController;
+  let controller: ReadableStreamDefaultController<number>;
+  let iterable: AsyncIterableIterator<number>;
+  let readableStream: ReadableStream<number>;
+
+  beforeEach(() => {
+    abortController = new AbortController();
+
+    readableStream = new ReadableStream({
+      start(c) {
+        controller = c;
+      }
+    });
+
+    iterable = readableStreamValues(readableStream, { signal: abortController.signal });
+  });
+
+  describe('when enqueue(1) is called', () => {
+    let nextPromise: Promise<IteratorResult<number>>;
+
+    beforeEach(() => {
+      nextPromise = iterable.next();
+      controller.enqueue(1);
+    });
+
+    test('iterable.next() should resolve 1', () => expect(nextPromise).resolves.toEqual({ value: 1 }));
+
+    describe('when abort() is called', () => {
+      beforeEach(() => {
+        nextPromise = iterable.next();
+        nextPromise.catch(() => {});
+
+        abortController.abort();
+      });
+
+      test('should throw', () => expect(nextPromise).rejects.toThrow('Aborted'));
+
+      describe('when enqueue(2) is called', () => {
+        beforeEach(() => {
+          controller.enqueue(2);
+        });
+
+        describe('when iterate again', () => {
+          beforeEach(() => {
+            iterable = readableStreamValues(readableStream);
+            nextPromise = iterable.next();
+          });
+
+          test('iterable.next() should resolve 2', () => expect(nextPromise).resolves.toEqual({ value: 2 }));
+        });
+      });
+    });
+  });
 });

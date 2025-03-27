@@ -1,5 +1,5 @@
 const { expect } = require('expect');
-const { readableStreamValues } = require('iter-fest/readableStreamValues');
+const { readableStreamValues } = require('iter-fest');
 
 describe('readableStreamValues', () => {
   it('should work', async () => {
@@ -18,5 +18,16 @@ describe('readableStreamValues', () => {
     }
 
     expect(values).toEqual([1, 2]);
+  });
+
+  it('should work with AbortSignal', async () => {
+    const abortController = new AbortController();
+    const readableStream = new ReadableStream();
+
+    const values = readableStreamValues(readableStream, { signal: abortController.signal });
+
+    abortController.abort();
+
+    await expect(values.next()).rejects.toThrow('Aborted');
   });
 });
