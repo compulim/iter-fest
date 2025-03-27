@@ -1,4 +1,4 @@
-import abortSignalAsRejectedPromise from './private/abortSignalAsRejectedPromise';
+import abortSignalAsRejectedPromise from './private/abortSignalAsRejectedPromise.js';
 
 type Init = {
   signal?: AbortSignal | undefined;
