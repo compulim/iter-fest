@@ -22,13 +22,7 @@ describe('readableStreamValues', () => {
 
   it('should work with AbortSignal', async () => {
     const abortController = new AbortController();
-    let controller;
-
-    const readableStream = new ReadableStream({
-      start(c) {
-        controller = c;
-      }
-    });
+    const readableStream = new ReadableStream();
 
     const values = readableStreamValues(readableStream, { signal: abortController.signal });
 
