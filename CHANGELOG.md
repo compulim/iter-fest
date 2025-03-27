@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `generatorWithLastValue`/`asyncGeneratorWithLastValue` will passthrough function calls to underlying `Generator`/`AsyncGenerator`, in PR [#65](https://github.com/compulim/iter-fest/pull/65)
-- `readableStreamValues` now allows early breakage via `AbortSignal`, in PR [#XXX](https://github.com/compulim/iter-fest/pull/XXX)
+- `readableStreamValues` now allows early breakage via `AbortSignal`, in PR [#69](https://github.com/compulim/iter-fest/pull/69)
 
 ### Changed
 
