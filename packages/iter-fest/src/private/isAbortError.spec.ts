@@ -17,6 +17,7 @@ describe('when DOMException is not defined globally', () => {
   beforeEach(() => {
     originalDOMException = globalThis.DOMException;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     globalThis.DOMException = undefined;
   });

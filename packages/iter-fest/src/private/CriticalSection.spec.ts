@@ -26,7 +26,8 @@ describe('when 2 jobs are pending', () => {
   });
 
   test('the first job should be running', () => expect(fn1).toHaveBeenCalledTimes(1));
-  test('the first entrance should not be resolved', () => expect(hasResolvedOrRejected(enter1Promise)).resolves.toBe(false));
+  test('the first entrance should not be resolved', () =>
+    expect(hasResolvedOrRejected(enter1Promise)).resolves.toBe(false));
   test('the second job should not be running', () => expect(fn2).not.toHaveBeenCalled());
 
   describe('when the first job is resolved', () => {
@@ -34,7 +35,8 @@ describe('when 2 jobs are pending', () => {
 
     test('the first entrance should be resolved', () => expect(enter1Promise).resolves.toBe(1));
     test('the second job should be running', () => expect(fn2).toHaveBeenCalledTimes(1));
-    test('the second entrance should not be resolved', () => expect(hasResolvedOrRejected(enter2Promise)).resolves.toBe(false));
+    test('the second entrance should not be resolved', () =>
+      expect(hasResolvedOrRejected(enter2Promise)).resolves.toBe(false));
 
     describe('when the second job is resolved', () => {
       beforeEach(() => resolver2.resolve(2));

@@ -1,3 +1,4 @@
+/* eslint-disable */
 // @ts-nocheck
 
 test.skip('readableStream.values() with 2 next() and 1 return()', async () => {
@@ -10,8 +11,8 @@ test.skip('readableStream.values() with 2 next() and 1 return()', async () => {
 
   const values = stream.values();
 
-  let next1Promise = values.next();
-  let next2Promise = values.next();
+  const next1Promise = values.next();
+  const next2Promise = values.next();
 
   controller.enqueue(1);
 

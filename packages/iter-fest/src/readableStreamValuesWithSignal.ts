@@ -1,7 +1,7 @@
-import AsyncIteratorMachinery from './private/AsyncIteratorMachinery';
-import createAbortError from './private/createAbortError';
+import AsyncIteratorMachinery from './private/AsyncIteratorMachinery.ts';
+import createAbortError from './private/createAbortError.ts';
 
-export type ReadableStreamIteratorWithSignalOptions = ReadableStreamIteratorOptions & {
+type ReadableStreamIteratorWithSignalOptions = ReadableStreamIteratorOptions & {
   signal?: AbortSignal | undefined;
 };
 
@@ -56,6 +56,7 @@ class ReadableStreamIterator<T> implements ReadableStreamAsyncIterator<T> {
 
   // The get the next iteration result steps for a ReadableStream, given stream and iterator, are:
   // next(...[value]: [] | [any]): Promise<IteratorResult<T, any>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   next: () => Promise<IteratorResult<T, any>> = () => {
     if (this.#signal?.aborted) {
       return Promise.reject(createAbortError());
@@ -70,6 +71,7 @@ class ReadableStreamIterator<T> implements ReadableStreamAsyncIterator<T> {
     // 2. Assert: reader.[[stream]] is not undefined.
 
     // 3. Let promise be a new promise.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resolvers = Promise.withResolvers<IteratorResult<T, any>>();
 
     // 4. Let readRequest be a new read request with the following items:
@@ -129,6 +131,7 @@ class ReadableStreamIterator<T> implements ReadableStreamAsyncIterator<T> {
   };
 
   // The asynchronous iterator return steps for a ReadableStream, given stream, iterator, and arg, are:
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async return(value?: any): Promise<IteratorResult<T, any>> {
     if (this.#signal?.aborted) {
       return Promise.reject(createAbortError());
@@ -183,3 +186,5 @@ export function readableStreamValuesWithSignal<T>(
 ): ReadableStreamAsyncIterator<T> {
   return new AsyncIteratorMachinery(new ReadableStreamIterator(stream, [options || {}]));
 }
+
+export { type ReadableStreamIteratorWithSignalOptions };

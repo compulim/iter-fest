@@ -1,4 +1,10 @@
-import { type CompleteFunction, type ErrorFunction, type NextFunction, type Observable, type StartFunction } from './Observable.ts';
+import {
+  type CompleteFunction,
+  type ErrorFunction,
+  type NextFunction,
+  type Observable,
+  type StartFunction
+} from './Observable.ts';
 import { observableFromAsync } from './observableFromAsync.ts';
 
 import { type JestMockOf } from './private/JestMockOf.js';

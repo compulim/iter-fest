@@ -1,4 +1,4 @@
-import CriticalSection from './CriticalSection';
+import CriticalSection from './CriticalSection.ts';
 
 /**
  * This machinery protect the logic of iterator/generator. It guarantees:
@@ -77,5 +77,6 @@ export default class AsyncIteratorMachinery<T, TReturn, TNext> implements AsyncI
 
   next: (...[value]: [] | [TNext]) => Promise<IteratorResult<T, TReturn>>;
   return?: (value?: TReturn | PromiseLike<TReturn> | undefined) => Promise<IteratorResult<T, TReturn>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   throw?: (e?: any) => Promise<IteratorResult<T, TReturn>>;
 }
