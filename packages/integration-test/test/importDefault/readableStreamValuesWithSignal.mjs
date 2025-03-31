@@ -1,7 +1,7 @@
 import { expect } from 'expect';
 import { readableStreamValuesWithSignal } from 'iter-fest';
 
-describe('readableStreamValuesWithAbort', () => {
+describe('readableStreamValuesWithSignal', () => {
   it('should work with AbortSignal', async () => {
     const abortController = new AbortController();
     const readableStream = new ReadableStream();
