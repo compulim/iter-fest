@@ -1,5 +1,5 @@
+import AsyncIteratorMachinery from './private/AsyncIteratorMachinery';
 import createAbortError from './private/createAbortError';
-import CriticalSection from './private/CriticalSection';
 
 export type ReadableStreamIteratorWithSignalOptions = ReadableStreamIteratorOptions & {
   signal?: AbortSignal | undefined;
@@ -182,79 +182,4 @@ export function readableStreamValuesWithSignal<T>(
   options?: ReadableStreamIteratorWithSignalOptions | undefined
 ): ReadableStreamAsyncIterator<T> {
   return new AsyncIteratorMachinery(new ReadableStreamIterator(stream, [options || {}]));
-}
-
-/**
- * This machinery protect the logic of iterator/generator. It guarantees:
- *
- * - next(), return(), throw() are in the same critical section
- *    - They will be processed sequentially
- * - Either return() and throw() will only be called once
- *    - Once return() or throw() is called, the iterator will be marked as done
- * - When the iterator is done
- *    - next() will always return { done: true, value: undefined }
- *    - return(value) will always return { done: true, value }
- *    - throw(reason) will always throw reason
- */
-class AsyncIteratorMachinery<T, TReturn, TNext> implements AsyncIteratorObject<T, TReturn, TNext> {
-  constructor(iterator: AsyncIterator<T, TReturn, TNext>) {
-    this.#criticalSection = new CriticalSection();
-    this.#done = false;
-
-    const enter = this.#criticalSection.enter.bind(this.#criticalSection);
-
-    const return_ = iterator.return && iterator.return.bind(iterator);
-    const throw_ = iterator.throw && iterator.throw.bind(iterator);
-
-    this.next = (...[value]) =>
-      enter(() =>
-        this.#done
-          ? // Seems a bug in TypeScript that it doesn't allow undefined as TReturn for AsyncIterator
-            Promise.resolve({ done: true, value: undefined as TReturn })
-          : iterator.next(...(value ? [value] : []))
-      );
-
-    if (return_) {
-      this.return = value =>
-        enter(() => {
-          if (this.#done) {
-            return Promise.resolve(value).then(value => ({
-              done: true,
-              // Seems a bug in TypeScript that it doesn't allow undefined as TReturn for AsyncIterator
-              value: typeof value === 'undefined' ? (value as TReturn) : value
-            }));
-          }
-
-          this.#done = true;
-
-          return return_(value);
-        });
-    }
-
-    if (throw_) {
-      this.throw = reason =>
-        enter(() => {
-          if (this.#done) {
-            throw reason;
-          }
-
-          this.#done = true;
-
-          return throw_(reason);
-        });
-    }
-  }
-
-  #criticalSection: CriticalSection;
-  #done: boolean;
-
-  async [Symbol.asyncDispose]() {}
-
-  [Symbol.asyncIterator]() {
-    return this;
-  }
-
-  next: (...[value]: [] | [TNext]) => Promise<IteratorResult<T, TReturn>>;
-  return?: (value?: TReturn | PromiseLike<TReturn> | undefined) => Promise<IteratorResult<T, TReturn>>;
-  throw?: (e?: any) => Promise<IteratorResult<T, TReturn>>;
 }
