@@ -31,15 +31,3 @@ test.skip('readableStream.values(), return() should not return reason', async ()
   // ACTUAL: { done: true, value: 'Cancellation reason' }
   expect(returnResult).toEqual({ done: true, value: undefined });
 });
-
-// test('readableStream.values() with preventCancel, return() followed by next() should reject', async () => {
-//   const stream = new ReadableStream();
-
-//   const values = stream.values({ preventCancel: true });
-
-//   await values.return();
-
-//   // EXPECT: Reject
-//   // ACTUAL: Resolve { done: true, value: undefined }
-//   await expect(values.next()).rejects.toThrow();
-// });
