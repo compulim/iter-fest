@@ -23,7 +23,6 @@ npm install iter-fest
 | `Iterator`                 | `IterableIterator`      | [`iteratorToIterable`](#converting-an-iterator-to-iterable)                     |
 | `AsyncIterator`            | `AsyncIterableIterator` | [`asyncIteratorToAsyncIterable`](#converting-an-iterator-to-iterable)           |
 | `Observable`               | `ReadableStream`        | [`observableSubscribeAsReadable`](#converting-an-observable-to-readablestream)  |
-| `ReadableStream`           | `AsyncIterableIterator` | [`readableStreamValues`](#converting-a-readablestream-to-asynciterableiterator) |
 | `AsyncIterable`            | `Observable`            | [`observableFromAsync`](#converting-an-asynciterable-to-observable)             |
 | `AsyncIterable`/`Iterable` | `ReadableStream`        | [`readableStreamFrom`](#converting-an-asynciterableiterable-to-readablestream)  |
 | `Observable`               | `AsyncIterableIterator` | [`observableValues`](#converting-an-observable-to-asynciterableiterator)        |
@@ -31,9 +30,9 @@ npm install iter-fest
 ### Converting an iterator to iterable
 
 ```ts
-function iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>
+function iteratorToIterable<T>(iterator: Iterator<T>): IterableIterator<T>;
 
-function asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>
+function asyncIteratorToAsyncIterable<T>(asyncIterator: AsyncIterator<T>): AsyncIterableIterator<T>;
 ```
 
 `iteratorToIterable` and `asyncIteratorToAsyncIterable` enable a [pure iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator) to be iterable using a for-loop statement.
@@ -63,7 +62,7 @@ Note: calling `[Symbol.iterator]()` or `[Symbol.asyncIterator]()` will not resta
 ### Converting an `AsyncIterable` to `Observable`
 
 ```ts
-function observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>
+function observableFromAsync<T>(iterable: AsyncIterable<T>): Observable<T>;
 ```
 
 `Observable.from` converts `Iterable` into `Observable`. However, it does not convert `AsyncIterable`.
@@ -90,7 +89,7 @@ Note: It is not recommended to convert `AsyncGenerator` to an `Observable`. `Asy
 ### Converting an `Observable` to `ReadableStream`
 
 ```ts
-function observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>
+function observableSubscribeAsReadable<T>(observable: Observable<T>): ReadableStream<T>;
 ```
 
 `ReadableStream` is powerful for transforming and piping stream of data. It can be formed using data from both push-based and pull-based source with backpressuree.
@@ -106,68 +105,18 @@ readable.pipeTo(stream.writable); // Will write 1, 2, 3.
 
 ### Converting a `ReadableStream` to `AsyncIterableIterator`
 
+> This is deprecated and removed in favor of [native `ReadableStream.values()`](https://streams.spec.whatwg.org/#rs-asynciterator).
+
 ```ts
 function readableStreamValues`<T>(
-  readable: ReadableStream<T>,
-  init: {
-    signal?: AbortSignal | undefined;
-  }
+  readable: ReadableStream<T>
 ): AsyncIterableIterator<T>
 ```
-
-`readableStreamValues` allow iteration of `ReadableStream` as an `AsyncIterableIterator`.
-
-```ts
-const readable = new ReadableStream({
-  start(controller) {
-    controller.enqueue(1);
-    controller.enqueue(2);
-  },
-  pull(controller) {
-    controller.enqueue(3);
-    controller.close();
-  }
-});
-
-const iterable = readableStreamValues(readable);
-
-for await (const value of iterable) {
-  console.log(value); // Prints "1", "2", "3".
-}
-```
-
-Note: The stream will be locked as soon as the iterable is created. When using iterating outside of for-loop, make sure to call `AsyncIterator.return` when the iteration is done to release the lock on the stream.
-
-Note: `[Symbol.asyncIterator]()` will not restart the stream.
-
-Note: When the iterating for-loop has broken, thrown, or is aborted via `init.signal`, the readable stream will be released and can be read again and continue where it left.
-
-#### Breaking the loop early
-
-To break early without awaiting for the next value, pass an `AbortSignal` to `init.signal`. When the signal is aborted, the `await` will be rejected with error message "Aborted" and release the reader gracefully. The reader can be reopened and will continue where it left.
-
-```ts
-const abortController = new AbortController();
-const iterable = readableStreamValues(readable, { signal: abortController.signal });
-
-setTimeout(() => {
-  abortController.abort();
-}, 100);
-
-try {
-  for await (const value of iterable) {
-    console.log(value);
-  }
-} catch (error) {
-  // Will throw with error message "Aborted".
-}
-```
-
 
 ### Converting an `AsyncIterable`/`Iterable` to `ReadableStream`
 
 ```ts
-function readableStreamFrom<T>(anyIterable: AsyncIterable<T> | Iterable<T>): ReadableStream<T>
+function readableStreamFrom<T>(anyIterable: AsyncIterable<T> | Iterable<T>): ReadableStream<T>;
 ```
 
 > Notes: this feature is part of [Streams Standard](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/from_static).
@@ -184,7 +133,7 @@ Note: `readableStreamFrom()` will call `[Symbol.iterator]()` initially to restar
 ### Converting an `Observable` to `AsyncIterableIterator`
 
 ```ts
-function observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>
+function observableValues<T>(observable: Observable<T>): AsyncIterableIterator<T>;
 ```
 
 `Observable` can be converted to `AsyncIterableIterator` for easier consumption.
@@ -278,6 +227,43 @@ const generator = generatorWithLastValue(
   })()[Symbol.iterator]() // Creates a fresh iteration.
 );
 ```
+
+### Iterating `ReadableStream` with `AbortSignal`
+
+> This is an unofficial extension to the [native `ReadableStream.values()`](https://streams.spec.whatwg.org/#rs-asynciterator).
+
+```ts
+function readableStreamValuesWithSignal`<T>(
+  readable: ReadableStream<T>,
+  options?: {
+    preventCancel?: boolean | undefined;
+    signal?: AbortSignal | undefined;
+  } | undefined
+): AsyncIterableIterator<T>
+```
+
+To break early without awaiting for the next value, pass an `AbortSignal` to `options.signal`. When the signal is aborted, all pending and future calls to `next()` and `return()` will reject with `DOMException` with name of `AbortError`.
+
+> Notes: native `ReadableStreamAsyncIterator` does not support `throw()`.
+
+```ts
+const abortController = new AbortController();
+const iterable = readableStreamValues(readable, { signal: abortController.signal });
+
+setTimeout(() => {
+  abortController.abort();
+}, 100);
+
+try {
+  for await (const value of iterable) {
+    console.log(value);
+  }
+} catch (error) {
+  // On abort, will throw DOMException with name of "AbortError"
+}
+```
+
+If `preventCancel` is `true`, the `ReadableStream` can be reopened and read by another reader.
 
 ## Adding types to `core-js-pure`
 

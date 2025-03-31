@@ -48,3 +48,4 @@ export * from './observableSubscribeAsReadable.ts';
 export * from './observableValues.ts';
 export * from './readableStreamFrom.ts';
 export * from './readableStreamValues.ts';
+export * from './readableStreamValuesWithSignal.ts';
