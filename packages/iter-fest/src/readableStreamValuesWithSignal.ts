@@ -34,13 +34,8 @@ class ReadableStreamIterator<T> implements ReadableStreamAsyncIterator<T> {
     this.#signal?.addEventListener(
       'abort',
       async () => {
-        if (!this.#preventCancel) {
-          // Ignore cancel() rejections.
-          reader.cancel(createAbortError());;
-          reader.releaseLock();
-
-          return;
-        }
+        // Ignore cancel() rejections.
+        this.#preventCancel || reader.cancel(createAbortError());
 
         reader.releaseLock();
       },

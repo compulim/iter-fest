@@ -68,7 +68,7 @@ describe.each([
       });
 
       if (options?.preventCancel) {
-        describe('when stream has a value while no reader is attached', () => {
+        describe('when stream enqueued a value while no reader is attached', () => {
           beforeEach(() => lastController.enqueue(2));
 
           describe('when another reader is attached', () => {
@@ -101,11 +101,13 @@ describe.each([
     describe('when signal is aborted', () => {
       beforeEach(() => abortController.abort());
 
-      // After aborted, all calls to next()/return()/throw() will reject with AbortError.
+      // After aborted, all calls to next()/return() will reject with AbortError.
       test('next() should reject with AbortError', () => expect(nextPromise).rejects.toEqual(createAbortError()));
       test(`return() should reject with AbortError`, () => expect(returnPromise).rejects.toEqual(createAbortError()));
 
-      if (!options?.preventCancel) {
+      if (options?.preventCancel) {
+        test('cancel() should not be called', () => expect(cancel).not.toHaveBeenCalled());
+      } else {
         describe('cancel() should be called', () => {
           test('once', () => expect(cancel).toHaveBeenCalledTimes(1));
           test('with AbortError', () => expect(cancel).toHaveBeenNthCalledWith(1, createAbortError()));
@@ -117,13 +119,14 @@ describe.each([
   describe('when signal is aborted', () => {
     beforeEach(() => abortController.abort());
 
-    test('next() should reject with AbortError', () =>
-      expect(values.next()).rejects.toThrow(new DOMException('The operation is aborted', 'AbortError')));
+    test('next() should reject with AbortError', () => expect(values.next()).rejects.toEqual(createAbortError()));
 
     test(`return('Return after abort') should reject with AbortError`, () =>
       expect(values.return!('Return after abort')).rejects.toEqual(createAbortError()));
 
-    if (!options?.preventCancel) {
+    if (options?.preventCancel) {
+      test('cancel() should not be called', () => expect(cancel).not.toHaveBeenCalled());
+    } else {
       describe('cancel() should be called', () => {
         test('once', () => expect(cancel).toHaveBeenCalledTimes(1));
         test('with AbortError', () => expect(cancel).toHaveBeenNthCalledWith(1, createAbortError()));
@@ -201,4 +204,17 @@ test('Scenario: without preventDefault, abort() before for-loop should reject im
   }).rejects.toEqual(createAbortError());
 
   expect(iteration).not.toHaveBeenCalled();
+});
+
+test('Scenario: Array.fromAsync() is pending but aborted should reject', async () => {
+  const abortController = new AbortController();
+  const stream = new ReadableStream();
+
+  const arrayFromAsyncPromise = Array.fromAsync(
+    readableStreamValuesWithSignal(stream, { signal: abortController.signal })
+  );
+
+  abortController.abort();
+
+  expect(arrayFromAsyncPromise).rejects.toThrow(createAbortError());
 });
