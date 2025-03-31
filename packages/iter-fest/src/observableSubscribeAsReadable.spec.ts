@@ -1,7 +1,7 @@
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.ts';
 import { observableSubscribeAsReadable } from './observableSubscribeAsReadable.ts';
-import type { JestMockOf } from './private/JestMockOf.js';
-import hasResolved from './private/hasResolved.ts';
+import { type JestMockOf } from './private/JestMockOf.js';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
 
 describe('comprehensive', () => {
   let observable: Observable<number>;
@@ -30,7 +30,7 @@ describe('comprehensive', () => {
       observer = subscriberFunction.mock.calls[0]![0];
     });
 
-    test('should not resolve', () => expect(hasResolved(readPromise)).resolves.toBe(false));
+    test('should not resolve', () => expect(hasResolvedOrRejected(readPromise)).resolves.toBe(false));
 
     describe('when complete()', () => {
       beforeEach(() => observer.complete());

@@ -1,4 +1,4 @@
-import hasResolved from './private/hasResolved';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected';
 import { readableStreamValues } from './readableStreamValues';
 
 describe('comprehensive', () => {
@@ -16,7 +16,7 @@ describe('comprehensive', () => {
     iterable = readableStreamValues(readableStream);
   });
 
-  test('iterable.next() should not resolve', () => expect(hasResolved(iterable.next())).resolves.toBe(false));
+  test('iterable.next() should not resolve', () => expect(hasResolvedOrRejected(iterable.next())).resolves.toBe(false));
 
   describe('when enqueue(1) is called', () => {
     let nextPromise: Promise<IteratorResult<number>>;

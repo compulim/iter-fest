@@ -1,5 +1,5 @@
 import { IterableWritableStream } from './iterableWritableStream';
-import type { JestMockOf } from './private/JestMockOf';
+import { type JestMockOf } from './private/JestMockOf';
 
 describe('comprehensive', () => {
   let done: JestMockOf<() => void>;
