@@ -54,6 +54,7 @@ export default defineConfig([
       'iter-fest.observableValues': './src/observableValues.ts',
       'iter-fest.readableStreamFrom': './src/readableStreamFrom.ts',
       'iter-fest.readableStreamValues': './src/readableStreamValues.ts',
+      'iter-fest.readableStreamValuesWithSignal': './src/readableStreamValuesWithSignal.ts',
       'iter-fest.symbolObservable': './src/SymbolObservable.ts'
     },
     format: ['cjs', 'esm'],
