@@ -284,3 +284,15 @@ test('AsyncGenerator: calling return() multiple times should not do anything', a
 
   await expect(values.next()).resolves.toEqual({ done: true, value: undefined });
 });
+
+test('ReadableStreamDefaultReader: after error(), call cancel() should throw', async () => {
+  const stream = new ReadableStream({
+    start(controller) {
+      controller.error(new Error('Something went wrong'));
+    }
+  });
+
+  const reader = stream.getReader();
+
+  await expect(reader.cancel()).rejects.toEqual(new Error('Something went wrong'));
+});

@@ -78,23 +78,44 @@ describe.each([
     });
 
     test('should lock initially', () => expect(stream.locked).toBe(true));
-    test('should have return()', () => expect(values.return).not.toBeUndefined());
-    test('should not have throw()', () => expect(values.throw).toBeUndefined());
+    test('should support return()', () => expect(values.return).not.toBeUndefined());
+    test('should not support throw()', () => expect(values.throw).toBeUndefined());
+
+    if (!options?.preventCancel) {
+      describe('when return() with cancel() rejected', () => {
+        let returnPromise: Promise<IteratorResult<T>>;
+
+        beforeEach(() => {
+          cancel.mockRejectedValueOnce(new Error('Something went wrong'));
+          returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason'));
+        });
+
+        test('return() should throw', () => expect(returnPromise).rejects.toEqual(new Error('Something went wrong')));
+        test('should unlock regardless', () => expect(stream).toHaveProperty('locked', false));
+      });
+    }
 
     describe(`when return('Cancellation reason')`, () => {
-      beforeEach(() => values.return!());
+      let returnPromise: Promise<IteratorResult<T>>;
 
-      test('should unlock', () => expect(stream.locked).toBe(false));
+      beforeEach(() => {
+        returnPromise = values.return!('Cancellation reason');
+      });
+
+      test('should be unlocked', () => expect(stream.locked).toBe(false));
+
+      // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
+      // test('should resolve with undefined', () =>
+      //   expect(returnPromise).resolves.toEqual({ done: true, value: undefined }));
+      test(`should resolve with reason`, () =>
+        expect(returnPromise).resolves.toEqual({ done: true, value: 'Cancellation reason' }));
 
       if (options?.preventCancel) {
         test('should not call cancel()', () => expect(cancel).not.toHaveBeenCalled());
       } else {
         describe(`should call cancel('Cancellation reason')`, () => {
           test('once', () => expect(cancel).toHaveBeenCalledTimes(1));
-
-          // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
-          // test('with arguments', () => expect(cancel).toHaveBeenNthCalledWith(1, 'Cancellation reason'));
-          test('without arguments', () => expect(cancel).toHaveBeenNthCalledWith(1, undefined));
+          test('with reason', () => expect(cancel).toHaveBeenNthCalledWith(1, 'Cancellation reason'));
         });
       }
 
@@ -105,10 +126,6 @@ describe.each([
           nextPromise = values.next();
         });
 
-        // --- Seems Node.js 22.14.0 implementation is different from W3C spec ---
-        // --- After releaseLock(), read() will always throw ---
-        // --- That means, regardless of preventCancel, after return(), read() should always throw ---
-        // test('should reject', () => expect(nextPromise).rejects.toThrow());
         test('should resolve undefined', () => expect(nextPromise).resolves.toEqual({ done: true, value: undefined }));
       });
     });
@@ -117,15 +134,13 @@ describe.each([
       let nextPromise: Promise<IteratorResult<T>>;
 
       beforeEach(() => {
-        nextPromise = ignoreUnhandledRejection(values.next());
+        nextPromise = values.next();
       });
 
       describe('when enqueue()', () => {
         beforeEach(() => lastController.enqueue(1));
 
-        test('should resolve next value', async () => {
-          await expect(nextPromise).resolves.toEqual({ done: false, value: 1 });
-        });
+        test('next() should resolve', () => expect(nextPromise).resolves.toEqual({ done: false, value: 1 }));
       });
 
       describe(`when return('Cancellation reason') is called while next() is pending`, () => {
@@ -143,30 +158,24 @@ describe.each([
         describe('when enqueue()', () => {
           beforeEach(() => lastController.enqueue(2));
 
-          test('next() should resolve', async () => {
-            await expect(nextPromise).resolves.toEqual({ done: false, value: 2 });
-          });
+          test('next() should resolve', () => expect(nextPromise).resolves.toEqual({ done: false, value: 2 }));
 
-          describe('after next() has resolved', () => {
-            beforeEach(() => nextPromise);
+          // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
+          // test('return() should resolve with undefined', () =>
+          //   expect(returnPromise).resolves.toEqual({ done: true, value: undefined }));
+          test('return() should resolve with reason', () =>
+            expect(returnPromise).resolves.toEqual({ done: true, value: 'Cancellation reason' }));
 
-            // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
-            // test('return() should resolve with undefined', () =>
-            //   expect(returnPromise).resolves.toEqual({ done: true, value: undefined }));
-            test('return() should resolve with reason', () =>
-              expect(returnPromise).resolves.toEqual({ done: true, value: 'Cancellation reason' }));
+          if (options?.preventCancel) {
+            test('cancel() should not be called', () => expect(cancel).not.toHaveBeenCalled());
+          } else {
+            describe(`cancel('Cancellation reason') should be called`, () => {
+              test('once', () => expect(cancel).toHaveBeenCalledTimes(1));
+              test('with arguments', () => expect(cancel).toHaveBeenNthCalledWith(1, 'Cancellation reason'));
+            });
+          }
 
-            if (options?.preventCancel) {
-              test('cancel() should not be called', () => expect(cancel).not.toHaveBeenCalled());
-            } else {
-              describe(`cancel('Cancellation reason') should be called`, () => {
-                test('once', () => expect(cancel).toHaveBeenCalledTimes(1));
-                test('with arguments', () => expect(cancel).toHaveBeenNthCalledWith(1, 'Cancellation reason'));
-              });
-            }
-
-            test('stream should unlock automatically', () => expect(stream).toHaveProperty('locked', false));
-          });
+          test('stream should be unlocked', () => expect(stream).toHaveProperty('locked', false));
         });
       });
 
@@ -176,20 +185,23 @@ describe.each([
         test('next() should resolve with undefined', () =>
           expect(nextPromise).resolves.toEqual({ done: true, value: undefined }));
 
-        test('stream should unlock automatically', () => expect(stream).toHaveProperty('locked', false));
+        test('stream should be unlocked', () => expect(stream).toHaveProperty('locked', false));
       });
 
       describe(`when controller.error('Something is wrong') is called`, () => {
-        beforeEach(() => lastController.error(new Error('Something is wrong')));
+        beforeEach(() => {
+          ignoreUnhandledRejection(nextPromise);
+          lastController.error(new Error('Something is wrong'));
+        });
 
         test('next() should rejects with the error', () =>
           expect(nextPromise).rejects.toEqual(new Error('Something is wrong')));
 
-        test('stream should unlock automatically', () => expect(stream).toHaveProperty('locked', false));
+        test('stream should be unlocked', () => expect(stream).toHaveProperty('locked', false));
       });
     });
 
-    describe('while one next() is resolve and another next() is pending', () => {
+    describe('while one next() is resolved but another next() is pending', () => {
       let next1Promise: Promise<IteratorResult<T>>;
       let next2Promise: Promise<IteratorResult<T>>;
 
@@ -223,12 +235,8 @@ describe.each([
             test('the second next() should have been resolved', () =>
               expect(next2Promise).resolves.toEqual({ done: false, value: 2 }));
 
-            describe('after second next() is resolved', () => {
-              beforeEach(() => next2Promise);
-
-              test('return() should be resolved', () =>
-                expect(returnPromise).resolves.toEqual({ done: true, value: undefined }));
-            });
+            test('return() should be resolved', () =>
+              expect(returnPromise).resolves.toEqual({ done: true, value: undefined }));
           });
         });
       }
@@ -249,7 +257,7 @@ describe.each([
         test('should resolve with undefined', () =>
           expect(nextPromise).resolves.toEqual({ done: true, value: undefined }));
 
-        test('stream should be unlocked automatically', () => expect(stream.locked).toBe(false));
+        test('stream should be unlocked', () => expect(stream.locked).toBe(false));
       });
 
       describe(`when return('Cancellation reason') is called`, () => {
@@ -270,7 +278,7 @@ describe.each([
     });
 
     describe(`when controller.error('Something is wrong') is called`, () => {
-      beforeEach(() => lastController.error('Something is wrong'));
+      beforeEach(() => lastController.error(new Error('Something is wrong')));
 
       describe('when next() is called', () => {
         let nextPromise: Promise<IteratorResult<T>>;
@@ -279,9 +287,10 @@ describe.each([
           nextPromise = ignoreUnhandledRejection(values.next());
         });
 
-        test(`should reject with 'Something is wrong'`, () => expect(nextPromise).rejects.toBe('Something is wrong'));
+        test(`should reject with 'Something is wrong'`, () =>
+          expect(nextPromise).rejects.toEqual(new Error('Something is wrong')));
 
-        test('stream should be unlocked automatically', () => expect(stream.locked).toBe(false));
+        test('stream should be unlocked', () => expect(stream.locked).toBe(false));
       });
 
       describe(`when return('Cancellation reason') is called`, () => {
@@ -298,14 +307,14 @@ describe.each([
           test(`should resolve with 'Cancellation reason'`, () =>
             expect(returnPromise).resolves.toEqual({ done: true, value: 'Cancellation reason' }));
         } else {
-          test('should not call controller.cancel() because reader.cancel() will throw', () =>
-            expect(cancel).not.toHaveBeenCalled());
-
           test(`should reject with 'Something is wrong'`, () =>
-            expect(returnPromise).rejects.toBe('Something is wrong'));
+            expect(returnPromise).rejects.toEqual(new Error('Something is wrong')));
+
+          test('should not call cancel() because reader.cancel() had thrown', () =>
+            expect(cancel).not.toHaveBeenCalled());
         }
 
-        test('stream should be unlocked', () => expect(stream.locked).toBe(false));
+        test('stream should be unlocked', () => expect(stream).toHaveProperty('locked', false));
 
         describe(`when return('Cancel again') is called again`, () => {
           let return2Promise: Promise<IteratorResult<T>>;
@@ -314,11 +323,20 @@ describe.each([
             return2Promise = ignoreUnhandledRejection(values.return!('Cancel again'));
           });
 
-          // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
-          // test('should resolve with undefined', () =>
-          //   expect(return2Promise).resolves.toEqual({ done: true, value: undefined }));
-          test(`should resolve with 'Cancel again'`, () =>
-            expect(return2Promise).resolves.toEqual({ done: true, value: 'Cancel again' }));
+          if (options?.preventCancel) {
+            // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
+            // test('should resolve with undefined', () =>
+            //   expect(return2Promise).resolves.toEqual({ done: true, value: undefined }));
+            test(`should resolve with 'Cancel again'`, () =>
+              expect(return2Promise).resolves.toEqual({ done: true, value: 'Cancel again' }));
+          } else {
+            // --- Seems Node.js 22.14.0 implementation is different from W3C spec ---
+            // --- As it already throw on first return(), it should continue to throw on second return() ---
+            // test(`should reject with 'Something is wrong'`, () =>
+            //   expect(return2Promise).rejects.toEqual(new Error('Something is wrong')));
+            test(`should resolve with 'Cancel again'`, () =>
+              expect(return2Promise).resolves.toEqual({ done: true, value: 'Cancel again' }));
+          }
         });
       });
     });
