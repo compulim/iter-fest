@@ -1,6 +1,7 @@
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.ts';
 import { observableValues } from './observableValues.ts';
-import type { JestMockOf } from './private/JestMockOf.js';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
+import { type JestMockOf } from './private/JestMockOf.js';
 
 describe('comprehensive', () => {
   describe('step-by-step', () => {
@@ -29,7 +30,7 @@ describe('comprehensive', () => {
         promise = iterator.next();
       });
 
-      test('should not have resolved', () => expect(Promise.race([promise, false])).resolves.toBe(false));
+      test('should not have resolved', () => expect(hasResolvedOrRejected(promise)).resolves.toBe(false));
 
       describe('when observer.complete() is called', () => {
         beforeEach(() => observer.complete());
@@ -47,7 +48,7 @@ describe('comprehensive', () => {
       describe('when observer.next(1) is called', () => {
         beforeEach(() => observer.next(1));
 
-        test('iterator.next() should return 1', () => expect(promise).resolves.toEqual({ value: 1 }));
+        test('iterator.next() should return 1', () => expect(promise).resolves.toEqual({ done: false, value: 1 }));
       });
     });
   });

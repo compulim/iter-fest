@@ -7,6 +7,7 @@
     "moduleResolution": "Bundler",
     "noEmit": true,
     "strict": true,
+    "strictBuiltinIteratorReturn": false,
     "target": "ESNext",
     "types": [
       "jest",

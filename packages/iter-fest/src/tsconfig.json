@@ -4,15 +4,14 @@
     "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "jsx": "react",
+    "lib": ["DOM", "DOM.AsyncIterable", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
     "strict": true,
+    "strictBuiltinIteratorReturn": false, // ReadableStreamAsyncIterator allow TReturn of any.
     "target": "ESNext",
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
   "extends": "./tsconfig.custom.json"
 }

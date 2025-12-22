@@ -1,5 +1,5 @@
-import type { JestMockOf } from './private/JestMockOf';
-import hasResolved from './private/hasResolved';
+import { type JestMockOf } from './private/JestMockOf';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected';
 import withResolvers from './private/withResolvers';
 import { readableStreamFrom } from './readableStreamFrom';
 
@@ -107,7 +107,7 @@ describe('comprehensive', () => {
     });
 
     test('next() should have been called once', () => expect(next).toHaveBeenCalledTimes(1));
-    test('read() should not have been resolved', () => expect(hasResolved(readPromise)).resolves.toBe(false));
+    test('read() should not have been resolved', () => expect(hasResolvedOrRejected(readPromise)).resolves.toBe(false));
 
     describe('when next() is resolved with 1', () => {
       beforeEach(() => deferreds[0]?.resolve({ value: 1 }));
@@ -124,7 +124,8 @@ describe('comprehensive', () => {
         });
 
         test('next() should have been called twice', () => expect(next).toHaveBeenCalledTimes(2));
-        test('read() should not have been resolved', () => expect(hasResolved(readPromise)).resolves.toBe(false));
+        test('read() should not have been resolved', () =>
+          expect(hasResolvedOrRejected(readPromise)).resolves.toBe(false));
 
         describe('when next() is resolved with done', () => {
           beforeEach(() => deferreds[1]?.resolve({ done: true, value: undefined }));
