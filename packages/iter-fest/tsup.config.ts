@@ -58,6 +58,7 @@ export default defineConfig([
       'iter-fest.symbolObservable': './src/SymbolObservable.ts'
     },
     format: ['cjs', 'esm'],
-    sourcemap: true
+    sourcemap: true,
+    target: 'esnext'
   }
 ]);

@@ -87,7 +87,8 @@ describe.each([
 
         beforeEach(() => {
           cancel.mockRejectedValueOnce(new Error('Something went wrong'));
-          returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason'));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason' as any));
         });
 
         test('return() should throw', () => expect(returnPromise).rejects.toEqual(new Error('Something went wrong')));
@@ -99,7 +100,8 @@ describe.each([
       let returnPromise: Promise<IteratorResult<T>>;
 
       beforeEach(() => {
-        returnPromise = values.return!('Cancellation reason');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        returnPromise = values.return!('Cancellation reason' as any);
       });
 
       test('should be unlocked', () => expect(stream.locked).toBe(false));
@@ -147,7 +149,8 @@ describe.each([
         let returnPromise: Promise<IteratorResult<T>>;
 
         beforeEach(() => {
-          returnPromise = values.return!('Cancellation reason');
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          returnPromise = values.return!('Cancellation reason' as any);
         });
 
         test('return() should not resolve because next() is pending', () =>
@@ -264,7 +267,8 @@ describe.each([
         let returnPromise: Promise<IteratorResult<T>>;
 
         beforeEach(() => {
-          returnPromise = values.return!('Cancellation reason');
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          returnPromise = values.return!('Cancellation reason' as any);
         });
 
         // --- Seems Node.js 22.14.0 implementation is different from W3C spec, see https://github.com/nodejs/node/issues/57681 ---
@@ -297,7 +301,8 @@ describe.each([
         let returnPromise: Promise<IteratorResult<T>>;
 
         beforeEach(() => {
-          returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason'));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason' as any));
         });
 
         if (options?.preventCancel) {
@@ -320,7 +325,8 @@ describe.each([
           let return2Promise: Promise<IteratorResult<T>>;
 
           beforeEach(() => {
-            return2Promise = ignoreUnhandledRejection(values.return!('Cancel again'));
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return2Promise = ignoreUnhandledRejection(values.return!('Cancel again' as any));
           });
 
           if (options?.preventCancel) {

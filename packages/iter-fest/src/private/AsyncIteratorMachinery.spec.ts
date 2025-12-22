@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import AsyncIteratorMachinery from './AsyncIteratorMachinery';
 import hasResolvedOrRejected from './hasResolvedOrRejected';
 import ignoreUnhandledRejection from './ignoreUnhandledRejection';

@@ -92,7 +92,8 @@ describe.each([
 
     beforeEach(() => {
       nextPromise = ignoreUnhandledRejection(values.next());
-      returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason'));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      returnPromise = ignoreUnhandledRejection(values.return!('Cancellation reason' as any));
     });
 
     test('next() is pending', () => expect(hasResolvedOrRejected(nextPromise)).resolves.toBe(false));
@@ -122,7 +123,8 @@ describe.each([
     test('next() should reject with AbortError', () => expect(values.next()).rejects.toEqual(createAbortError()));
 
     test(`return('Return after abort') should reject with AbortError`, () =>
-      expect(values.return!('Return after abort')).rejects.toEqual(createAbortError()));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(values.return!('Return after abort' as any)).rejects.toEqual(createAbortError()));
 
     if (options?.preventCancel) {
       test('cancel() should not be called', () => expect(cancel).not.toHaveBeenCalled());
