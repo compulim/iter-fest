@@ -1,11 +1,15 @@
-import { iteratorReduce } from './iteratorReduce';
-import { iteratorTake } from './iteratorTake';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorReduce } from './iteratorReduce.ts';
+import { iteratorTake } from './iteratorTake.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
-  let arrayReducer: jest.Mock<string, [string, number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
+  let arrayReducer: Mock<(_1: string, _2: number, _3: number, _4: readonly number[]) => string>;
   let iterator: Iterator<number>;
   // Iterator.reduce() do not have third argument of the iterator itself, unlike Array.reduce().
-  let iteratorReducer: jest.Mock<string, [string, number, number]>;
+  let iteratorReducer: Mock<(_1: string, _2: number, _3: number) => string>;
   let arrayResult: string;
   let iteratorResult: string;
 
@@ -14,8 +18,8 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.reduce()', array => {
 
     iterator = array.values();
 
-    arrayReducer = jest.fn();
-    iteratorReducer = jest.fn();
+    arrayReducer = fn();
+    iteratorReducer = fn();
 
     arrayReducer.mockImplementation(reducer);
     iteratorReducer.mockImplementation(reducer);

@@ -1,3 +1,6 @@
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
 import {
   type CompleteFunction,
   type ErrorFunction,
@@ -7,29 +10,28 @@ import {
 } from './Observable.ts';
 import { observableFromAsync } from './observableFromAsync.ts';
 
-import { type JestMockOf } from './private/JestMockOf.js';
 import withResolvers from './private/withResolvers.ts';
 
 describe('comprehensive', () => {
-  let complete: JestMockOf<CompleteFunction>;
-  let error: JestMockOf<ErrorFunction>;
+  let complete: Mock<CompleteFunction>;
+  let error: Mock<ErrorFunction>;
   let iterable: AsyncIterableIterator<number>;
   let iterableNextReject: (error: unknown) => void;
   let iterableNextResolve: (result: IteratorResult<number>) => void;
-  let next: JestMockOf<NextFunction<number>>;
+  let next: Mock<NextFunction<number>>;
   let observable: Observable<number>;
-  let start: JestMockOf<StartFunction>;
+  let start: Mock<StartFunction>;
   let iterableNextDeferred: PromiseWithResolvers<IteratorResult<number>>;
 
   beforeEach(() => {
     iterableNextDeferred = withResolvers();
 
-    iterableNextReject = jest.fn().mockImplementation(error => {
+    iterableNextReject = fn().mockImplementation(error => {
       iterableNextDeferred.reject(error);
       iterableNextDeferred = withResolvers();
     });
 
-    iterableNextResolve = jest.fn().mockImplementation(value => {
+    iterableNextResolve = fn<(result: IteratorResult<number>) => void>().mockImplementation(value => {
       iterableNextDeferred.resolve(value);
       iterableNextDeferred = withResolvers();
     });
@@ -43,10 +45,10 @@ describe('comprehensive', () => {
       }
     };
 
-    complete = jest.fn();
-    error = jest.fn();
-    next = jest.fn();
-    start = jest.fn();
+    complete = fn();
+    error = fn();
+    next = fn();
+    start = fn();
 
     observable = observableFromAsync(iterable);
 

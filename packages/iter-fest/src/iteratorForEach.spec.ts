@@ -1,18 +1,22 @@
-import { iteratorForEach } from './iteratorForEach';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorForEach } from './iteratorForEach.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[]]])('when compare to %s.map()', array => {
-  let arrayCallbackfn: jest.Mock<void, [number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[]]])('when compare to %s.map()', array => {
+  let arrayCallbackfn: Mock<(_1: number, _2: number, _3: readonly number[]) => void>;
   let iterator: Iterator<number>;
   // Iterator.forEach() do not have third argument of the iterator itself, unlike Array.forEach().
-  let iteratorCallbackfn: jest.Mock<void, [number, number]>;
+  let iteratorCallbackfn: Mock<(_1: number, _2: number) => void>;
 
   beforeEach(() => {
     const callbackfn = (_: number) => {};
 
     iterator = array.values();
 
-    arrayCallbackfn = jest.fn();
-    iteratorCallbackfn = jest.fn();
+    arrayCallbackfn = fn();
+    iteratorCallbackfn = fn();
 
     arrayCallbackfn.mockImplementation(callbackfn);
     iteratorCallbackfn.mockImplementation(callbackfn);

@@ -1,4 +1,6 @@
-import hasResolvedOrRejected from './private/hasResolvedOrRejected';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
 
 test('ReadableStreamDefaultReader: releaseLock() twice should not throw', () => {
   const stream = new ReadableStream();

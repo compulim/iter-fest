@@ -27,6 +27,7 @@
     "core-js-pure": "^3.38.1",
     "expect": "^29.7.0",
     "mocha": "^10.7.3",
+    "resolve-cwd": "^3.0.0",
     "sinon": "^19.0.2"
   },
   "dependencies": {

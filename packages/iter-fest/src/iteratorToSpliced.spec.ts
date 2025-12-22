@@ -1,6 +1,9 @@
-import { iteratorToSpliced } from './iteratorToSpliced';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import { iteratorToSpliced } from './iteratorToSpliced.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([
+describeEach([
   [[1, 2, 3, 4, 5], undefined, 1, [9]],
   [[1, 2, 3, 4, 5], 1, undefined, [9]],
   [[1, 2, 3, 4, 5], undefined, undefined, [9]],
@@ -15,7 +18,7 @@ describe.each([
   [[], undefined, undefined, [9]]
 ])(
   'when compare to %s.slice(%s, %s, ...%s)',
-  (array: number[], start: number | undefined, deleteCount: number | undefined, items: number[]) => {
+  (array: readonly number[], start: number | undefined, deleteCount: number | undefined, items: readonly number[]) => {
     let iterator: Iterator<number>;
     let arrayResult: number[];
     let iteratorResult: number[];

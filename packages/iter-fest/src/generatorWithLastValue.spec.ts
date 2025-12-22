@@ -1,4 +1,7 @@
-import { generatorWithLastValue, type GeneratorWithLastValue } from './generatorWithLastValue';
+import { expect } from 'expect';
+import { fn } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { generatorWithLastValue, type GeneratorWithLastValue } from './generatorWithLastValue.ts';
 
 test('usage', () => {
   const generator = generatorWithLastValue<number, 'end', void>(
@@ -77,7 +80,7 @@ describe('comprehensive', () => {
 });
 
 test('passthrough next', () => {
-  const next = jest.fn<void, [boolean]>();
+  const next = fn<(value: boolean) => void>();
 
   const generator = generatorWithLastValue<number, void, boolean>(
     (function* () {
@@ -95,7 +98,7 @@ test('passthrough next', () => {
 });
 
 test('passthrough return', () => {
-  const shouldNotCall = jest.fn<void, []>();
+  const shouldNotCall = fn<() => void>();
 
   const generator = generatorWithLastValue<number, boolean, unknown>(
     (function* () {
@@ -114,8 +117,8 @@ test('passthrough return', () => {
 });
 
 test('passthrough throw', () => {
-  const throw_ = jest.fn<void, [unknown]>();
-  const shouldNotCall = jest.fn<void, []>();
+  const throw_ = fn<(error: unknown) => void>();
+  const shouldNotCall = fn<() => void>();
 
   const generator = generatorWithLastValue(
     (function* () {

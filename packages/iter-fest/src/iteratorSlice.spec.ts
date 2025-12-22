@@ -1,6 +1,10 @@
-import { iteratorSlice } from './iteratorSlice';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorSlice } from './iteratorSlice.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([
+describeEach([
   [[1, 2, 3, 4, 5], undefined, 1],
   [[1, 2, 3, 4, 5], 1, undefined],
   [[1, 2, 3, 4, 5], undefined, undefined],
@@ -11,28 +15,31 @@ describe.each([
   [[1, 2, 3, 4, 5], 100, 1],
   [[1, 2, 3, 4, 5], -Infinity, Infinity],
   [[], undefined, undefined]
-])('when compare to %s.slice(%s, %s)', (array: number[], start: number | undefined, end: number | undefined) => {
-  let iterator: Iterator<number>;
-  let arrayResult: number[];
-  let iteratorResult: number[];
+])(
+  'when compare to %s.slice(%s, %s)',
+  (array: readonly number[], start: number | undefined, end: number | undefined) => {
+    let iterator: Iterator<number>;
+    let arrayResult: number[];
+    let iteratorResult: number[];
 
-  beforeEach(() => {
-    iterator = array.values();
+    beforeEach(() => {
+      iterator = array.values();
 
-    arrayResult = array.slice(start, end);
-    iteratorResult = Array.from(iteratorSlice(iterator, start, end));
-  });
+      arrayResult = array.slice(start, end);
+      iteratorResult = Array.from(iteratorSlice(iterator, start, end));
+    });
 
-  test('should return same result', () => expect(iteratorResult).toEqual(arrayResult));
-});
+    test('should return same result', () => expect(iteratorResult).toEqual(arrayResult));
+  }
+);
 
 describe('when passing start of Infinity', () => {
-  let next: jest.Mock<IteratorResult<number>, []>;
+  let next: Mock<() => IteratorResult<number>>;
   let iterator: IterableIterator<number>;
   let result: number[];
 
   beforeEach(() => {
-    next = jest.fn(() => ({ done: true, value: undefined }));
+    next = fn(() => ({ done: true, value: undefined }));
 
     iterator = {
       [Symbol.iterator]() {

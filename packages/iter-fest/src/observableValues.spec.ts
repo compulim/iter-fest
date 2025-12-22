@@ -1,19 +1,21 @@
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.ts';
 import { observableValues } from './observableValues.ts';
 import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
-import { type JestMockOf } from './private/JestMockOf.js';
 
 describe('comprehensive', () => {
   describe('step-by-step', () => {
-    let closeFunction: JestMockOf<() => void>;
+    let closeFunction: Mock<() => void>;
     let iterator: AsyncIterableIterator<number>;
     let observable: Observable<number>;
     let observer: SubscriptionObserver<number>;
-    let subscriberFunction: JestMockOf<SubscriberFunction<number>>;
+    let subscriberFunction: Mock<SubscriberFunction<number>>;
 
     beforeEach(() => {
-      closeFunction = jest.fn();
-      subscriberFunction = jest.fn().mockImplementation(o => {
+      closeFunction = fn();
+      subscriberFunction = fn<SubscriberFunction<number>>().mockImplementation(o => {
         observer = o;
 
         return closeFunction;
@@ -78,8 +80,8 @@ describe('comprehensive', () => {
   });
 
   test('when for-loop break should unsubscribe', async () => {
-    const closeFunction = jest.fn();
-    const subscriberFunction: JestMockOf<SubscriberFunction<number>> = jest.fn();
+    const closeFunction = fn();
+    const subscriberFunction: Mock<SubscriberFunction<number>> = fn();
     let observer: SubscriptionObserver<number> | undefined;
 
     subscriberFunction.mockImplementation(target => {

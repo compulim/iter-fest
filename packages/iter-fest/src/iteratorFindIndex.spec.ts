@@ -1,9 +1,13 @@
-import { iteratorFindIndex } from './iteratorFindIndex';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorFindIndex } from './iteratorFindIndex.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[]]])('when compare to %s.findIndex()', array => {
-  let arrayPredicate: jest.Mock<unknown, [number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[]]])('when compare to %s.findIndex()', array => {
+  let arrayPredicate: Mock<(_1: number, _2: number, _3: readonly number[]) => unknown>;
   let iterator: Iterator<number>;
-  let iteratorPredicate: jest.Mock<unknown, [number, number, Iterator<number>]>;
+  let iteratorPredicate: Mock<(_1: number, _2: number, _3: Iterator<number>) => unknown>;
   let arrayResult: number | undefined;
   let iteratorResult: number | undefined;
 
@@ -13,8 +17,8 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.findIndex()', array => {
 
     iterator = array.values();
 
-    arrayPredicate = jest.fn();
-    iteratorPredicate = jest.fn();
+    arrayPredicate = fn();
+    iteratorPredicate = fn();
 
     arrayPredicate.mockImplementation(predicate);
     iteratorPredicate.mockImplementation(predicate);

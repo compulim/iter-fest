@@ -1,4 +1,6 @@
-import abortSignalAsRejectedPromise from './abortSignalAsRejectedPromise';
+import { expect } from 'expect';
+import { beforeEach, describe, test } from 'node:test';
+import abortSignalAsRejectedPromise from './abortSignalAsRejectedPromise.ts';
 
 describe('when aborted initially', () => {
   let abortController: AbortController;

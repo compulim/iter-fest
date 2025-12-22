@@ -1,17 +1,19 @@
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
 import { Observable, type SubscriberFunction, type SubscriptionObserver } from './Observable.ts';
 import { observableSubscribeAsReadable } from './observableSubscribeAsReadable.ts';
-import { type JestMockOf } from './private/JestMockOf.js';
 import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
 
 describe('comprehensive', () => {
   let observable: Observable<number>;
   let readable: ReadableStream<number>;
-  let subscriberFunction: JestMockOf<SubscriberFunction<number>>;
-  let unsubscribeFunction: JestMockOf<() => void>;
+  let subscriberFunction: Mock<SubscriberFunction<number>>;
+  let unsubscribeFunction: Mock<() => void>;
 
   beforeEach(() => {
-    unsubscribeFunction = jest.fn();
-    subscriberFunction = jest.fn().mockImplementation(() => unsubscribeFunction);
+    unsubscribeFunction = fn();
+    subscriberFunction = fn<SubscriberFunction<number>>().mockImplementation(() => unsubscribeFunction);
     observable = new Observable(subscriberFunction);
     readable = observableSubscribeAsReadable(observable);
   });

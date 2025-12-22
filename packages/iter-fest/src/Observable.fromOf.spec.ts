@@ -1,3 +1,6 @@
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
 import {
   Observable,
   type CompleteFunction,
@@ -7,22 +10,22 @@ import {
   type StartFunction,
   type Subscription
 } from './Observable.ts';
-import { type JestMockOf } from './private/JestMockOf.js';
+import { describeEach } from './private/describeEach.ts';
 
 describe('comprehensive', () => {
-  let complete: JestMockOf<CompleteFunction>;
-  let error: JestMockOf<ErrorFunction>;
-  let next: JestMockOf<NextFunction<number>>;
-  let start: JestMockOf<StartFunction>;
+  let complete: Mock<CompleteFunction>;
+  let error: Mock<ErrorFunction>;
+  let next: Mock<NextFunction<number>>;
+  let start: Mock<StartFunction>;
 
   beforeEach(() => {
-    complete = jest.fn();
-    error = jest.fn();
-    next = jest.fn();
-    start = jest.fn();
+    complete = fn();
+    error = fn();
+    next = fn();
+    start = fn();
   });
 
-  describe.each([['from' as const], ['of' as const]])('Observable.%s()', type => {
+  describeEach([['from' as const], ['of' as const]])('Observable.%s()', type => {
     let observable: Observable<number>;
 
     beforeEach(() => {
@@ -33,7 +36,7 @@ describe('comprehensive', () => {
       }
     });
 
-    describe.each([['interface' as const], ['functions' as const]])('subscribe via %s', type => {
+    describeEach([['interface' as const], ['functions' as const]])('subscribe via %s', type => {
       let subscription: Subscription;
 
       beforeEach(() => {

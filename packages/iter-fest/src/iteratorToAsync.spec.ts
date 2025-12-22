@@ -1,4 +1,6 @@
-import { iteratorToAsync } from './iteratorToAsync';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import { iteratorToAsync } from './iteratorToAsync.ts';
 
 test('should work', async () => {
   const iterator = [1, 2, 3].values();

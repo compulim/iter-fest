@@ -1,5 +1,7 @@
-import { asyncIteratorFlatMap } from './asyncIteratorFlatMap';
-import { iteratorToAsync } from './iteratorToAsync';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import { asyncIteratorFlatMap } from './asyncIteratorFlatMap.ts';
+import { iteratorToAsync } from './iteratorToAsync.ts';
 
 test('should follow TC39 proposal sample (sync)', async () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.

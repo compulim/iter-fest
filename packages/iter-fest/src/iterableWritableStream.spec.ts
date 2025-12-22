@@ -1,13 +1,15 @@
-import { IterableWritableStream } from './iterableWritableStream';
-import { type JestMockOf } from './private/JestMockOf';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { IterableWritableStream } from './iterableWritableStream.ts';
 
 describe('comprehensive', () => {
-  let done: JestMockOf<() => void>;
+  let done: Mock<() => void>;
   let values: number[];
   let writer: WritableStreamDefaultWriter<number>;
 
   beforeEach(() => {
-    done = jest.fn();
+    done = fn();
 
     const iterable = new IterableWritableStream<number>();
 
