@@ -1,31 +1,34 @@
-import createAbortError from './private/createAbortError';
-import hasResolvedOrRejected from './private/hasResolvedOrRejected';
-import ignoreUnhandledRejection from './private/ignoreUnhandledRejection';
-import isAbortError from './private/isAbortError';
-import { type JestMockOf } from './private/JestMockOf';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import createAbortError from './private/createAbortError.ts';
+import { describeEach } from './private/describeEach.ts';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
+import ignoreUnhandledRejection from './private/ignoreUnhandledRejection.ts';
+import isAbortError from './private/isAbortError.ts';
 import {
   readableStreamValuesWithSignal,
   type ReadableStreamIteratorWithSignalOptions
-} from './readableStreamValuesWithSignal';
+} from './readableStreamValuesWithSignal.ts';
 
 type T = number;
 
-describe.each([
+describeEach([
   ['without arguments', undefined],
   ['with { preventCancel: false }', { preventCancel: false }],
   ['with { preventCancel: true }', { preventCancel: true }]
 ])('%s', (_, options: ReadableStreamIteratorWithSignalOptions | undefined) => {
   let abortController: AbortController;
-  let cancel: JestMockOf<Exclude<UnderlyingDefaultSource<T>['cancel'], undefined>>;
+  let cancel: Mock<Exclude<UnderlyingDefaultSource<T>['cancel'], undefined>>;
   let lastController: ReadableStreamDefaultController<T>;
-  let start: JestMockOf<Exclude<UnderlyingDefaultSource<T>['start'], undefined>>;
+  let start: Mock<Exclude<UnderlyingDefaultSource<T>['start'], undefined>>;
   let stream: ReadableStream<T>;
   let values: ReadableStreamAsyncIterator<T>;
 
   beforeEach(() => {
     abortController = new AbortController();
-    cancel = jest.fn(async () => {});
-    start = jest.fn(controller => {
+    cancel = fn(async () => {});
+    start = fn(controller => {
       lastController = controller;
     });
     stream = new ReadableStream({ cancel, start });
@@ -195,7 +198,7 @@ test('Scenario: with preventDefault, abort during for-loop should reject', async
 test('Scenario: without preventDefault, abort() before for-loop should reject immediately', async () => {
   const abortController = new AbortController();
   const stream = new ReadableStream<number>();
-  const iteration = jest.fn();
+  const iteration = fn();
 
   abortController.abort();
 

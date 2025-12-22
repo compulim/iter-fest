@@ -1,11 +1,15 @@
-import { iteratorSome } from './iteratorSome';
-import { iteratorTake } from './iteratorTake';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorSome } from './iteratorSome.ts';
+import { iteratorTake } from './iteratorTake.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[]]])('when compare to %s.some()', array => {
-  let arrayPredicate: jest.Mock<unknown, [number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[]]])('when compare to %s.some()', array => {
+  let arrayPredicate: Mock<(_1: number, _2: number, _3: readonly number[]) => unknown>;
   let iterator: Iterator<number>;
   // Iterator.some() do not have third argument of the iterator itself, unlike Array.some().
-  let iteratorPredicate: jest.Mock<unknown, [number, number]>;
+  let iteratorPredicate: Mock<(_1: number, _2: number) => unknown>;
   let arrayResult: boolean;
   let iteratorResult: boolean;
 
@@ -14,8 +18,8 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.some()', array => {
 
     iterator = array.values();
 
-    arrayPredicate = jest.fn();
-    iteratorPredicate = jest.fn();
+    arrayPredicate = fn();
+    iteratorPredicate = fn();
 
     arrayPredicate.mockImplementation(predicate);
     iteratorPredicate.mockImplementation(predicate);

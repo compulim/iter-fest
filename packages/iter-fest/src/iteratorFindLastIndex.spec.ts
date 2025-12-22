@@ -1,9 +1,13 @@
-import { iteratorFindLastIndex } from './iteratorFindLastIndex';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorFindLastIndex } from './iteratorFindLastIndex.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[2]], [[]]])('when compare to %s.findLastIndex()', (array: number[]) => {
-  let arrayPredicate: jest.Mock<unknown, [number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[2]], [[]]])('when compare to %s.findLastIndex()', (array: readonly number[]) => {
+  let arrayPredicate: Mock<(_1: number, _2: number, _3: readonly number[]) => unknown>;
   let iterator: Iterator<number>;
-  let iteratorPredicate: jest.Mock<unknown, [number, number, Iterator<number>]>;
+  let iteratorPredicate: Mock<(_1: number, _2: number, _3: Iterator<number>) => unknown>;
   let arrayResult: number | undefined;
   let iteratorResult: number | undefined;
   let thisArg: object;
@@ -14,8 +18,8 @@ describe.each([[[1, 2, 3]], [[2]], [[]]])('when compare to %s.findLastIndex()', 
     thisArg = {};
     iterator = array.values();
 
-    arrayPredicate = jest.fn();
-    iteratorPredicate = jest.fn();
+    arrayPredicate = fn();
+    iteratorPredicate = fn();
 
     arrayPredicate.mockImplementation(predicate);
     iteratorPredicate.mockImplementation(predicate);

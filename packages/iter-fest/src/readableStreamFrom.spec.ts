@@ -1,23 +1,25 @@
-import { type JestMockOf } from './private/JestMockOf';
-import hasResolvedOrRejected from './private/hasResolvedOrRejected';
-import withResolvers from './private/withResolvers';
-import { readableStreamFrom } from './readableStreamFrom';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { describeEach } from './private/describeEach.ts';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
+import withResolvers from './private/withResolvers.ts';
+import { readableStreamFrom } from './readableStreamFrom.ts';
 
-describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type => {
-  let next: JestMockOf<() => unknown>;
+describeEach([['AsyncIterator'], ['Iterator']])('with %s', type => {
+  let next: Mock<() => unknown>;
   let readable: ReadableStream;
   let reader: ReadableStreamDefaultReader;
 
   beforeEach(() => {
     if (type === 'AsyncIterator') {
       const iterator: AsyncIterator<number> = {
-        next: jest
-          .fn()
+        next: fn<AsyncIterator<number>['next']>()
           .mockImplementationOnce(() => Promise.resolve({ value: 1 }))
           .mockImplementationOnce(() => Promise.resolve({ done: true, value: undefined }))
       };
 
-      next = iterator.next as JestMockOf<() => unknown>;
+      next = iterator.next as Mock<() => unknown>;
 
       readable = readableStreamFrom({
         [Symbol.asyncIterator]() {
@@ -26,13 +28,12 @@ describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type =
       });
     } else {
       const iterator: Iterator<number> = {
-        next: jest
-          .fn()
+        next: fn<Iterator<number>['next']>()
           .mockImplementationOnce(() => ({ value: 1 }))
           .mockImplementationOnce(() => ({ done: true, value: undefined }))
       };
 
-      next = iterator.next as JestMockOf<() => unknown>;
+      next = iterator.next as Mock<() => unknown>;
 
       readable = readableStreamFrom({
         [Symbol.iterator]() {
@@ -70,7 +71,7 @@ describe.each(['AsyncIterator' as const, 'Iterator' as const])('with %s', type =
 });
 
 describe('comprehensive', () => {
-  let next: JestMockOf<() => Promise<IteratorResult<number>>>;
+  let next: Mock<() => Promise<IteratorResult<number>>>;
   let readable: ReadableStream;
   let reader: ReadableStreamDefaultReader;
   let deferreds: PromiseWithResolvers<IteratorResult<number>>[];
@@ -79,7 +80,7 @@ describe('comprehensive', () => {
     deferreds = [];
 
     const iterator: AsyncIterator<number> = {
-      next: jest.fn().mockImplementation(() => {
+      next: fn<AsyncIterator<number>['next']>().mockImplementation(() => {
         const deferred = withResolvers<IteratorResult<number>>();
 
         deferreds.push(deferred);
@@ -88,7 +89,7 @@ describe('comprehensive', () => {
       })
     };
 
-    next = iterator.next as JestMockOf<() => Promise<IteratorResult<number>>>;
+    next = iterator.next as Mock<() => Promise<IteratorResult<number>>>;
 
     readable = readableStreamFrom({
       [Symbol.asyncIterator]() {

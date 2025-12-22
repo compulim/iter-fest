@@ -1,4 +1,6 @@
-import { iteratorFlatMap } from './iteratorFlatMap';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import { iteratorFlatMap } from './iteratorFlatMap.ts';
 
 test('should follow TC39 proposal sample', () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.

@@ -1,4 +1,6 @@
-import { iteratorDrop } from './iteratorDrop';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import { iteratorDrop } from './iteratorDrop.ts';
 
 test('should follow TC39 proposal sample', () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.

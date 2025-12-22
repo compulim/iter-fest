@@ -1,6 +1,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
+import { expect } from 'expect';
+import { test } from 'node:test';
+
 test.skip('readableStream.values() with 2 next() and 1 return()', async () => {
   let controller;
   const stream = new ReadableStream({

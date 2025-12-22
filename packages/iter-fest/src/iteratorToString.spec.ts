@@ -1,8 +1,11 @@
-import { iteratorJoin } from './iteratorJoin';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import { iteratorJoin } from './iteratorJoin.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[1, 2, 3]], [[1, 2, 3]], [[1, undefined, 2, null, 3]]])(
+describeEach([[[1, 2, 3]], [[1, 2, 3]], [[1, 2, 3]], [[1, undefined, 2, null, 3]]])(
   'when compare to %s.toString()',
-  (array: (number | null | undefined)[]) => {
+  (array: readonly (number | null | undefined)[]) => {
     let arrayResult: string;
     let iteratorResult: string;
 

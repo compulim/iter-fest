@@ -1,11 +1,14 @@
-import { iteratorJoin } from './iteratorJoin';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import { iteratorJoin } from './iteratorJoin.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([
+describeEach([
   [[1, 2, 3], undefined],
   [[1, 2, 3], ''],
   [[1, 2, 3], ', '],
   [[1, undefined, 2, null, 3], undefined]
-])('when compare to %s.join()', (array: (number | null | undefined)[], separator: string | undefined) => {
+])('when compare to %s.join()', (array: readonly (number | null | undefined)[], separator: string | undefined) => {
   let arrayResult: string;
   let iteratorResult: string;
 

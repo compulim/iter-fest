@@ -1,6 +1,9 @@
-import { iteratorAt } from './iteratorAt';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import { iteratorAt } from './iteratorAt.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([
+describeEach([
   [[1, 2, 3], 0],
   [[1, 2, 3], 1],
   [[1, 2, 3], 4],
@@ -8,7 +11,7 @@ describe.each([
   [[1, 2, 3], Infinity],
   [[1, 2, 3], 0.1],
   [[], 0]
-])('when compare to %s.at(%s)', (array: number[], index: number) => {
+])('when compare to %s.at(%s)', (array: readonly number[], index: number) => {
   let iterator: Iterator<number>;
   let arrayResult: number | undefined;
   let iteratorResult: number | undefined;

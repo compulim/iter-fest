@@ -1,4 +1,6 @@
-import hasResolvedOrRejected from './hasResolvedOrRejected';
+import { expect } from 'expect';
+import { beforeEach, describe, test } from 'node:test';
+import hasResolvedOrRejected from './hasResolvedOrRejected.ts';
 
 describe('when resolved', () => {
   let hasResolvedOrRejectedPromise: Promise<boolean>;

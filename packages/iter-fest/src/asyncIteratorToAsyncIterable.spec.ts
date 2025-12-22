@@ -1,4 +1,6 @@
-import { asyncIteratorToAsyncIterable } from './asyncIteratorToAsyncIterable';
+import { expect } from 'expect';
+import { beforeEach, describe, test } from 'node:test';
+import { asyncIteratorToAsyncIterable } from './asyncIteratorToAsyncIterable.ts';
 
 describe('passing an async iterator-compatible generator', () => {
   let asyncIterable: AsyncIterableIterator<number>;

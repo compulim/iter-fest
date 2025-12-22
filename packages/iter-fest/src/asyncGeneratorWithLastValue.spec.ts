@@ -1,4 +1,7 @@
-import { asyncGeneratorWithLastValue, type AsyncGeneratorWithLastValue } from './asyncGeneratorWithLastValue';
+import { expect } from 'expect';
+import { fn } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { asyncGeneratorWithLastValue, type AsyncGeneratorWithLastValue } from './asyncGeneratorWithLastValue.ts';
 
 test('usage', async () => {
   const generator = asyncGeneratorWithLastValue<number, 'end', void>(
@@ -83,7 +86,7 @@ describe('comprehensive', () => {
 });
 
 test('passthrough next', async () => {
-  const next = jest.fn<void, [boolean]>();
+  const next = fn<(value: boolean) => void>();
 
   const generator = asyncGeneratorWithLastValue<number, void, boolean>(
     (async function* () {
@@ -105,7 +108,7 @@ test('passthrough next', async () => {
 });
 
 test('passthrough return', async () => {
-  const shouldNotCall = jest.fn<void, []>();
+  const shouldNotCall = fn<() => void>();
 
   const generator = asyncGeneratorWithLastValue<number, boolean, unknown>(
     (async function* () {
@@ -131,8 +134,8 @@ test('passthrough return', async () => {
 });
 
 test('passthrough throw', async () => {
-  const throw_ = jest.fn<void, [unknown]>();
-  const shouldNotCall = jest.fn<void, []>();
+  const throw_ = fn<(reason: unknown) => void>();
+  const shouldNotCall = fn<() => void>();
 
   const generator = asyncGeneratorWithLastValue(
     (async function* () {
@@ -193,7 +196,7 @@ test('return in try-finally', async () => {
 });
 
 test('passthrough asyncDispose', async () => {
-  const dispose = jest.fn();
+  const dispose = fn<() => PromiseLike<void>>();
   const symbolAsyncDispose: typeof Symbol.asyncDispose = Symbol.asyncDispose || Symbol.for('Symbol.asyncDispose');
 
   const generator = (async function* () {})();

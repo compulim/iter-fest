@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import AsyncIteratorMachinery from './AsyncIteratorMachinery';
-import hasResolvedOrRejected from './hasResolvedOrRejected';
-import ignoreUnhandledRejection from './ignoreUnhandledRejection';
-import { type JestMockOf } from './JestMockOf';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { test } from 'node:test';
+import AsyncIteratorMachinery from './AsyncIteratorMachinery.ts';
+import hasResolvedOrRejected from './hasResolvedOrRejected.ts';
+import ignoreUnhandledRejection from './ignoreUnhandledRejection.ts';
 
 test('next() and return() are in the same critical section', async () => {
   type TIterator = AsyncIterator<number, string, boolean>;
@@ -11,8 +13,8 @@ test('next() and return() are in the same critical section', async () => {
   const nextResolver = Promise.withResolvers<IteratorResult<number>>();
   const returnResolver = Promise.withResolvers<IteratorResult<number>>();
 
-  const next: JestMockOf<TIterator['next']> = jest.fn(() => nextResolver.promise);
-  const return_: JestMockOf<Exclude<TIterator['return'], undefined>> = jest.fn(() => returnResolver.promise);
+  const next: Mock<TIterator['next']> = fn(() => nextResolver.promise);
+  const return_: Mock<Exclude<TIterator['return'], undefined>> = fn(() => returnResolver.promise);
 
   const generator: TIterator = {
     next,
@@ -50,8 +52,8 @@ test('next() and throw() are in the same critical section', async () => {
   const nextResolver = Promise.withResolvers<IteratorResult<number>>();
   const throwResolver = Promise.withResolvers<any>();
 
-  const next: JestMockOf<TIterator['next']> = jest.fn(() => nextResolver.promise);
-  const throw_: JestMockOf<Exclude<TIterator['throw'], undefined>> = jest.fn(() => throwResolver.promise);
+  const next: Mock<TIterator['next']> = fn(() => nextResolver.promise);
+  const throw_: Mock<Exclude<TIterator['throw'], undefined>> = fn(() => throwResolver.promise);
 
   const generator: TIterator = {
     next,
@@ -119,9 +121,9 @@ test('when return() is called, throw() will not be called', async () => {
   const throwResolver = Promise.withResolvers<any>();
 
   const underlying: TIterator = {
-    next: jest.fn(() => nextResolver.promise),
-    return: jest.fn(() => returnResolver.promise),
-    throw: jest.fn(() => throwResolver.promise)
+    next: fn(() => nextResolver.promise),
+    return: fn(() => returnResolver.promise),
+    throw: fn(() => throwResolver.promise)
   };
 
   const machinery = new AsyncIteratorMachinery(underlying);
@@ -160,9 +162,9 @@ test('when throw() is called, return() will not be called', async () => {
   const throwResolver = Promise.withResolvers<any>();
 
   const underlying: TIterator = {
-    next: jest.fn(async () => ({ done: true, value: undefined })),
-    return: jest.fn(() => returnResolver.promise),
-    throw: jest.fn(() => throwResolver.promise)
+    next: fn(async () => ({ done: true, value: undefined })),
+    return: fn(() => returnResolver.promise),
+    throw: fn(() => throwResolver.promise)
   };
 
   const machinery = new AsyncIteratorMachinery(underlying);
@@ -197,7 +199,7 @@ test('when throw() is called, return() will not be called', async () => {
 
 test('[Symbol.asyncIterator]() should return this', () => {
   const underlying: AsyncIterator<number> = {
-    next: jest.fn()
+    next: fn<AsyncIterator<number>['next']>()
   };
 
   const machinery = new AsyncIteratorMachinery(underlying);
@@ -207,8 +209,7 @@ test('[Symbol.asyncIterator]() should return this', () => {
 
 test('next() should call underlying next()', async () => {
   const underlying: AsyncIterator<number> = {
-    next: jest
-      .fn()
+    next: fn<AsyncIterator<number>['next']>()
       .mockImplementationOnce(() => Promise.resolve({ done: false, value: 1 }))
       .mockImplementation(() => Promise.resolve({ done: true, value: undefined }))
   };

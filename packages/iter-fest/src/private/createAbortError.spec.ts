@@ -1,5 +1,7 @@
-import createAbortError from './createAbortError';
-import isAbortError from './isAbortError';
+import { expect } from 'expect';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+import createAbortError from './createAbortError.ts';
+import isAbortError from './isAbortError.ts';
 
 describe('when DOMException is not defined globally', () => {
   let originalDOMException: typeof globalThis.DOMException;

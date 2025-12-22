@@ -1,4 +1,6 @@
-import isAbortError from './isAbortError';
+import { expect } from 'expect';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+import isAbortError from './isAbortError.ts';
 
 test('should return true for AbortError from fetch()', async () => {
   const abortController = new AbortController();

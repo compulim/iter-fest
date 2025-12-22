@@ -1,14 +1,16 @@
-import CriticalSection from './CriticalSection';
-import hasResolvedOrRejected from './hasResolvedOrRejected';
-import ignoreUnhandledRejection from './ignoreUnhandledRejection';
-import { type JestMockOf } from './JestMockOf';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import CriticalSection from './CriticalSection.ts';
+import hasResolvedOrRejected from './hasResolvedOrRejected.ts';
+import ignoreUnhandledRejection from './ignoreUnhandledRejection.ts';
 
 describe('when 2 jobs are pending', () => {
   let criticalSection: CriticalSection;
   let enter1Promise: Promise<number>;
   let enter2Promise: Promise<number>;
-  let fn1: JestMockOf<() => Promise<number>>;
-  let fn2: JestMockOf<() => Promise<number>>;
+  let fn1: Mock<() => Promise<number>>;
+  let fn2: Mock<() => Promise<number>>;
   let resolver1: PromiseWithResolvers<number>;
   let resolver2: PromiseWithResolvers<number>;
 
@@ -16,8 +18,8 @@ describe('when 2 jobs are pending', () => {
     resolver1 = Promise.withResolvers<number>();
     resolver2 = Promise.withResolvers<number>();
 
-    fn1 = jest.fn().mockImplementationOnce(() => resolver1.promise);
-    fn2 = jest.fn().mockImplementationOnce(() => resolver2.promise);
+    fn1 = fn<() => Promise<number>>().mockImplementationOnce(() => resolver1.promise);
+    fn2 = fn<() => Promise<number>>().mockImplementationOnce(() => resolver2.promise);
 
     criticalSection = new CriticalSection();
 
@@ -45,12 +47,12 @@ describe('when 2 jobs are pending', () => {
 
       describe('when the third job is scheduled', () => {
         let enter3Promise: Promise<number>;
-        let fn3: JestMockOf<() => Promise<number>>;
+        let fn3: Mock<() => Promise<number>>;
         let resolver3: PromiseWithResolvers<number>;
 
         beforeEach(() => {
           resolver3 = Promise.withResolvers<number>();
-          fn3 = jest.fn().mockImplementationOnce(() => resolver3.promise);
+          fn3 = fn<() => Promise<number>>().mockImplementationOnce(() => resolver3.promise);
 
           enter3Promise = criticalSection.enter(fn3);
         });
@@ -100,12 +102,12 @@ describe('when 2 jobs are pending', () => {
 
       describe('when the third job is scheduled', () => {
         let enter3Promise: Promise<number>;
-        let fn3: JestMockOf<() => Promise<number>>;
+        let fn3: Mock<() => Promise<number>>;
         let resolver3: PromiseWithResolvers<number>;
 
         beforeEach(() => {
           resolver3 = Promise.withResolvers<number>();
-          fn3 = jest.fn().mockImplementationOnce(() => resolver3.promise);
+          fn3 = fn<() => Promise<number>>().mockImplementationOnce(() => resolver3.promise);
 
           enter3Promise = criticalSection.enter(fn3);
         });

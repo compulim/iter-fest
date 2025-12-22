@@ -1,4 +1,6 @@
-import { iteratorToIterable } from './iteratorToIterable';
+import { expect } from 'expect';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorToIterable } from './iteratorToIterable.ts';
 
 describe('passing a iterator-compatible generator', () => {
   let iterable: IterableIterator<number>;

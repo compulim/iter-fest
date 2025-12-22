@@ -1,4 +1,6 @@
-import { asyncIteratorDrop } from './asyncIteratorDrop';
+import { expect } from 'expect';
+import { test } from 'node:test';
+import { asyncIteratorDrop } from './asyncIteratorDrop.ts';
 
 test('should follow TC39 proposal sample (sync)', async () => {
   // Copied from https://github.com/tc39/proposal-iterator-helpers.

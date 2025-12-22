@@ -1,14 +1,17 @@
-import hasResolvedOrRejected from './private/hasResolvedOrRejected';
-import ignoreUnhandledRejection from './private/ignoreUnhandledRejection';
-import { type JestMockOf } from './private/JestMockOf';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { describeEach } from './private/describeEach.ts';
+import hasResolvedOrRejected from './private/hasResolvedOrRejected.ts';
+import ignoreUnhandledRejection from './private/ignoreUnhandledRejection.ts';
 import {
   readableStreamValuesWithSignal,
   type ReadableStreamIteratorWithSignalOptions
-} from './readableStreamValuesWithSignal';
+} from './readableStreamValuesWithSignal.ts';
 
 type T = number;
 
-describe.each([
+describeEach([
   [
     'native readableStream.values' as const,
     (
@@ -57,20 +60,24 @@ describe.each([
       expect(iterator.next()).resolves.toEqual({ done: false, value: 1 }));
   });
 
-  describe.each([
+  describeEach([
     ['without arguments', undefined],
     ['with { preventCancel: false }', { preventCancel: false }],
     ['with { preventCancel: true }', { preventCancel: true }]
   ])('%s', (_, options: ReadableStreamIteratorWithSignalOptions | undefined) => {
-    let cancel: JestMockOf<Exclude<UnderlyingDefaultSource<T>['cancel'], undefined>>;
+    let cancel: Mock<
+      (
+        ...args: Parameters<Exclude<UnderlyingDefaultSource<T>['cancel'], undefined>>
+      ) => Exclude<ReturnType<Exclude<UnderlyingDefaultSource<T>['cancel'], undefined>>, void>
+    >;
     let lastController: ReadableStreamDefaultController<T>;
-    let start: JestMockOf<Exclude<UnderlyingDefaultSource<T>['start'], undefined>>;
+    let start: Mock<Exclude<UnderlyingDefaultSource<T>['start'], undefined>>;
     let stream: ReadableStream<T>;
     let values: ReadableStreamAsyncIterator<T>;
 
     beforeEach(() => {
-      cancel = jest.fn(async () => {});
-      start = jest.fn(controller => {
+      cancel = fn(async () => {});
+      start = fn(controller => {
         lastController = controller;
       });
       stream = new ReadableStream({ cancel, start });

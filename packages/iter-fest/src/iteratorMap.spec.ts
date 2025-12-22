@@ -1,10 +1,14 @@
-import { iteratorMap } from './iteratorMap';
+import { expect } from 'expect';
+import { fn, type Mock } from 'jest-mock';
+import { beforeEach, describe, test } from 'node:test';
+import { iteratorMap } from './iteratorMap.ts';
+import { describeEach } from './private/describeEach.ts';
 
-describe.each([[[1, 2, 3]], [[]]])('when compare to %s.map()', array => {
-  let arrayMapper: jest.Mock<string, [number, number, number[]]>;
+describeEach([[[1, 2, 3]], [[]]])('when compare to %s.map()', array => {
+  let arrayMapper: Mock<(_1: number, _2: number, _3: readonly number[]) => string>;
   let iterator: Iterator<number>;
   // Iterator.map() do not have third argument of the iterator itself, unlike Array.map().
-  let iteratorMapper: jest.Mock<string, [number, number]>;
+  let iteratorMapper: Mock<(_1: number, _2: number) => string>;
   let arrayResult: string[];
   let iteratorResult: string[];
 
@@ -13,8 +17,8 @@ describe.each([[[1, 2, 3]], [[]]])('when compare to %s.map()', array => {
 
     iterator = array.values();
 
-    arrayMapper = jest.fn();
-    iteratorMapper = jest.fn();
+    arrayMapper = fn();
+    iteratorMapper = fn();
 
     arrayMapper.mockImplementation(mapper);
     iteratorMapper.mockImplementation(mapper);
