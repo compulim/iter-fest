@@ -564,6 +564,9 @@
     "url": "https://github.com/compulim/iter-fest/issues"
   },
   "homepage": "https://github.com/compulim/iter-fest#readme",
+  "localPeerDependencies": {
+    "@compulim/test-harness": "0.0.0-0"
+  },
   "peerDependencies": {
     "core-js-pure": "^3.37.1"
   },
@@ -579,8 +582,5 @@
     "publint": "^0.3.16",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
-  },
-  "localPeerDependencies": {
-    "@compulim/test-harness": "0.0.0-0"
   }
 }
