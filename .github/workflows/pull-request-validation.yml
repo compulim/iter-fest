@@ -16,5 +16,4 @@ jobs:
     with:
       node-version: 22 # Some tests requires Node.js 22 because behaviors changed in 24.
       package-name: 'iter-fest'
-      skip-integration-test: false
       switch: ${{ matrix.switch }}
